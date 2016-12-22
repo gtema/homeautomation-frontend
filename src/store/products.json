@@ -1,0 +1,47 @@
+[
+    {
+        "id": 1,
+        "category_id" : 1,
+        "name": "product1"
+    },
+    {
+        "id": 2,
+        "category_id": 1,
+        "name": "product2"
+    },
+    {
+        "id": 3,
+        "category_id": 2,
+        "name": "product3"
+    },
+    {
+        "id": 4,
+        "category_id": 6,
+        "name": "Milch 1,5%"
+    },
+    {
+        "id": 5,
+        "category_id": 6,
+        "name": "Milch 3%"
+    },
+    {
+        "id": 6,
+        "category_id": 7,
+        "name": "Mozarella"
+    },
+    {
+        "id": 7,
+        "category_id": 7,
+        "name": "Ementaller"
+    },
+    {
+        "id": 8,
+        "category_id": 7,
+        "name": "Reibkäse"
+    },
+    {
+        "id": 9,
+        "category_id": 7,
+        "name": "Parmesan"
+    }
+]

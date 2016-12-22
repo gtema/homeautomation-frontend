@@ -1,0 +1,30 @@
+.subcategories-list .list-item {
+
+}
+
+div.sidebar {
+  border-right: 1px solid rgb(209, 209, 209);
+  box-shadow: 2px 0px 6px -3px rgba(209, 209, 209, 0.75);
+}
+
+.sidebar::after {
+
+}
+
+.subcategories-list .list-group-item {
+  border-style: none none solid none;
+  margin-bottom: 0px;
+  /*border-bottom: 1px solid rgb(209, 209, 209);*/
+}
+
+.item-attribute-name {
+
+}
+
+.item-attribute-name:after {
+  content: ":"
+}
+
+.item-attribute-value {
+    padding-left: 1em;
+}
