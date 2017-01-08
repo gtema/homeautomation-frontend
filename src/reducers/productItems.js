@@ -14,6 +14,7 @@ const normalizeFunction = ( item ) => ({
   id: item.id,
   product_id: item.product_id,
   is_started: item.is_started,
+  is_disposed: item.is_disposed,
   amount: item.amount,
   create_date: item.create_date,
   expiry_date: item.expiry_date

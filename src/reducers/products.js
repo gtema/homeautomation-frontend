@@ -16,6 +16,7 @@ const normalizeFunction = ( item ) => ({
   name: item.name,
   volume: item.volume,
   amount: item.amount,
+  count_quantities: item.count_quantities,
   first_started_id: item.first_started_id,
   first_started_ed: item.first_started_ed
 })

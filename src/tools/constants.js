@@ -6,7 +6,7 @@ export const apiPrefix = "http://localhost:5000/api/v0/stock/";
 
 export const apiRoot = apiPrefix;
 
-export const apiKey = "api_key=2"
+export const apiKey = "api_key=23"
 
 // Standard category properties
 export const categoryPropTypes = PropTypes.shape({
@@ -34,6 +34,7 @@ export const productItemsPropTypes = PropTypes.shape({
   product_id: PropTypes.number.isRequired,
   amount: PropTypes.number.isRequired,
   is_started: PropTypes.bool.isRequired,
+  is_disposed: PropTypes.bool.isRequired,
   create_date: PropTypes.string.isRequired,
   expiry_date: PropTypes.string.isRequired
 })

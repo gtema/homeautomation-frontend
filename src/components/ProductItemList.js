@@ -1,36 +1,65 @@
 import React, { PropTypes } from 'react'
 import ProductItem from './ProductItem'
-import { ListGroup } from 'react-bootstrap'
+import { ListGroup, ListGroupItem } from 'react-bootstrap'
 
 import { productItemsPropTypes } from '../tools/constants'
 
+
+
 // List of Product Items of the given category
-const ProductItemList = ({ params, elements, toggleEditFn, modifyFn, editItemId }) => {
+const ProductItemList = ({ params, activeItems, inactiveItems, toggleEditFn, modifyFn, addFn, editItemId, productId }) => {
 
   return (
     <ListGroup bsClass="list-group productitems-list" componentClass="ul">
-    {
-      elements.map(item =>
-        <ProductItem
-        key={item.id}
-        {...item}
+      <ProductItem
+        key={-1}
         toggleEditFn={toggleEditFn}
         modifyFn={modifyFn}
-        enableEdit={ (item.id === editItemId )? true:false}
+        addFn={addFn}
+        enableEdit={true}
+        id={-1}
+        productId={productId}
         />
-      )
-    }
-
+      <ListGroupItem />
+      {
+        activeItems
+          .map(item =>
+            <ProductItem
+              key={item.id}
+              {...item}
+              toggleEditFn={toggleEditFn}
+              modifyFn={modifyFn}
+              enableEdit={ (item.id === editItemId )? true:false}
+              productId={item.product_id}
+              />
+          )
+      }
+      <ListGroupItem />
+      {
+        inactiveItems
+          .map(item =>
+            <ProductItem
+              key={item.id}
+              {...item}
+              enableEdit={false}
+              inactive={true}
+              productId={item.product_id}
+              />
+          )
+      }
     </ListGroup>
   )
 
 }
 
 ProductItemList.propTypes = {
-  elements: PropTypes.arrayOf(productItemsPropTypes.isRequired),
+  activeItems: PropTypes.arrayOf(productItemsPropTypes.isRequired),
+  inactiveItems: PropTypes.arrayOf(productItemsPropTypes.isRequired),
   toggleEditFn: PropTypes.func.isRequired,
   modifyFn: PropTypes.func.isRequired,
-  editItemId: PropTypes.number
+  addFn: PropTypes.func.isRequired,
+  editItemId: PropTypes.number,
+  productId: PropTypes.number.isRequired,
 }
 
 ProductItemList.defaultProps = {

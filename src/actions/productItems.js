@@ -67,14 +67,14 @@ export const loadProductItemsByProductIdIfNeeded = (parent_id) => {
 }
 
 // Add new product
-export const addNewProductItem = ( name, id ) => {
+export const addNewProductItem = ( item ) => {
   return {
     [CALL_API]: {
       types: ['ADD_PRODUCT_ITEM', 'RECEIVE_PRODUCT_ITEM_BY_ID', 'RECEIVE_PRODUCT_ITEM_BY_ID_ERROR'],
       endpoint: `product_item`,
       method: Methods.POST,
       schema: Schemas.PRODUCT_ITEM,
-      payload: {name: name, product_id: id},
+      payload: {product_id: item.product_id, create_date: item.create_date, expiry_date: item.expiry_date},
     }
   }
 }
@@ -82,7 +82,7 @@ export const addNewProductItem = ( name, id ) => {
 export const modifyProductItem = ( item ) => {
   return {
     [CALL_API]: {
-      types: ['MODIFY_PRODUCT_ITEM', 'RECEIVE_PRODUCT_ITEM_BY_PRODUCT_ID', 'RECEIVE_PRODUCT_ITEM_BY_PRODUCT_ID_ERROR'],
+      types: ['MODIFY_PRODUCT_ITEM', 'RECEIVE_PRODUCT_ITEM_BY_ID', 'RECEIVE_PRODUCT_ITEM_BY_ID_ERROR'],
       endpoint: `product_item/${item.id}`,
       method: Methods.PUT,
       schema: Schemas.PRODUCT_ITEM,

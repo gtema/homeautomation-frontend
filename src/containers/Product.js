@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import { browserHistory } from 'react-router'
-import { Panel, Glyphicon, Button, ButtonGroup, Form, FormGroup, FormControl, InputGroup, Col, ControlLabel } from 'react-bootstrap'
+import { Panel, Glyphicon, Button, ButtonGroup, Form, FormGroup, FormControl, InputGroup, Col, ControlLabel, Checkbox } from 'react-bootstrap'
 
 import * as UIActionCreators from '../actions/ui'
 import * as CategoriesActionCreators from '../actions/categories'
@@ -13,7 +13,7 @@ import { productPropTypes, productItemsPropTypes, cataloguePath } from '../tools
 // import Spinner from '../components/Spinner'
 import {getISODate} from '../tools/common'
 
-import { getCurrentProduct, getProductItemsByProductId } from '../selectors/Catalogue'
+import { makeGetCurrentProduct, makeGetActiveProductItemsByProductId, makeGetInactiveProductItemsByProductId } from '../selectors/Catalogue'
 
 import ProductItemList from '../components/ProductItemList'
 
@@ -22,7 +22,8 @@ class ProductImpl extends Component {
 
   static propTypes = {
     product: productPropTypes,
-    product_items: PropTypes.arrayOf(productItemsPropTypes),
+    activeProductItems: PropTypes.arrayOf(productItemsPropTypes),
+    inActiveProductItems: PropTypes.arrayOf(productItemsPropTypes),
   }
 
   static defaultProps = {
@@ -32,8 +33,10 @@ class ProductImpl extends Component {
   constructor(props) {
     super(props)
     this.state={
-      name: (props.product)? props.product.name : '',
-      volume: (props.volume)? props.product.volume : '',
+      'name': (props.product)? props.product.name : '',
+      'volume': (props.product)? props.product.volume : 'x',
+      'first_started_ed': (props.product.first_started_ed)? getISODate(new Date(props.product.first_started_ed)) : '',
+      'count_quantities': (props.product)? props.product.count_quantities: true,
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -55,8 +58,16 @@ class ProductImpl extends Component {
       this.props.loadProductByProductIdIfNeeded(nextProps.productId)
       this.props.loadProductItemsByProductIdIfNeeded(nextProps.productId);
     }
-    if (nextProps.product.name !== this.state.name) {
-      this.setState({name:nextProps.product.name})
+    if (nextProps.product.name !== this.state.name ||
+        nextProps.product.volume !== this.state.volume ||
+        nextProps.product.first_started_ed !== this.state.first_started_ed ||
+        nextProps.product.count_quantities !== this.state.count_quantities) {
+      this.setState({
+        name: nextProps.product.name,
+        volume: nextProps.product.volume,
+        first_started_ed: getISODate(new Date(nextProps.product.first_started_ed)),
+        count_quantities: nextProps.product.count_quantities,
+      })
     }
   }
 
@@ -76,6 +87,7 @@ class ProductImpl extends Component {
       category_id : this.props.product.category_id,
       name : this.state.name,
       volume : this.state.volume,
+      count_quantities : this.state.count_quantities,
     });
     this.props.toggleProductEditMode(null);
   }
@@ -124,59 +136,112 @@ class ProductImpl extends Component {
       <Panel header={header} bsStyle="primary">
         <Form horizontal onSubmit={this.handleSubmit} onReset={this.cancelEdit}>
           <FormGroup controlId="productName">
-            <Col componentClass={ControlLabel} xs={4} sm={2} md={1} lg={1}>
+            <Col componentClass={ControlLabel} xs={4} sm={2} md={1} lg={2}>
               Name
             </Col>
-            <Col xs={8} sm={10} md={11} lg={11}>
-              <FormControl type='text' name='productName' value={this.state.name} onChange={(e) => { this.setState({name:e.target.value}) } } readOnly={!editMode} />
+            <Col xs={8} sm={10} md={11} lg={10}>
+              { (editMode)?
+                (<FormControl type='text' name='productName' value={this.state.name} onChange={(e) => { this.setState({name:e.target.value}) } } />)
+                :
+                (<FormControl.Static>{this.state.name}</FormControl.Static>)
+              }
             </Col>
           </FormGroup>
           <FormGroup controlId="productVolume">
-            <Col componentClass={ControlLabel} xs={4} sm={2} md={1} lg={1}>
+            <Col componentClass={ControlLabel} xs={4} sm={2} md={1} lg={2}>
               Volume
             </Col>
-            <Col xs={8} sm={10} md={11} lg={11}>
-              <FormControl type='text' name='productVolume' value={this.state.volume} onChange={(e) => { this.setState({volume:e.target.value}) } } readOnly={!editMode} />
+            <Col xs={8} sm={10} md={11} lg={10}>
+              { (editMode)?
+                (<FormControl type='text' name='productVolume' value={this.state.volume} onChange={(e) => { this.setState({volume:e.target.value}) } } />)
+                :
+                (<FormControl.Static>{this.state.volume}</FormControl.Static>)
+              }
+            </Col>
+          </FormGroup>
+          <FormGroup controlId="productcountQuantities">
+            <Col componentClass={ControlLabel} xs={4} sm={2} md={1} lg={2}>
+              Count Quantities
+            </Col>
+            <Col xs={8} sm={10} md={11} lg={10}>
+              { (editMode)?
+                (<Checkbox title='Checked means sum of individual amounts is reported as total amount, otherwise only quantity of active items is used' name='productcountQuantities' checked={this.state.count_quantities} onChange={(e) => { this.setState({count_quantities:e.target.checked}) } } />)
+                :
+                (<FormControl.Static>{this.state.count_quantities?'on':'off'}</FormControl.Static>)
+              }
+            </Col>
+          </FormGroup>
+          <FormGroup controlId="productAmount">
+            <Col componentClass={ControlLabel} xs={4} sm={2} md={1} lg={2}>
+              Amount
+            </Col>
+            <Col xs={8} sm={10} md={11} lg={10}>
+              <FormControl.Static>{this.props.product.amount}</FormControl.Static>
             </Col>
           </FormGroup>
           <FormGroup controlId="productFirstStartedExpiry">
-            <Col componentClass={ControlLabel} xs={4} sm={2} md={1} lg={1}>
+            <Col componentClass={ControlLabel} xs={4} sm={2} md={1} lg={2}>
               Open expires
             </Col>
-            <Col xs={8} sm={10} md={11} lg={11}>
-              <FormControl type='date' name='productFirstStartedExpiry' value={getISODate(new Date(product.first_started_ed))} readOnly/>
+            <Col xs={8} sm={10} md={11} lg={10}>
+              <FormControl.Static>{this.props.product.first_started_ed}</FormControl.Static>
             </Col>
           </FormGroup>
         </Form>
 
         <ProductItemList
-          elements={this.props.product_items}
+          activeItems={this.props.activeProductItems}
+          inactiveItems={this.props.inActiveProductItems}
           toggleEditFn={this.props.toggleProductItemEditMode}
           modifyFn={this.props.modifyProductItem}
+          addFn={this.props.addNewProductItem}
           editItemId={productItemEditId}
+          productId={this.props.productId}
           />
       </Panel>
     )
   }
 }
 
-const mapStateToProps = ( state, ownProps ) => {
-  const id = parseInt(ownProps.params.itemId, 10);
-  return {
-    productId: id,
-    product: getCurrentProduct(state, ownProps),//state.products.getIn(['selectedProduct', 'product']),
-    product_items: getProductItemsByProductId(state, ownProps),
-    editMode: (state.ui.get('productEditId') === id)? true:false,
-    productItemEditId: state.ui.get('productItemEditId')
+// Use mapStateToProps maker in order to use caching for different categoryIds
+const makeMapStateToProps = () => {
+
+  const product = makeGetCurrentProduct();
+  const activeItems = makeGetActiveProductItemsByProductId();
+  const inActiveItems = makeGetInactiveProductItemsByProductId();
+
+  const mapStateToProps = (state, ownProps) => {
+    const id = parseInt(ownProps.params.itemId, 10);
+    return {
+      productId: id,
+      product: product(state, ownProps),//state.products.getIn(['selectedProduct', 'product']),
+      activeProductItems: activeItems(state, ownProps),
+      inActiveProductItems: inActiveItems(state, ownProps),
+      editMode: (state.ui.get('productEditId') === id)? true:false,
+      productItemEditId: state.ui.get('productItemEditId')
+    }
   }
+
+  return mapStateToProps
 }
+
+// const mapStateToProps = ( state, ownProps ) => {
+//   const id = parseInt(ownProps.params.itemId, 10);
+//   return {
+//     productId: id,
+//     product: getCurrentProduct(state, ownProps),//state.products.getIn(['selectedProduct', 'product']),
+//     product_items: getProductItemsByProductId(state, ownProps),
+//     editMode: (state.ui.get('productEditId') === id)? true:false,
+//     productItemEditId: state.ui.get('productItemEditId')
+//   }
+// }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({}, UIActionCreators, CategoriesActionCreators, ProductActionCreators, ProductItemsActionCreators), dispatch)
 }
 
 const Product = connect(
-  mapStateToProps,
+  makeMapStateToProps,
   mapDispatchToProps
 )(ProductImpl)
 

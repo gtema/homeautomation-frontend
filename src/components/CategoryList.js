@@ -10,15 +10,16 @@ const CategoryList = ({ params, elements, toggleEditFn, modifyFn, editItemId }) 
   return (
     <ListGroup bsClass="list-group subcategories-list" >
     {
-      elements.map(category =>
-        <Category
-        key={category.id}
-        {...category}
-        toggleEditFn={toggleEditFn}
-        modifyFn={modifyFn}
-        enableEdit={ (category.id === editItemId )? true:false}
-        />
-      )
+      elements
+        .map(category =>
+          <Category
+          key={category.id}
+          {...category}
+          toggleEditFn={toggleEditFn}
+          modifyFn={modifyFn}
+          enableEdit={ (category.id === editItemId )? true:false}
+          />
+        )
     }
 
     </ListGroup>

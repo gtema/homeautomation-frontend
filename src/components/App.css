@@ -67,3 +67,11 @@ nav.app-navbar .navbar-nav > li.active > a:focus {
     /*border-top-color: #555;
     border-bottom-color: #555;*/
 }
+
+.form-control {
+  border-radius: 0px !important;
+}
+
+.input-group-sm > .form-control, .input-group-sm > .input-group-addon, .input-group-sm > .input-group-btn > .btn {
+  border-radius: 0px !important;
+}

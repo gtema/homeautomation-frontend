@@ -26,6 +26,7 @@ export const getVisibleSubcategories = createSelector(
       // Get the categories by the groupId
       const categories = categoriesById
         .filter(cat => categoryIdsByCategoryId.has(cat.get('id').toString()))
+        .sortBy((item) => { return item.get('name') })
         .map(cat => cat.toObject()).toArray()
         || []
       console.log("result of select", categories)
@@ -110,6 +111,10 @@ export const getCurrentProduct = createSelector(
   }
 )
 
+export const makeGetCurrentProduct = () => {
+  return getCurrentProduct
+}
+
 const getVisibleProductsByCategoryId = createSelector(
   [getProductsById, getProductIdsByCategoryId],
   (objById, idsByParent) => {
@@ -132,13 +137,14 @@ export const makeGetVisibleProductsByCategoryId = () => {
   return getVisibleProductsByCategoryId
 }
 
-export const getProductItemsByProductId = createSelector(
+export const getActiveProductItemsByProductId = createSelector(
   [getProductItemsById, getProductItemIdsByProductId],
   (objById, idsByParent) => {
     if (typeof(idsByParent) !== 'undefined' ) {
       // Get the categories by the groupId
       const items = objById
-        .filter(item => idsByParent.has(item.get('id').toString()))
+        .filter(item => (idsByParent.has(item.get('id').toString()) && !item.get('is_disposed') && item.get('amount') > 0))
+        .sortBy((item) => { return "".concat(!item.get('is_disposed').toString(),(-item.get('amount')).toString()) })
         .map(item => item.toObject()).toArray()
         || []
       console.log("result of select for product items", items)
@@ -150,6 +156,29 @@ export const getProductItemsByProductId = createSelector(
   }
 )
 
-export const makeGetProductItemsByProductId = () => {
-  return getProductItemsByProductId
+export const makeGetActiveProductItemsByProductId = () => {
+  return getActiveProductItemsByProductId
+}
+
+export const getInactiveProductItemsByProductId = createSelector(
+  [getProductItemsById, getProductItemIdsByProductId],
+  (objById, idsByParent) => {
+    if (typeof(idsByParent) !== 'undefined' ) {
+      // Get the categories by the groupId
+      const items = objById
+        .filter(item => idsByParent.has(item.get('id').toString()) && (item.get('is_disposed') || item.get('amount') <= 0))
+        .sortBy((item) => { return "".concat(!item.get('is_disposed').toString(),(-item.get('amount')).toString()) })
+        .map(item => item.toObject()).toArray()
+        || []
+      console.log("result of select for product items", items)
+
+      return items
+    } else {
+      return []
+    }
+  }
+)
+
+export const makeGetInactiveProductItemsByProductId = () => {
+  return getInactiveProductItemsByProductId
 }
