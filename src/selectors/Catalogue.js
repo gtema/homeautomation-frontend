@@ -26,7 +26,7 @@ export const getVisibleSubcategories = createSelector(
       // Get the categories by the groupId
       const categories = categoriesById
         .filter(cat => categoryIdsByCategoryId.has(cat.get('id').toString()))
-        .sortBy((item) => { return item.get('name') })
+        .sortBy((item) => { return item.get('prio' + item.get('name')) })
         .map(cat => cat.toObject()).toArray()
         || []
       console.log("result of select", categories)

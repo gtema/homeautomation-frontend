@@ -190,13 +190,22 @@ class ProductImpl extends Component {
         </Form>
 
         <ProductItemList
-          activeItems={this.props.activeProductItems}
-          inactiveItems={this.props.inActiveProductItems}
+          elements={this.props.activeProductItems}
           toggleEditFn={this.props.toggleProductItemEditMode}
           modifyFn={this.props.modifyProductItem}
           addFn={this.props.addNewProductItem}
           editItemId={productItemEditId}
           productId={this.props.productId}
+          active={true}
+          />
+
+        <ProductItemList
+          elements={this.props.inActiveProductItems}
+          toggleEditFn={this.props.toggleProductItemEditMode}
+          modifyFn={this.props.modifyProductItem}
+          editItemId={productItemEditId}
+          productId={this.props.productId}
+          active={false}
           />
       </Panel>
     )

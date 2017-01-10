@@ -13,7 +13,8 @@ const INITIAL_STATE = Map({
 const normalizeFunction = ( item ) => ({
   id: item.id,
   parent_id: item.parent_id,
-  name: item.name
+  name: item.name,
+  prio: item.prio,
 })
 
 // Reducer
