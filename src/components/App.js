@@ -10,7 +10,7 @@ import './App.css'
 const App = ( props ) => {
 
   const navHeader = (
-    <Navbar fixedTop className="app-navbar">
+    <Navbar fixedTop fluid className="app-navbar">
       <Navbar.Header>
         <Navbar.Brand><Link to="/">HomeAutomation</Link></Navbar.Brand>
         <Navbar.Toggle />
@@ -38,7 +38,7 @@ const App = ( props ) => {
   return (
     <div>
       {navHeader}
-      <div className="main-content container">
+      <div className="main-content container-fluid">
         {props.children}
       </div>
     </div>

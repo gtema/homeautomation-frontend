@@ -26,9 +26,10 @@ export const toggleProductItemEditMode = (id) => {
 }
 
 // Switch product edit mode
-export const toggleAddCategoryMode = () => {
+export const toggleAddCategoryMode = (parent_id) => {
   return {
-    type: 'TOGGLE_ADD_CATEGORY_MODE'
+    type: 'TOGGLE_ADD_CATEGORY_MODE',
+    parent_id: parent_id,
   }
 }
 

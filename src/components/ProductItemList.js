@@ -22,7 +22,9 @@ const ProductItemList = ({ params, elements, active, toggleEditFn, modifyFn, add
           productId={productId}
           />
       }
-      <ListGroupItem />
+      { addFn &&
+        <ListGroupItem />
+      }
       {
         elements
           .map(item =>

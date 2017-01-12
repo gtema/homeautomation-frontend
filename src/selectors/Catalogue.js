@@ -1,9 +1,11 @@
 import { createSelector } from 'reselect'
+import { Map } from 'immutable'
 
 // Remember: keys in Immutable.js are strings in our case
 
 // const getSelectedCategory = (state) => state.ui.get('selectedCategoryId')
 const getCategoriesById = (state) => state.categories.get('categoriesById')
+const getCategoryIdsByCategoryIdAll = (state) => state.categories.get('categoriesByGroupId')
 // const getCategoriesByGroupId = (state) => state.categories.get('categoriesByGroupId')
 const getCategoryIdsByCategoryId = (state, props) => state.categories.getIn(['categoriesByGroupId', props.params.groupId || "0"])
 const getPropCurrentCategoryId = (state, props) => parseInt(props.params.groupId, 10) || 0
@@ -18,6 +20,43 @@ const getProductIdsByCategoryId = (state, props) => state.products.getIn(['produ
 const getProductItemsById = (state) => state.productItems.get('productItemsById')
 const getProductItemById = (state, props) => state.productItems.getIn(['productItemsById', props.params.itemId])
 const getProductItemIdsByProductId = (state, props) => state.productItems.getIn(['productItemsByProductId', props.params.itemId || "0"])
+
+const denormalizeCategories = (objById, idsByParent, categoryId) => {
+  console.debug("denormalize for category=" + categoryId, idsByParent.get('0'))
+
+  const childrenIds = Map(idsByParent.get(categoryId.toString())).keySeq().toArray()
+
+  const tree = childrenIds
+    .map(cat => objById.get(cat.toString()))
+    .map(cat => {
+        const children = denormalizeCategories(objById, idsByParent, cat.get('id'));
+        if (children.length > 0) {
+          return cat.set('children', children)
+        } else {
+          return cat
+        }
+      } )
+    .filter(cat => typeof cat !== 'undefined')
+    .map(cat => cat.toObject())
+
+    //.map(cat => cat.set('children', denormalizeCategories(objById, idsByParent, cat.get('id'))))
+  console.debug("denormalize results=" + tree, tree)
+  return tree
+}
+
+export const getCategoriesTree = createSelector(
+  [getCategoriesById, getCategoryIdsByCategoryIdAll],
+  (objById, idsByParent) => {
+    console.log(idsByParent.constructor.name)
+    const tree = denormalizeCategories(objById, idsByParent, 0)
+    console.debug("denormalize final result=" + JSON.stringify(tree), tree)
+    return tree
+  }
+)
+
+export const makeGetCategoriesTree = () => {
+  return getCategoriesTree
+}
 
 export const getVisibleSubcategories = createSelector(
   [getCategoriesById, getCategoryIdsByCategoryId],

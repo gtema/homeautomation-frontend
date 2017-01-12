@@ -74,7 +74,7 @@ export const addNewProductItem = ( item ) => {
       endpoint: `product_item`,
       method: Methods.POST,
       schema: Schemas.PRODUCT_ITEM,
-      payload: {product_id: item.product_id, create_date: item.create_date, expiry_date: item.expiry_date},
+      payload: {product_id: item.product_id, create_date: item.create_date, expiry_date: item.expiry_date, amount: item.amount},
     }
   }
 }

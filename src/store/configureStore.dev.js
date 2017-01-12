@@ -4,8 +4,7 @@ import createLogger from 'redux-logger'
 import rootReducer from '../reducers'
 import DevTools from '../containers/DevTools'
 import * as CategoriesActions  from '../actions/categories'
-// import { receiveProducts }  from '../actions/products'
-// import { callAPIMiddleware } from '../tools/common'
+
 import api from '../middleware/api'
 
 const configureStore = preloadedState => {

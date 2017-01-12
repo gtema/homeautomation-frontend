@@ -88,7 +88,7 @@ class ProductsAppImpl extends Component {
     const spin = null
 
     return (
-        <div className="ProductApp">
+        <div className="ProductsApp">
         { ui.productsLastUpdatedAt &&
           <span>Last Updated at {new Date(ui.productsLastUpdatedAt).toLocaleTimeString()}.{' '}</span>
         }

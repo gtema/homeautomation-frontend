@@ -1,9 +1,10 @@
 import { connect } from 'react-redux'
 import React, { PropTypes, Component }  from 'react'
-import { Alert, ButtonGroup, Button, Glyphicon, Col, Collapse, Navbar, Nav, NavItem, FormGroup, FormControl } from 'react-bootstrap'
+import { Alert, ButtonGroup, Button, Glyphicon, Col, Collapse, Navbar, Nav, NavItem, FormGroup, FormControl, Clearfix } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { bindActionCreators } from 'redux'
 // import Sidebar from 'react-sidebar'
+// import {TreeMenu, TreeNode} from 'react-tree-menu'
 
 import { categoryPropTypes, cataloguePath } from '../tools/constants'
 import CategoryList from '../components/CategoryList'
@@ -12,8 +13,9 @@ import * as CatalogueActionCreators from '../actions/categories'
 import AddCategoryWidget  from './AddCategory'
 import AddProductWidget  from './AddProduct'
 import Spinner from '../components/Spinner'
+import CategoryTreeMenu from '../components/CategoryTreeMenu'
 
-import { makeGetPathToRootFromCategoryId, makeGetCurrentCategory, makeGetVisibleSubcategoriesByCategoryId } from '../selectors/Catalogue'
+import { makeGetPathToRootFromCategoryId, makeGetCurrentCategory, makeGetVisibleSubcategoriesByCategoryId, getCategoriesTree } from '../selectors/Catalogue'
 
 import './Catalogue.css'
 
@@ -98,14 +100,24 @@ class CatalogueAppImpl extends Component {
     const sidebarContent = (categoryId === fetchingSubcategoriesByCategoryId)?
         (<Spinner />)
         :
-        (
-          <CategoryList
-            elements={subCategories}
-            toggleEditFn={this.props.toggleCategoryEditMode}
-            modifyFn={this.props.modifyCategory}
-            editItemId={categoryEditId}
-          />
-        )
+        // (
+        //   <CategoryList
+        //     elements={subCategories}
+        //     toggleEditFn={this.props.toggleCategoryEditMode}
+        //     modifyFn={this.props.modifyCategory}
+        //     editItemId={categoryEditId}
+        //   />
+        // )
+        (this.props.categoriesTree)?
+            (<CategoryTreeMenu
+              tree={this.props.categoriesTree}
+              toggleEditFn={this.props.toggleCategoryEditMode}
+              modifyFn={this.props.modifyCategory}
+              editItemId={categoryEditId}
+            />)
+          : null
+
+
 
     const appHeader = (categoryId === fetchingSubcategoriesByCategoryId)?
         (<Spinner />)
@@ -147,32 +159,29 @@ class CatalogueAppImpl extends Component {
         <AddProductWidget />
         {appHeader}
         <div className="row">
-          <div>
-            <Collapse in={this.state.subcategoriesVisible} className="sidebar" dimension="width">
-              <Col xsHidden sm={(subcategoriesSidebarPresent)? 4:0} md={(subcategoriesSidebarPresent)? 4:0} lg={(subcategoriesSidebarPresent)? 2:0}>
-                {sidebarContent}
-              </Col>
-            </Collapse>
-            <Button componentClass="btn-sm" onClick={() => { this.handleSubcategoriesCollapse() }}><Glyphicon glyph={this.state.toggleSwitch} /></Button>
+          <div className="CatSidebar">
+            {sidebarContent}
           </div>
-          <Col sm={(subcategoriesSidebarPresent)? 8:12} md={(subcategoriesSidebarPresent)? 8:12} lg={(subcategoriesSidebarPresent)? 10:12}>
+          <div className="CatContent">
             {children}
-            </Col>
+          </div>
         </div>
+
       </div>
 
     )
+    // <span className="SidebarToggler"><Glyphicon glyph={this.state.toggleSwitch} /></span>
   }
 }
-
+// <Button componentClass="btn-sm" onClick={() => { this.handleSubcategoriesCollapse() }}><Glyphicon glyph={this.state.toggleSwitch} /></Button>
 // Introduce reselect caching per property (categoryId)
 const makeMapStateToProps = () => {
   const getVisibleSubcategoriesByCategoryId = makeGetVisibleSubcategoriesByCategoryId()
   const getCurrentCategory = makeGetCurrentCategory()
   const getPathToRootFromCategoryId = makeGetPathToRootFromCategoryId()
+  // const getCategoriesTree = getCategoriesTree()
 
   const mapStateToProps = (state, ownProps) => {
-
     return {
       categoryId: parseInt(ownProps.params.groupId, 10) || 0,
       category: getCurrentCategory(state, ownProps),
@@ -181,25 +190,13 @@ const makeMapStateToProps = () => {
       ui: state.ui.toObject,
       categoryEditId: state.ui.get('categoryEditId'),
       alertText: state.ui.get('alertText'),
-      fetchingSubcategoriesByCategoryId: state.ui.get('fetchingSubcategoriesByCategoryId')
+      fetchingSubcategoriesByCategoryId: state.ui.get('fetchingSubcategoriesByCategoryId'),
+      categoriesTree: getCategoriesTree(state, ownProps),
     }
   }
 
   return mapStateToProps
 }
-
-// const mapStateToProps = ( state, ownProps ) => {
-//   let groupId = parseInt(ownProps.params.groupId) || 0;
-//
-//   return {
-//     groupId: groupId,
-//     category: getCurrentCategory(state, ownProps),//state.categories.getIn(['selectedCategory', 'category']),
-//     pathToTop: getPathToRootFromGroupId(state, ownProps),//state.categories.getIn(['selectedCategory', 'pathToRoot']),
-//     subCategories: getVisibleSubcategories(state, ownProps),
-//     ui: state.ui.toObject,
-//     categoryEditId: state.ui.get('categoryEditId')
-//   }
-// }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({}, UIActionCreators, CatalogueActionCreators), dispatch)

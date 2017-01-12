@@ -2,7 +2,7 @@ import { PropTypes } from 'react'
 
 export const cataloguePath = "/cat"
 
-export const apiPrefix = "http://localhost:5000/api/v0/stock/";
+export const apiPrefix = process.env.REACT_APP_API_PREFIX || "http://localhost:5002/api/v0/stock/";
 
 export const apiRoot = apiPrefix;
 
@@ -13,6 +13,7 @@ export const categoryPropTypes = PropTypes.shape({
   id: PropTypes.number.isRequired,
   parent_id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
+  prio: PropTypes.number,
   img: PropTypes.string
 })
 

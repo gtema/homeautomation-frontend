@@ -165,7 +165,7 @@ class ProductImpl extends Component {
             </Col>
             <Col xs={8} sm={10} md={11} lg={10}>
               { (editMode)?
-                (<Checkbox title='Checked means sum of individual amounts is reported as total amount, otherwise only quantity of active items is used' name='productcountQuantities' checked={this.state.count_quantities} onChange={(e) => { this.setState({count_quantities:e.target.checked}) } } />)
+                (<Checkbox title='Unchecked means sum of individual amounts is reported as total amount, otherwise only quantity of active items is used' name='productcountQuantities' checked={this.state.count_quantities} onChange={(e) => { this.setState({count_quantities:e.target.checked}) } } />)
                 :
                 (<FormControl.Static>{this.state.count_quantities?'on':'off'}</FormControl.Static>)
               }
@@ -233,17 +233,6 @@ const makeMapStateToProps = () => {
 
   return mapStateToProps
 }
-
-// const mapStateToProps = ( state, ownProps ) => {
-//   const id = parseInt(ownProps.params.itemId, 10);
-//   return {
-//     productId: id,
-//     product: getCurrentProduct(state, ownProps),//state.products.getIn(['selectedProduct', 'product']),
-//     product_items: getProductItemsByProductId(state, ownProps),
-//     editMode: (state.ui.get('productEditId') === id)? true:false,
-//     productItemEditId: state.ui.get('productItemEditId')
-//   }
-// }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({}, UIActionCreators, CategoriesActionCreators, ProductActionCreators, ProductItemsActionCreators), dispatch)
