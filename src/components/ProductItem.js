@@ -114,7 +114,10 @@ class ProductItem extends Component {
             <FormGroup controlId="formInlineExpiry" bsSize="small">
               <InputGroup bsSize="sm">
                 <InputGroup.Addon>Expiry</InputGroup.Addon>
-                <FormControl type="date" readOnly={(id !== -1)?true:false} value={this.state.expiry_date} onChange={(e) => {this.setState({expiry_date: e.target.value})}} />
+                <FormControl type="date" readOnly={(id !== -1)?true:false}
+                  value={this.state.expiry_date}
+                  onChange={(e) => {this.setState({expiry_date: e.target.value})}}
+                />
               </InputGroup>
             </FormGroup>
           </Col>
@@ -122,7 +125,10 @@ class ProductItem extends Component {
             <FormGroup controlId="formInlineBought" bsSize="small">
               <InputGroup bsSize="sm">
                 <InputGroup.Addon>Bought</InputGroup.Addon>
-                <FormControl type="date" readOnly={(id !== -1)?true:false} value={this.state.create_date} onChange={(e) => {this.setState({create_date: e.target.value})}} />
+                <FormControl type="date" readOnly={(id !== -1)?true:false}
+                  value={this.state.create_date} 
+                  onChange={(e) => {this.setState({create_date: e.target.value})}}
+                />
               </InputGroup>
             </FormGroup>
           </Col>

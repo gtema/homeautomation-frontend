@@ -53,7 +53,12 @@ class CategoryTreeMenuNode extends Component {
     const editItemUi = (
         <Form inline onSubmit={this.handleSubmit} onReset={this.cancelEdit}>
           <FormGroup controlId='name'>
-            <FormControl type='text' name='name' value={this.state.name} onChange={ this.handleChange } />
+            <FormControl type='text' name='name' value={this.state.name}
+              onChange={ (e) => {this.setState({name: e.target.value})} } />
+          </FormGroup>
+          <FormGroup controlId='prio'>
+            <FormControl type='number' name='prio' value={this.state.prio}
+              onChange={ (e) => {this.setState({prio: e.target.value})} } />
           </FormGroup>
           <FormGroup>
             <ButtonGroup>
@@ -74,10 +79,12 @@ class CategoryTreeMenuNode extends Component {
                     const currLi = e.target.parentElement.parentElement
                     const chevron = e.target
                     const childUl = currLi.getElementsByClassName("tree");
-                    if (childUl.length === 1) {
+                    if (childUl.length >= 1) {
                       childUl[0].classList.toggle('hidden')
                       chevron.classList.toggle('glyphicon-chevron-down')
                       chevron.classList.toggle('glyphicon-chevron-right')
+                    } else {
+                      console.warn("no parent", childUl.length, currLi, chevron, childUl);
                     }
                   }
                   }>

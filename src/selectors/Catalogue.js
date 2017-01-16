@@ -22,12 +22,13 @@ const getProductItemById = (state, props) => state.productItems.getIn(['productI
 const getProductItemIdsByProductId = (state, props) => state.productItems.getIn(['productItemsByProductId', props.params.itemId || "0"])
 
 const denormalizeCategories = (objById, idsByParent, categoryId) => {
-  console.debug("denormalize for category=" + categoryId, idsByParent.get('0'))
+  // console.debug("denormalize for category=" + categoryId, idsByParent.get('0'))
 
-  const childrenIds = Map(idsByParent.get(categoryId.toString())).keySeq().toArray()
+  const childrenIds = Map(idsByParent.get(categoryId.toString())).keySeq()
 
   const tree = childrenIds
     .map(cat => objById.get(cat.toString()))
+    .sortBy((item) => { return item.get('prio') + item.get('name') })
     .map(cat => {
         const children = denormalizeCategories(objById, idsByParent, cat.get('id'));
         if (children.length > 0) {
@@ -38,9 +39,10 @@ const denormalizeCategories = (objById, idsByParent, categoryId) => {
       } )
     .filter(cat => typeof cat !== 'undefined')
     .map(cat => cat.toObject())
+    .toArray()
 
     //.map(cat => cat.set('children', denormalizeCategories(objById, idsByParent, cat.get('id'))))
-  console.debug("denormalize results=" + tree, tree)
+  // console.debug("denormalize results=" + tree, tree)
   return tree
 }
 
@@ -65,7 +67,7 @@ export const getVisibleSubcategories = createSelector(
       // Get the categories by the groupId
       const categories = categoriesById
         .filter(cat => categoryIdsByCategoryId.has(cat.get('id').toString()))
-        .sortBy((item) => { return item.get('prio' + item.get('name')) })
+        .sortBy((item) => { return item.get('prio') + item.get('name') })
         .map(cat => cat.toObject()).toArray()
         || []
       console.log("result of select", categories)

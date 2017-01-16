@@ -34,7 +34,10 @@ class CategoryTreeMenu extends Component {
     if (typeof (tree) !== 'undefined') {
       return (
           <ul className="nav nav-list nav-menu-list-style tree" >
-            {tree.map(this.renderChild)}
+            {
+              tree
+                .map(this.renderChild)
+            }
           </ul>
         )
     } else {
