@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import { browserHistory } from 'react-router'
-import { Panel, Glyphicon, Button, ButtonGroup, Form, FormGroup, FormControl, InputGroup, Col, ControlLabel, Checkbox } from 'react-bootstrap'
+import { Panel, Glyphicon, Button, ButtonGroup, Form, FormGroup, FormControl, Col, ControlLabel, Checkbox } from 'react-bootstrap'
 
 import * as UIActionCreators from '../actions/ui'
 import * as CategoriesActionCreators from '../actions/categories'
@@ -36,7 +36,7 @@ class ProductImpl extends Component {
       'name': (props.product)? props.product.name : '',
       'volume': (props.product)? props.product.volume : 'x',
       'first_started_ed': (props.product.first_started_ed)? getISODate(new Date(props.product.first_started_ed)) : '',
-      'count_quantities': (props.product)? props.product.count_quantities: true,
+      'sum_amounts': (props.product)? props.product.sum_amounts: true,
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -53,6 +53,7 @@ class ProductImpl extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log("nexprops", nextProps)
     if (nextProps.productId !== this.props.productId) {
       // this.props.requestProductIfNeeded(nextProps.productId);
       this.props.loadProductByProductIdIfNeeded(nextProps.productId)
@@ -61,12 +62,12 @@ class ProductImpl extends Component {
     if (nextProps.product.name !== this.state.name ||
         nextProps.product.volume !== this.state.volume ||
         nextProps.product.first_started_ed !== this.state.first_started_ed ||
-        nextProps.product.count_quantities !== this.state.count_quantities) {
+        nextProps.product.sum_amounts !== this.state.sum_amounts) {
       this.setState({
         name: nextProps.product.name,
         volume: nextProps.product.volume,
         first_started_ed: getISODate(new Date(nextProps.product.first_started_ed)),
-        count_quantities: nextProps.product.count_quantities,
+        sum_amounts: nextProps.product.sum_amounts,
       })
     }
   }
@@ -87,7 +88,7 @@ class ProductImpl extends Component {
       category_id : this.props.product.category_id,
       name : this.state.name,
       volume : this.state.volume,
-      count_quantities : this.state.count_quantities,
+      sum_amounts : this.state.sum_amounts,
     });
     this.props.toggleProductEditMode(null);
   }
@@ -141,7 +142,13 @@ class ProductImpl extends Component {
             </Col>
             <Col xs={8} sm={10} md={11} lg={10}>
               { (editMode)?
-                (<FormControl type='text' name='productName' value={this.state.name} onChange={(e) => { this.setState({name:e.target.value}) } } />)
+                (
+                  <FormControl type='text' name='productName' required
+                    value={this.state.name}
+                    onChange={(e) => { this.setState({name:e.target.value}) } }
+                    placeholder="Product Name"
+                  />
+                )
                 :
                 (<FormControl.Static>{this.state.name}</FormControl.Static>)
               }
@@ -153,21 +160,32 @@ class ProductImpl extends Component {
             </Col>
             <Col xs={8} sm={10} md={11} lg={10}>
               { (editMode)?
-                (<FormControl type='text' name='productVolume' value={this.state.volume} onChange={(e) => { this.setState({volume:e.target.value}) } } />)
+                (
+                  <FormControl type='text' name='productVolume' required
+                      value={this.state.volume}
+                      onChange={(e) => { this.setState({volume:e.target.value}) } }
+                      placeholder="Volume entity (Liter, Pack, etc.)"
+                  />
+                )
                 :
                 (<FormControl.Static>{this.state.volume}</FormControl.Static>)
               }
             </Col>
           </FormGroup>
-          <FormGroup controlId="productcountQuantities">
+          <FormGroup controlId="productSumAmounts">
             <Col componentClass={ControlLabel} xs={4} sm={2} md={1} lg={2}>
-              Count Quantities
+              Sum amounts
             </Col>
             <Col xs={8} sm={10} md={11} lg={10}>
               { (editMode)?
-                (<Checkbox title='Unchecked means sum of individual amounts is reported as total amount, otherwise only quantity of active items is used' name='productcountQuantities' checked={this.state.count_quantities} onChange={(e) => { this.setState({count_quantities:e.target.checked}) } } />)
+                (
+                  <Checkbox name='productSumAmounts' checked={this.state.sum_amounts}
+                    onChange={(e) => { this.setState({sum_amounts:e.target.checked}) } }
+                    title="If checked sum amounts of individual entities, otherwise return count of items as product amount"
+                  />
+                )
                 :
-                (<FormControl.Static>{this.state.count_quantities?'on':'off'}</FormControl.Static>)
+                (<FormControl.Static>{this.state.sum_amounts?'on':'off'}</FormControl.Static>)
               }
             </Col>
           </FormGroup>
@@ -197,16 +215,13 @@ class ProductImpl extends Component {
           editItemId={productItemEditId}
           productId={this.props.productId}
           active={true}
-          />
+        />
 
         <ProductItemList
           elements={this.props.inActiveProductItems}
-          toggleEditFn={this.props.toggleProductItemEditMode}
-          modifyFn={this.props.modifyProductItem}
-          editItemId={productItemEditId}
           productId={this.props.productId}
           active={false}
-          />
+        />
       </Panel>
     )
   }
@@ -223,7 +238,7 @@ const makeMapStateToProps = () => {
     const id = parseInt(ownProps.params.itemId, 10);
     return {
       productId: id,
-      product: product(state, ownProps),//state.products.getIn(['selectedProduct', 'product']),
+      product: product(state, ownProps),
       activeProductItems: activeItems(state, ownProps),
       inActiveProductItems: inActiveItems(state, ownProps),
       editMode: (state.ui.get('productEditId') === id)? true:false,
@@ -235,7 +250,10 @@ const makeMapStateToProps = () => {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, UIActionCreators, CategoriesActionCreators, ProductActionCreators, ProductItemsActionCreators), dispatch)
+  return bindActionCreators(
+      Object.assign({},
+        UIActionCreators, CategoriesActionCreators, ProductActionCreators, ProductItemsActionCreators),
+      dispatch)
 }
 
 const Product = connect(

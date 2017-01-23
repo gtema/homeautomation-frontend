@@ -17,7 +17,7 @@ export const reducerRemoveItem = ( state, stateIdKey, stateParentKey, itemParent
   if (typeof(item) !== 'undefined') {
     return state
         .deleteIn([stateIdKey, id.toString()])
-        .deleteIn([stateParentKey, item.get(itemParentAttribute).toString(), id.toString()])
+        .deleteIn([stateParentKey, item.get(itemParentAttribute).toString(), 'items', id.toString()])
   } else {
     return state
   }
@@ -38,7 +38,7 @@ export const reducerReceiveItems = (state, stateIdKey, stateParentKey, itemParen
 
     // If we receive products by category_id - detect deleted products
     if (itemsForSingleParent) {
-      const currentItemsPerParent = state.getIn([stateParentKey, action[itemParentAttribute].toString()])
+      const currentItemsPerParent = state.getIn([stateParentKey, action[itemParentAttribute].toString(), 'items'])
       if (typeof(currentItemsPerParent) !== 'undefined') {
         // gather list of deleted products
         const currentIds = currentItemsPerParent.keySeq()
@@ -56,13 +56,21 @@ export const reducerReceiveItems = (state, stateIdKey, stateParentKey, itemParen
 
       const newItem = normalizeFunction(item)
 
+			newItem['_invalidated'] = false
+
       itemsById[newItem.id] = newItem
       let itemsByParent = itemsByParentId[newItem[itemParentAttribute]]
       // initialize if does not exists
       if (null == itemsByParent) {
-        itemsByParent = {};
+        itemsByParent = {
+					'invalidated':
+						/* If we are note receiving complete bunch per parent OR item.parent != action.parent
+							set the group initially to invalid for further refetch*/
+						(itemsForSingleParent && newItem[itemParentAttribute] === action[itemParentAttribute]) ? false : true,
+					'items': {}
+				}
       }
-      itemsByParent[item.id] = true
+      itemsByParent['items'][item.id] = true
       itemsByParentId[newItem[itemParentAttribute]] = itemsByParent
     })
 
@@ -83,6 +91,21 @@ export const reducerReceiveItems = (state, stateIdKey, stateParentKey, itemParen
     }
 
     return modState
+  } else {
+    return state
+  }
+}
+
+export const reducerInvalidateItemsByParent = (state, stateParentKey, id) => {
+	return state.setIn([stateParentKey, id.toString(), 'invalidate'], true)
+}
+
+/* Set "invalidate" property of the entity */
+export const reducerInvalidateItemById = (state, stateIdKey, id) => {
+	const item = state.getIn([stateIdKey, id.toString()]);
+
+  if (typeof(item) !== 'undefined') {
+    return state.setIn([stateIdKey, id.toString(), '_invalidated'], true)
   } else {
     return state
   }

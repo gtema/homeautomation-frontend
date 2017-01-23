@@ -85,8 +85,6 @@ class ProductsAppImpl extends Component {
       </Col>
     )
 
-    const spin = null
-
     return (
         <div className="ProductsApp">
         { ui.productsLastUpdatedAt &&

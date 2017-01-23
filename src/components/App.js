@@ -1,10 +1,12 @@
 import React from 'react'
 import { Nav, Navbar, NavItem } from 'react-bootstrap'
-// import { FormGroup, FormControl, Button } from 'react-bootstrap'
+// import { FormGroup, FormControl, Button, Glyphicon } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Link } from 'react-router'
 
 import './App.css'
+
+import AppSearch from '../containers/AppSearch'
 
 // Overall root app
 const App = ( props ) => {
@@ -22,18 +24,11 @@ const App = ( props ) => {
           </LinkContainer>
         </Nav>
         <Nav pullRight>
+          <AppSearch />
         </Nav>
       </Navbar.Collapse>
     </Navbar>
   )
-  // Comment it out, as it leads to error on page
-  // <Navbar.Form pullLeft>
-  // <FormGroup>
-  // <FormControl type="text" placeholder="Search - not implemented yet" />
-  // </FormGroup>
-  // {' '}
-  // <Button type="submit">Submit</Button>
-  // </Navbar.Form>
 
   return (
     <div>

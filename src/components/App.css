@@ -11,6 +11,7 @@ div.main-content {
   padding-top: 60px !important;
   width: 100%;
   height: 100%;
+  padding-left: 0px !important;
 }
 
 /* navbar */
@@ -71,10 +72,49 @@ nav.app-navbar .navbar-nav > li.active > a:focus {
     border-bottom-color: #555;*/
 }
 
+/* remove border rounds and other similar stuff from bootstrap */
 .form-control {
   border-radius: 0px !important;
 }
 
-.input-group-sm > .form-control, .input-group-sm > .input-group-addon, .input-group-sm > .input-group-btn > .btn {
+.btn {
+  border-radius: 0 !important;
+}
+
+.input-group-sm > .form-control,
+.input-group-sm > .input-group-addon,
+.input-group-sm > .input-group-btn > .btn {
   border-radius: 0px !important;
+}
+
+.navbar-default {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.panel.panel-primary {
+  border-radius: 0 !important;
+}
+
+.list-group {
+  border-radius: 0 !important;
+}
+
+.list-group-item {
+  border-radius: 0 !important;
+}
+
+.panel.panel-primary .panel-heading {
+  background-image: linear-gradient(to bottom, #319bdf 0%, #157fc3 100%);
+  color: rgba(255, 250, 0, 0.9);
+  font-weight: bold;
+}
+
+.panel-heading {
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+}
+
+.btn-primary {
+  background-image: linear-gradient(to bottom, #319bdf 0%, #157fc3 100%) !important;
 }

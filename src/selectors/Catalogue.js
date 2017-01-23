@@ -7,24 +7,24 @@ import { Map } from 'immutable'
 const getCategoriesById = (state) => state.categories.get('categoriesById')
 const getCategoryIdsByCategoryIdAll = (state) => state.categories.get('categoriesByGroupId')
 // const getCategoriesByGroupId = (state) => state.categories.get('categoriesByGroupId')
-const getCategoryIdsByCategoryId = (state, props) => state.categories.getIn(['categoriesByGroupId', props.params.groupId || "0"])
+const getCategoryIdsByCategoryId = (state, props) => state.categories.getIn(['categoriesByGroupId', props.params.groupId || "0", 'items'])
 const getPropCurrentCategoryId = (state, props) => parseInt(props.params.groupId, 10) || 0
 const getStateCurrentCategory = (state, props) => state.categories.getIn(['categoriesById', props.params.groupId || "0"])
 
 // Products
 const getProductsById = (state) => state.products.get('productsById')
 const getProductById = (state, props) => state.products.getIn(['productsById', props.params.itemId])
-const getProductIdsByCategoryId = (state, props) => state.products.getIn(['productsByCategoryId', props.params.groupId || "0"])
+const getProductIdsByCategoryId = (state, props) => state.products.getIn(['productsByCategoryId', props.params.groupId || "0", 'items'])
 
 // Product Items
 const getProductItemsById = (state) => state.productItems.get('productItemsById')
-const getProductItemById = (state, props) => state.productItems.getIn(['productItemsById', props.params.itemId])
-const getProductItemIdsByProductId = (state, props) => state.productItems.getIn(['productItemsByProductId', props.params.itemId || "0"])
+// const getProductItemById = (state, props) => state.productItems.getIn(['productItemsById', props.params.itemId])
+const getProductItemIdsByProductId = (state, props) => state.productItems.getIn(['productItemsByProductId', props.params.itemId || "0", 'items'])
 
 const denormalizeCategories = (objById, idsByParent, categoryId) => {
   // console.debug("denormalize for category=" + categoryId, idsByParent.get('0'))
 
-  const childrenIds = Map(idsByParent.get(categoryId.toString())).keySeq()
+  const childrenIds = Map(idsByParent.getIn([categoryId.toString(), 'items'])).keySeq()
 
   const tree = childrenIds
     .map(cat => objById.get(cat.toString()))
@@ -49,9 +49,9 @@ const denormalizeCategories = (objById, idsByParent, categoryId) => {
 export const getCategoriesTree = createSelector(
   [getCategoriesById, getCategoryIdsByCategoryIdAll],
   (objById, idsByParent) => {
-    console.log(idsByParent.constructor.name)
+    // console.log(idsByParent.constructor.name)
     const tree = denormalizeCategories(objById, idsByParent, 0)
-    console.debug("denormalize final result=" + JSON.stringify(tree), tree)
+    // console.debug("denormalize final result=" + JSON.stringify(tree), tree)
     return tree
   }
 )
@@ -188,7 +188,7 @@ export const getActiveProductItemsByProductId = createSelector(
         .sortBy((item) => { return "".concat(!item.get('is_disposed').toString(),(-item.get('amount')).toString()) })
         .map(item => item.toObject()).toArray()
         || []
-      console.log("result of select for product items", items)
+      console.log("result of reselect for active product items", items)
 
       return items
     } else {
@@ -211,7 +211,7 @@ export const getInactiveProductItemsByProductId = createSelector(
         .sortBy((item) => { return "".concat(!item.get('is_disposed').toString(),(-item.get('amount')).toString()) })
         .map(item => item.toObject()).toArray()
         || []
-      console.log("result of select for product items", items)
+      console.log("result of reselect for inactive product items", items)
 
       return items
     } else {

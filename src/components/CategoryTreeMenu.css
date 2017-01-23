@@ -1,0 +1,83 @@
+/*.hidden { display: none !important; }*/
+/*.shown { display: block; }*/
+
+/*.no-padding{
+  padding:0px;
+}
+
+span.tree-toggle open {
+  / *.glyphicon-chevron-down* /
+}*/
+
+ul.nav-menu-list-style .nav-header .menu-collapsible-icon {
+  /*position:absolute; */
+  /*right:3px; */
+  /*top:16px; */
+  font-size:0.8em; /* Glyph size*/
+  margin-right: 5px; /* margin between icon and link*/
+}
+
+ul.nav-menu-list-style{
+  /*margin:0;*/
+  padding-left: 1em !important;
+}
+
+/*ul.nav-menu-list-style .nav-header {
+  border-top:1px solid #FFFFFF;
+  border-bottom:1px solid #e8e8e8;
+  display:block;
+  margin:0;
+  line-height: 1.4em;
+  padding:0 8px;
+}*/
+
+/* Decorate the items in the current path */
+ul.nav-menu-list-style > li.current > a{
+  font-weight: bold;
+  /*text-decoration: underline;*/
+}
+
+ul.nav-menu-list-style> li {
+  /*position:relative;*/
+}
+
+ul.nav-menu-list-style> li a {
+  border-top:1px solid #FFFFFF;
+  /*border-bottom:1px solid #e8e8e8;*/
+  padding:0 10px 0 0;
+  line-height:1.42857143;
+}
+
+ul.nav-menu-list-style> li a.active {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+ul.nav-menu-list-style > li:first-child a {
+}
+
+ul.nav-menu-list-style {
+  list-style:none;
+  /*padding:0px; */
+  /*margin:0px;*/
+}
+
+ul.nav-menu-list-style li .badge,
+ul.nav-menu-list-style li .badge-sm,
+ul.nav-menu-list-style li .pull-right,
+ul.nav-menu-list-style li span.badge,
+ul.nav-menu-list-style li label.badge {
+  float:right;
+  /*margin-top:7px;*/
+}
+
+ul.nav-menu-list-style form {
+  /*margin: 10px 0;*/
+  background-color: rgba(245,245,245,0.8);
+  padding: 10px;
+  border-bottom: solid 1px lightgray;
+}
+/* In the tree reduce the height of the inputs */
+ul.nav-menu-list-style .form-control {
+  height: 1.43em !important;
+}

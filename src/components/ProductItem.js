@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 // import { Link } from 'react-router'
-import { ListGroupItem, Glyphicon, Button, ButtonGroup, ButtonToolbar, Form, FormGroup, FormControl, Col, ControlLabel, InputGroup, Checkbox } from 'react-bootstrap'
+import { ListGroupItem, Glyphicon, Button, ButtonGroup, ButtonToolbar, Form, FormGroup, FormControl, Col, InputGroup } from 'react-bootstrap'
 
 import { productItemsPropTypes } from '../tools/constants'
 import {getISODate} from '../tools/common'
@@ -8,11 +8,9 @@ import {getISODate} from '../tools/common'
 class ProductItem extends Component {
   static propTypes = {
     productItemsPropTypes,
-    toggleEditFn: PropTypes.func,
+    productId: PropTypes.number.isRequired,
     modifyFn: PropTypes.func,
     addFn: PropTypes.func,
-    enableEdit: PropTypes.bool,
-    productId: PropTypes.number.isRequired,
     inactive: PropTypes.bool
   }
 
@@ -64,7 +62,7 @@ class ProductItem extends Component {
   }
 
   render() {
-    const { enableEdit, id, toggleEditFn } = this.props
+    const { id } = this.props
 
     const inactive = this.props.inactive
 
@@ -126,7 +124,7 @@ class ProductItem extends Component {
               <InputGroup bsSize="sm">
                 <InputGroup.Addon>Bought</InputGroup.Addon>
                 <FormControl type="date" readOnly={(id !== -1)?true:false}
-                  value={this.state.create_date} 
+                  value={this.state.create_date}
                   onChange={(e) => {this.setState({create_date: e.target.value})}}
                 />
               </InputGroup>

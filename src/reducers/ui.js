@@ -8,7 +8,7 @@ const INITIAL_UI_STATE = Map({
   productAddMode: false,
   alertText: '',
   alertType: '',
-  fetchingInitialCategories: true
+  fetchingInitialCategories: true,
 })
 
 
@@ -22,7 +22,9 @@ const ui = (state = INITIAL_UI_STATE, action) => {
     case 'TOGGLE_PRODUCT_ITEM_EDIT_MODE':
       return state.set('productItemEditId', action.id)
     case 'TOGGLE_ADD_CATEGORY_MODE':
-      return state.update('categoryAddMode', item => !item)
+      return state
+        .update('categoryAddMode', item => !item)
+        .set('categoryAddParentId', action.parent_id)
     case 'TOGGLE_ADD_PRODUCT_MODE':
       return state.update('productAddMode', item => !item)
     case 'REQUEST_CATEGORIES':

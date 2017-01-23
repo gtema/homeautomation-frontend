@@ -1,13 +1,15 @@
 import { connect } from 'react-redux'
 import React, { PropTypes, Component }  from 'react'
-import { Alert, ButtonGroup, Button, Glyphicon, Col, Collapse, Navbar, Nav, NavItem, FormGroup, FormControl, Clearfix } from 'react-bootstrap'
-import { LinkContainer } from 'react-router-bootstrap'
+import { Alert } from 'react-bootstrap'
+// import { Button, Glyphicon, Navbar, Nav, NavItem, FormGroup, FormControl } from 'react-bootstrap'
+// import { LinkContainer } from 'react-router-bootstrap'
 import { bindActionCreators } from 'redux'
-// import Sidebar from 'react-sidebar'
 // import {TreeMenu, TreeNode} from 'react-tree-menu'
 
-import { categoryPropTypes, cataloguePath } from '../tools/constants'
-import CategoryList from '../components/CategoryList'
+import Sidebar from '../components/Sidebar'
+import { categoryPropTypes } from '../tools/constants'
+// import { categoryPropTypes, cataloguePath } from '../tools/constants'
+// import CategoryList from '../components/CategoryList'
 import * as UIActionCreators from '../actions/ui'
 import * as CatalogueActionCreators from '../actions/categories'
 import AddCategoryWidget  from './AddCategory'
@@ -84,7 +86,7 @@ class CatalogueAppImpl extends Component {
   }
 
   render() {
-    const { categoryId, pathToTop, subCategories, ui, children, categoryEditId, alertText, fetchingSubcategoriesByCategoryId } = this.props;
+    const { categoryId, pathToTop, ui, children, categoryEditId, alertText, fetchingSubcategoriesByCategoryId } = this.props;
 
     let alert;
     if (this.state.alertVisible && alertText !== null && alertText !== "" && typeof alertText !== 'undefined') {
@@ -95,7 +97,9 @@ class CatalogueAppImpl extends Component {
           </Alert>
         )
     }
-    const subcategoriesSidebarPresent = (subCategories.length > 0 && this.state.subcategoriesVisible)? true: false;
+
+    const pathIds = pathToTop
+      .map(item=> {return item["id"]}) || [0]
 
     const sidebarContent = (categoryId === fetchingSubcategoriesByCategoryId)?
         (<Spinner />)
@@ -113,7 +117,9 @@ class CatalogueAppImpl extends Component {
               tree={this.props.categoriesTree}
               toggleEditFn={this.props.toggleCategoryEditMode}
               modifyFn={this.props.modifyCategory}
+              addCategoryFn={this.props.toggleAddCategoryMode}
               editItemId={categoryEditId}
+              currentPathIds={pathIds}
             />)
           : null
 
@@ -122,55 +128,66 @@ class CatalogueAppImpl extends Component {
     const appHeader = (categoryId === fetchingSubcategoriesByCategoryId)?
         (<Spinner />)
         :
-        (
-      <div className="catalogueHeader">
-        <Navbar fluid>
-          <Nav>
-            { pathToTop &&
-              pathToTop.map(cat =>
-                <LinkContainer key={cat.id} to={{pathname: cataloguePath + '/' + cat.id}}>
-                <NavItem eventKey={cat.id} title={cat.name}>
-                {cat.name}
-                </NavItem>
-                </LinkContainer>
-              )
-            }
-            <NavItem eventKey={1} onClick={() => { this.handleAddCategoryMode() }} title="Add New Subcategory"><Button componentClass="btn-sm"><Glyphicon glyph="plus" /></Button></NavItem>
-          </Nav>
-          <Nav pullRight activeKey={0} bsStyle="pills">
-            <NavItem eventKey={2} onClick={() => { this.props.toggleAddProductMode() }} title="Add Product"><Button componentClass="btn-sm"><Glyphicon glyph="plus-sign" /></Button></NavItem>
-          </Nav>
-          <Navbar.Form pullRight>
-            <FormGroup>
-              <FormControl type="text" placeholder="Filter" onChange={(e) => console.log("Filter value" + e.target.value)}/>
-            </FormGroup>
-            {' '}
-            <Button type="submit" componentClass="btn-sm"><Glyphicon glyph="search" /></Button>
-          </Navbar.Form>
-        </Navbar>
-      </div>
-    )
-    // <NavItem eventKey={3} onClick={() => { this.handleSubcategoriesCollapse() }}><Glyphicon glyph="th-list" /></NavItem>
+        null
+        // (
+        //   <div className="catalogueHeader">
+        //     <Navbar fluid>
+        //       <Nav>
+        //         { pathToTop &&
+        //           pathToTop.map(cat =>
+        //             <LinkContainer key={cat.id} to={{pathname: cataloguePath + '/' + cat.id}}>
+        //             <NavItem eventKey={cat.id} title={cat.name}>
+        //             {cat.name}
+        //             </NavItem>
+        //             </LinkContainer>
+        //           )
+        //         }
+        //         <NavItem eventKey={1} onClick={() => { this.handleAddCategoryMode() }} title="Add New Subcategory">
+        //           <Button componentClass="btn-sm"><Glyphicon glyph="plus" /></Button>
+        //         </NavItem>
+        //       </Nav>
+        //       <Nav pullRight activeKey={0} bsStyle="pills">
+        //         <NavItem eventKey={2} onClick={() => { this.props.toggleAddProductMode() }} title="Add Product">
+        //           <Button componentClass="btn-sm"><Glyphicon glyph="plus-sign" /></Button>
+        //         </NavItem>
+        //       </Nav>
+        //       <Navbar.Form pullRight>
+        //         <FormGroup>
+        //           <FormControl type="text" placeholder="Filter" onChange={(e) => console.log("Filter value" + e.target.value)}/>
+        //         </FormGroup>
+        //         {' '}
+        //         <Button type="submit" componentClass="btn-sm"><Glyphicon glyph="search" /></Button>
+        //       </Navbar.Form>
+        //     </Navbar>
+        //   </div>
+        // )
 
     return (
       <div className="CatalogueApp">
         {alert}
         <AddCategoryWidget />
         <AddProductWidget />
-        {appHeader}
-        <div className="row">
-          <div className="CatSidebar">
-            {sidebarContent}
+        <Sidebar sidebar={sidebarContent}>
+          <div className="container-fluid">
+          {appHeader}
+          {children}
           </div>
-          <div className="CatContent">
-            {children}
-          </div>
-        </div>
+        </Sidebar>
 
       </div>
 
     )
+    // {appHeader}
     // <span className="SidebarToggler"><Glyphicon glyph={this.state.toggleSwitch} /></span>
+
+    // <div className="row">
+    //   <div className="CatSidebar">
+    //     {sidebarContent}
+    //   </div>
+    //   <div className="CatContent">
+    //     {children}
+    //   </div>
+    // </div>
   }
 }
 // <Button componentClass="btn-sm" onClick={() => { this.handleSubcategoriesCollapse() }}><Glyphicon glyph={this.state.toggleSwitch} /></Button>

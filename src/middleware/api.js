@@ -2,7 +2,7 @@ import { Schema, arrayOf } from 'normalizr'
 // import { camelizeKeys } from 'humps'
 import fetch  from 'isomorphic-fetch'
 
-import { apiRoot, apiKey } from '../tools/constants'
+import { API_HOST, API_PATH, API_KEY } from '../tools/constants'
 
 // Extracts the next page URL from Github API response.
 // const getNextPageUrl = response => {
@@ -19,7 +19,7 @@ import { apiRoot, apiKey } from '../tools/constants'
 //   return nextLink.split(';')[0].slice(1, -1)
 // }
 
-const API_ROOT = apiRoot//'http://localhost:5000/api/v0/stock/'
+const API_ROOT = `http://${API_HOST}${API_PATH}`//'http://localhost:5000/api/v0/stock/'
 
 export const Methods = {
   GET: "GET",
@@ -27,6 +27,8 @@ export const Methods = {
   POST: "POST",
   DELETE: "DELETE"
 }
+
+const apiKey = (API_KEY)? `api_key=${API_KEY}`:null;
 
 // Fetches an API response and normalizes the result JSON according to schema.
 // This makes every API response have the same shape, regardless of how nested it was.
@@ -103,7 +105,8 @@ export default store => next => action => {
     types,
     payload,
     shouldCallAPI = () => true,
-    method
+    method,
+    postSuccessCallback
   } = callAPI
 
   if (typeof endpoint === 'function') {
@@ -141,12 +144,18 @@ export default store => next => action => {
 
   // Invoke API and dispatch success/error action
   return callApi(endpoint, schema, method, payload).then(
-    response => next(actionWith(Object.assign({}, payload, {
-      response,
-      type: successType,
-      timestamp: Date.now(),
-      status: 'success',
-    }))),
+    response => {
+      next(actionWith(Object.assign({}, payload, {
+        response,
+        type: successType,
+        timestamp: Date.now(),
+        status: 'success',
+      })))
+      /* If we have a CALL_API postSuccessCallback - dispatch it*/
+      if (typeof(postSuccessCallback) === 'object' && postSuccessCallback.hasOwnProperty(CALL_API)) {
+        store.dispatch(postSuccessCallback)
+      }
+    },
     error => next(actionWith(Object.assign({}, payload, {
       type: failureType,
       error: error.message || 'Something bad happened',

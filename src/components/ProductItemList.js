@@ -14,10 +14,8 @@ const ProductItemList = ({ params, elements, active, toggleEditFn, modifyFn, add
       { addFn &&
         <ProductItem
           key={-1}
-          toggleEditFn={toggleEditFn}
           modifyFn={modifyFn}
           addFn={addFn}
-          enableEdit={true}
           id={-1}
           productId={productId}
           />
@@ -31,9 +29,7 @@ const ProductItemList = ({ params, elements, active, toggleEditFn, modifyFn, add
             <ProductItem
               key={item.id}
               {...item}
-              toggleEditFn={toggleEditFn}
               modifyFn={modifyFn}
-              enableEdit={ (item.id === editItemId && active)? true:false}
               inactive={!active}
               productId={item.product_id}
               />
@@ -48,8 +44,8 @@ const ProductItemList = ({ params, elements, active, toggleEditFn, modifyFn, add
 ProductItemList.propTypes = {
   items: PropTypes.arrayOf(productItemsPropTypes.isRequired),
   // inactiveItems: PropTypes.arrayOf(productItemsPropTypes.isRequired),
-  toggleEditFn: PropTypes.func.isRequired,
-  modifyFn: PropTypes.func.isRequired,
+  toggleEditFn: PropTypes.func,
+  modifyFn: PropTypes.func,
   addFn: PropTypes.func,
   editItemId: PropTypes.number,
   productId: PropTypes.number.isRequired,

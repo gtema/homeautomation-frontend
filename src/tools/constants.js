@@ -2,11 +2,14 @@ import { PropTypes } from 'react'
 
 export const cataloguePath = "/cat"
 
-export const apiPrefix = process.env.REACT_APP_API_PREFIX || "http://localhost:5002/api/v0/stock/";
+export const API_HOST = process.env.REACT_APP_API_HOST || 'localhost:5000'
+export const API_PATH = process.env.REACT_APP_API_PATH || '/api/v0/stock/'
+export const API_KEY = process.env.REACT_APP_API_KEY || '23'
+export const apiPrefix = API_HOST + API_PATH
 
 export const apiRoot = apiPrefix;
 
-export const apiKey = "api_key=23"
+// export const apiKey = "api_key=23"
 
 // Standard category properties
 export const categoryPropTypes = PropTypes.shape({
@@ -25,6 +28,7 @@ export const productPropTypes = PropTypes.shape({
   img: PropTypes.string,
   volume: PropTypes.string,
   amount: PropTypes.number,
+  sum_amounts: PropTypes.bool,
   first_started_id: PropTypes.number,
   first_started_ed: PropTypes.date
 })
@@ -36,6 +40,7 @@ export const productItemsPropTypes = PropTypes.shape({
   amount: PropTypes.number.isRequired,
   is_started: PropTypes.bool.isRequired,
   is_disposed: PropTypes.bool.isRequired,
+  is_valid: PropTypes.bool,
   create_date: PropTypes.string.isRequired,
   expiry_date: PropTypes.string.isRequired
 })

@@ -13,7 +13,6 @@ export const receiveCategories = (ignore, cats, timestamp = Date.now(), err = nu
 
 export const shouldFetchSubcategories = (state, category_id) => {
   // TODO: check timestamp, last update status, ...
-  console.log("shouldFetchSubcategories", category_id)
   if ( typeof(state.ui) === 'undefined' || typeof(state.categories) === 'undefined' ) {
     return true
   }

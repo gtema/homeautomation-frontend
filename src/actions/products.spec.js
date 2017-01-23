@@ -4,6 +4,7 @@ import	*	as	actions	from	'./products'
 import	nock	from	'nock'
 
 import api from '../middleware/api'
+import { API_HOST, API_PATH, API_KEY } from '../tools/constants'
 
 import { fromJS, Map, List } from 'immutable'
 
@@ -60,9 +61,9 @@ describe('products actions', () => {
   it('handles success REQUEST_PRODUCT_BY_PRODUCT_ID', () => {
 
     let product = {id: 3, name: 'test', parent_id: 1};
-    nock('http://localhost:5000')
-      .get(`/api/v0/stock/product/${product.id}`)
-      .query({api_key:2})
+    nock(`http://${API_HOST}`)
+      .get(`${API_PATH}product/${product.id}`)
+      .query({api_key:API_KEY})
       .reply(200, product);
 
     const timestamp = Date.now()
@@ -82,9 +83,9 @@ describe('products actions', () => {
   it('handles failure REQUEST_PRODUCT_BY_PRODUCT_ID', () => {
 
     let product = {id: 3, name: 'test', parent_id: 1};
-    nock('http://localhost:5000')
-      .get(`/api/v0/stock/product/${product.id}`)
-      .query({api_key:2})
+    nock(`http://${API_HOST}`)
+      .get(`${API_PATH}product/${product.id}`)
+      .query({api_key:API_KEY})
       .reply(404, {message: "ups"});
 
     const timestamp = Date.now()
@@ -105,7 +106,7 @@ describe('products actions', () => {
     const iniState = {
       products: fromJS({
         productsById: {1:{"id":1}},
-        productsByCategoryId: {0:[1:true]}
+        productsByCategoryId: {0:{invalidated:false, items:{1:true}}}
       }),
       ui: fromJS({
         fetchingProductsByCategoryId: 3
@@ -123,9 +124,10 @@ describe('products actions', () => {
       {id: 3, name: 'test', category_id: 1},
       {id: 4, name: 'test2', category_id: 1}
     ]
-    nock('http://localhost:5000')
-      .get(`/api/v0/stock/products_by_category_id/${products[0].category_id}`)
-      .query({api_key:2})
+
+    nock(`http://${API_HOST}`)
+      .get(`${API_PATH}products_by_category_id/${products[0].category_id}`)
+      .query({api_key:API_KEY})
       .reply(200, products);
 
     const timestamp = Date.now()
@@ -148,16 +150,16 @@ describe('products actions', () => {
       {id: 3, name: 'test', category_id: 1},
       {id: 4, name: 'test2', category_id: 1}
     ]
-    nock('http://localhost:5000')
-      .get(`/api/v0/stock/products_by_category_id/${products[0].category_id}`)
-      .query({api_key:2})
+    nock(`http://${API_HOST}`)
+      .get(`${API_PATH}products_by_category_id/${products[0].category_id}`)
+      .query({api_key:API_KEY})
       .replyWithError('Server error');
 
     const timestamp = Date.now()
     const expectedActions = [
       { type: 'REQUEST_PRODUCTS_BY_CATEGORY_ID', category_id: products[0].category_id },
       { type: 'RECEIVE_PRODUCTS_BY_CATEGORY_ID_ERROR', category_id: products[0].category_id, status: 'failure', error:
-          "request to http://localhost:5000/api/v0/stock/products_by_category_id/1?api_key=2 failed, reason: Server error", timestamp: timestamp }
+          `request to http://${API_HOST}${API_PATH}products_by_category_id/${products[0].category_id}?api_key=${API_KEY} failed, reason: Server error`, timestamp: timestamp }
     ]
 
     const store = mockStore({})

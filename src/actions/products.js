@@ -18,11 +18,22 @@ export const shouldFetchProductsByCategoryId = (state, category_id) => {
   }
   if (category_id !== null && category_id !== state.ui.get('fetchingProductsByCategoryId')) {
     const productIdsByCategoryId = state.products.getIn(['productsByCategoryId', category_id.toString()])
-    if (typeof(productIdsByCategoryId) === 'undefined') {
+    /* If we do not have a group, or it is invalidated - refetch */
+    if (typeof(productIdsByCategoryId) === 'undefined' || productIdsByCategoryId.get('invalidated') === true) {
       return true;
     }
+    /* If any known product in the category is invalidated - refetch complete group */
+    const list = productIdsByCategoryId.get('items').keySeq()
+      .map(item => state.products.getIn(['productsById', item.toString(), '_invalidated']))
+      .filter(item => item)
+      .toArray()
+    if (typeof(list) !== 'undefined' && list.length > 0 && list[0] === true) {
+      console.debug("refetching due to the product invalidation")
+      return true
+    }
   }
-  return false;
+  console.log("not refetching products by category")
+  return false
 }
 
 export const shouldFetchProduct = (state, product_id) => {
@@ -35,9 +46,13 @@ export const shouldFetchProduct = (state, product_id) => {
     if (typeof(product) === 'undefined') {
       return true;
     }
+    if (product.get('_invalidated')) {
+      console.debug("Product is invalidated - refetching")
+      return true
+    }
 
   }
-  return false;
+  return false
 }
 
 export const loadProductByProductIdIfNeeded = (product_id) => {

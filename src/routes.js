@@ -6,6 +6,7 @@ import App from './components/App'
 import CatalogueApp from './containers/Catalogue'
 import ProductsApp from './containers/Products'
 import Product from './containers/Product'
+import SidebarTest from './containers/SidebarTest'
 // import AddCategory  from './components/AddCategory'
 
 export default (
@@ -14,6 +15,7 @@ export default (
       <Route path=":groupId" component={ProductsApp} />
       <Route path=":groupId/item/:itemId" component={Product} />
     </Route>
+    <Route path="/sidebar" component={SidebarTest} />
   </Route>
 )
 // <Route path={cataloguePath + "/:groupId/add"} component={AddCategory} />

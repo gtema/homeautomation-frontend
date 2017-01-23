@@ -1,8 +1,8 @@
-import React, {Component, PropTypes} from 'react'
+// import React, {Component, PropTypes} from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { Button, Modal, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
+// import { Button, Modal, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 
 import * as UIActionCreators from '../actions/ui'
 import * as CategoriesActionCreators from '../actions/categories'
@@ -12,7 +12,7 @@ import AddCategoryImpl from '../components/AddCategory'
 const mapStateToProps = (state, ownProps) => {
   return {
     visible: state.ui.get('categoryAddMode'),
-    parent_id: state.ui.get('selectedCategoryId')
+    parent_id: state.ui.get('categoryAddParentId')
   }
 }
 

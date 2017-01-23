@@ -56,6 +56,13 @@ export const selectCategory = id => {
   }
 }
 
+export const search = value => {
+  return {
+    type: 'SEARCH',
+    value: value
+  }
+}
+
 export const selectProductId = id => (dispatch, getState) => {
   const currentSelectedProductId = getState().ui.get('selectedProductId');
   if (typeof(currentSelectedProductId) !== 'undefined' && currentSelectedProductId !== null ) {
