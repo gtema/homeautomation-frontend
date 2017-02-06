@@ -1,9 +1,11 @@
+// NOT USED
 import React from 'react'
 import { Nav, Navbar, NavItem } from 'react-bootstrap'
 // import { FormGroup, FormControl, Button, Glyphicon } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Link } from 'react-router'
 
+// import 'purecss/build/pure-min.css'
 import './App.css'
 
 import AppSearch from '../containers/AppSearch'

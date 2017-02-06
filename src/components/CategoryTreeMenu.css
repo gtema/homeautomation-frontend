@@ -1,83 +1,84 @@
-/*.hidden { display: none !important; }*/
-/*.shown { display: block; }*/
+/*!
+  CategoryTreeMenu.css
+*/
 
-/*.no-padding{
-  padding:0px;
+/* Indent sub-elements only */
+.menu-list-tree .menu-list-tree {
+  padding-left: 1em;
 }
 
-span.tree-toggle open {
-  / *.glyphicon-chevron-down* /
-}*/
+.menu-list-tree li{
+  /*margin: 0 0 1em 1em;*/
+  /*padding-left: 1em;*/
+  /*border-top:1px solid #FFFFFF;*/
 
-ul.nav-menu-list-style .nav-header .menu-collapsible-icon {
-  /*position:absolute; */
-  /*right:3px; */
-  /*top:16px; */
-  font-size:0.8em; /* Glyph size*/
-  margin-right: 5px; /* margin between icon and link*/
 }
 
-ul.nav-menu-list-style{
-  /*margin:0;*/
-  padding-left: 1em !important;
+.menu-list-tree li a{
+  /*margin: 0 0 1em 1em;*/
+  /*padding-left: 1em;*/
+  /*border-top:1px solid #FFFFFF;*/
+  /*float:left;*/
+  /*clear:both;*/
+  /*overflow: auto;
+  display: block;*/
 }
 
-/*ul.nav-menu-list-style .nav-header {
+.menu-list-tree a.pure-menu-link:after{
+  content:"";
+  display: table;
+  clear: both;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+/*.pure-menu-list.tree > li a {
   border-top:1px solid #FFFFFF;
-  border-bottom:1px solid #e8e8e8;
-  display:block;
-  margin:0;
-  line-height: 1.4em;
-  padding:0 8px;
-}*/
-
-/* Decorate the items in the current path */
-ul.nav-menu-list-style > li.current > a{
-  font-weight: bold;
-  /*text-decoration: underline;*/
-}
-
-ul.nav-menu-list-style> li {
-  /*position:relative;*/
-}
-
-ul.nav-menu-list-style> li a {
-  border-top:1px solid #FFFFFF;
-  /*border-bottom:1px solid #e8e8e8;*/
   padding:0 10px 0 0;
   line-height:1.42857143;
-}
+  text-decoration: none;
+}*/
 
-ul.nav-menu-list-style> li a.active {
+.menu-list-tree > li a.active {
   font-weight: bold;
   text-decoration: underline;
 }
 
-ul.nav-menu-list-style > li:first-child a {
+.menu-list-tree .menu-collapsible-icon {
+  /*font-size:0.8em;*/ /* Glyph size*/
+  margin-right: 5px; /* margin between icon and link*/
+  float:left;
 }
 
-ul.nav-menu-list-style {
-  list-style:none;
-  /*padding:0px; */
-  /*margin:0px;*/
+.menu-list-tree .pure-menu-link {
+  padding: .5em .5em .5em 1em;
 }
 
-ul.nav-menu-list-style li .badge,
-ul.nav-menu-list-style li .badge-sm,
-ul.nav-menu-list-style li .pull-right,
-ul.nav-menu-list-style li span.badge,
-ul.nav-menu-list-style li label.badge {
-  float:right;
-  /*margin-top:7px;*/
-}
-
-ul.nav-menu-list-style form {
+.menu-list-tree form {
   /*margin: 10px 0;*/
   background-color: rgba(245,245,245,0.8);
   padding: 10px;
   border-bottom: solid 1px lightgray;
 }
-/* In the tree reduce the height of the inputs */
-ul.nav-menu-list-style .form-control {
-  height: 1.43em !important;
+
+.menu-list-tree form input{
+  font-size: 0.9em;
+}
+
+.menu-list-tree form .pure-button-group {
+  font-size: 0.9em;
+  display:flex;
+  flex-direction: row;
+}
+
+.menu-list-tree form .pure-button-group button{
+  flex-grow:1; /* Fill complete row with buttons*/
 }

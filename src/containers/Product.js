@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import { browserHistory } from 'react-router'
-import { Panel, Glyphicon, Button, ButtonGroup, Form, FormGroup, FormControl, Col, ControlLabel, Checkbox } from 'react-bootstrap'
+// import { Panel, iconicon, Button, ButtonGroup, Form, FormGroup, FormControl, Col, ControlLabel, Checkbox } from 'react-bootstrap'
 
 import * as UIActionCreators from '../actions/ui'
 import * as CategoriesActionCreators from '../actions/categories'
@@ -16,6 +16,12 @@ import {getISODate} from '../tools/common'
 import { makeGetCurrentProduct, makeGetActiveProductItemsByProductId, makeGetInactiveProductItemsByProductId } from '../selectors/Catalogue'
 
 import ProductItemList from '../components/ProductItemList'
+
+import 'purecss/build/forms-min.css'
+
+import ButtonGroup from '../components/ButtonGroup'
+import Button from '../components/Button'
+import Icon from '../components/Icon'
 
 // Single Product presentation
 class ProductImpl extends Component {
@@ -98,33 +104,33 @@ class ProductImpl extends Component {
 
     // Panel header (name, edit&delete buttons)
     let header = (
-      <div className="container-fluid">
-        <div className="pull-left">
+      <div className="panelHeader">
+        <div className="headerName">
           <span>{this.state.name}</span>
         </div>
         <div className="pull-right">
           {editMode ?
             (
               <ButtonGroup>
-                <Button className="btn-sm btn-warning" type="reset" onClick={ this.cancelEdit }>
-                  <Glyphicon glyph="remove" />
+                <Button className="button-small button-warning" type="reset" onClick={ this.cancelEdit }>
+                  <Icon icon="fa-undo" />
                 </Button>
-                <Button className="btn-sm btn-success" type="submit" onClick={ this.handleSubmit }>
-                  <Glyphicon glyph="ok" />
+                <Button className="button-small button-success" type="submit" onClick={ this.handleSubmit }>
+                  <Icon icon="fa-check" />
                 </Button>
               </ButtonGroup>
             ) : (
               <ButtonGroup>
-                <Button className="btn-sm btn-info" onClick={() => {
+                <Button className="button-small button-secondary" onClick={() => {
                   toggleProductEditMode(product.id)
                 }}>
-                  <Glyphicon glyph="pencil" />
+                  <Icon icon="fa-pencil" />
                 </Button>
-                <Button className="btn-sm btn-danger" onClick={() => {
+                <Button className="button-small button-warning" onClick={() => {
                   browserHistory.push(cataloguePath + '/' + product.category_id);
                   removeProductByProductId(product.id);
                 }}>
-                  <Glyphicon glyph="trash" />
+                  <Icon icon="fa-trash" />
                 </Button>
               </ButtonGroup>
             )
@@ -134,7 +140,92 @@ class ProductImpl extends Component {
     )
 
     return (
-      <Panel header={header} bsStyle="primary">
+      <section className="Panel">
+        <header className="PanelHeader">{header}</header>
+        <div className="PanelDescription">
+          <form onSubmit={this.handleSubmit} onReset={this.cancelEdit} className="pure-form pure-form-aligned">
+            <fieldset>
+              <div className="pure-control-group">
+                <label htmlFor="name">Name</label>
+                { (editMode)?
+                  (
+                    <input type="text" name="name" required
+                      value={this.state.name}
+                      onChange={(e) => { this.setState({name:e.target.value}) } }
+                      placeholder="Product Name"
+                    />
+                  ) :
+                  (
+                    <span>{this.state.name}</span>
+                  )
+                }
+              </div>
+
+              <div className="pure-control-group">
+                <label htmlFor="volume">Volume</label>
+                { (editMode)?
+                  (
+                    <input type="text" name="volume" required
+                      value={this.state.name}
+                      onChange={(e) => { this.setState({volume:e.target.value}) } }
+                      placeholder="Volume entity (Liter, Pack, etc.)"
+                    />
+                  ) :
+                  (
+                    <span>{this.state.volume}</span>
+                  )
+                }
+              </div>
+
+              <div className="pure-control-group">
+                <label htmlFor="sum_amounts">Sum amounts</label>
+                { (editMode)?
+                  (
+                    <input type="checkbox" name='sum_amounts' checked={this.state.sum_amounts}
+                      onChange={(e) => { this.setState({sum_amounts:e.target.checked}) } }
+                      title="If checked sum amounts of individual entities, otherwise return count of items as product amount"
+                    />
+                  ) :
+                  (
+                    <span>{this.state.sum_amounts?'on':'off'}</span>
+                  )
+                }
+              </div>
+
+              <div className="pure-control-group">
+                <label htmlFor="amount">Amount</label>
+                <span>{this.props.product.amount}</span>
+              </div>
+
+              <div className="pure-control-group">
+                <label htmlFor="amount">Open expires</label>
+                <span>{this.props.product.first_started_ed}</span>
+              </div>
+
+            </fieldset>
+          </form>
+          
+          <ProductItemList
+            elements={this.props.activeProductItems}
+            toggleEditFn={this.props.toggleProductItemEditMode}
+            modifyFn={this.props.modifyProductItem}
+            addFn={this.props.addNewProductItem}
+            editItemId={productItemEditId}
+            productId={this.props.productId}
+            active={true}
+          />
+
+          <ProductItemList
+            elements={this.props.inActiveProductItems}
+            productId={this.props.productId}
+            active={false}
+          />
+        </div>
+      </section>
+    )
+
+  /*  return (
+      <Panel header={header}>
         <Form horizontal onSubmit={this.handleSubmit} onReset={this.cancelEdit}>
           <FormGroup controlId="productName">
             <Col componentClass={ControlLabel} xs={4} sm={2} md={1} lg={2}>
@@ -223,7 +314,7 @@ class ProductImpl extends Component {
           active={false}
         />
       </Panel>
-    )
+    )*/
   }
 }
 

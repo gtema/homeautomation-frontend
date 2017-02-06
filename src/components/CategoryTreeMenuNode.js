@@ -1,6 +1,11 @@
 import React, { PropTypes, Component } from 'react'
 import { Link } from 'react-router'
-import { Glyphicon, Button, ButtonGroup, Form, FormGroup, FormControl } from 'react-bootstrap'
+// import { Glyphicon, ButtonGroup, Form, FormGroup, FormControl } from 'react-bootstrap'
+
+import 'purecss/build/forms-min.css'
+import ButtonGroup from './ButtonGroup'
+import Button from './Button'
+import Icon from './Icon'
 
 import { categoryPropTypes, cataloguePath } from '../tools/constants'
 import CategoryTreeMenu from './CategoryTreeMenu'
@@ -56,100 +61,100 @@ class CategoryTreeMenuNode extends Component {
 
     // Edit form for the item modification
     const editItemUi = (
-        <Form onSubmit={this.handleSubmit} onReset={this.cancelEdit}>
-          <FormGroup controlId='name'>
-            <FormControl type='text' name='name' value={this.state.name}
-              onChange={ (e) => {this.setState({name: e.target.value})} } />
-          </FormGroup>
-          <FormGroup controlId='prio'>
-            <FormControl type='number' name='prio' value={this.state.prio}
-              onChange={ (e) => {this.setState({prio: e.target.value})} } />
-          </FormGroup>
-            <ButtonGroup justified>
-              <ButtonGroup>
-              <Button type="reset" bsStyle={'warning'} bsSize="xsmall" title="Cancel">
-                <Glyphicon glyph="remove"/>
+        <form onSubmit={this.handleSubmit} onReset={this.cancelEdit} className="pure-form pure-form-aligned">
+          <fieldset>
+            <div className="pure-control-group">
+              <input type="text" name="name" value={this.state.name}
+                onChange={ (e) => {this.setState({name: e.target.value})} }
+              />
+            </div>
+            <div className="pure-control-group">
+              <input type="number" name="prio" value={this.state.prio}
+                onChange={ (e) => {this.setState({prio: e.target.value})} }
+              />
+            </div>
+            <ButtonGroup>
+              <Button
+                title="Cancel"
+                type="cancel"
+                className="button-small button-warning"
+              >
+                <Icon icon="fa-undo" />
               </Button>
-              </ButtonGroup>
-              <ButtonGroup>
-              <Button type="button" bsStyle={'success'} bsSize="xsmall" title="Add Subcategory"
-                onClick={(e) => { e.preventDefault(); this.props.addCategoryFn(id)}}>
-                <Glyphicon glyph="plus"/>
+              <Button
+                title="Add Subcategory"
+                className="button-small button-success"
+              >
+                <Icon icon="fa-plus" />
               </Button>
-              </ButtonGroup>
-              <ButtonGroup>
-              <Button type="submit" bsStyle={'primary'} bsSize="xsmall" title="Save changes">
-                <Glyphicon glyph="ok"/>
+              <Button
+                title="Save changes"
+                type="submit"
+                className="button-small button-primary"
+              >
+                <Icon icon="fa-check" />
               </Button>
-              </ButtonGroup>
             </ButtonGroup>
-        </Form>
+          </fieldset>
+        </form>
     )
     // <FormGroup controlId='buttons'>
     // </FormGroup>
 
     // simple ReadOnly representation of the item
       const roItemUi = (
-            <Link
-                to={{pathname: cataloguePath + '/' + id}}
-                activeClassName="active"
-              >
-              { children &&
-                <span
-                  className={
-                    classnames("tree-toggle menu-collapsible-icon glyphicon",
-                        {
-                          'glyphicon-menu-down': !this.props.collapsed,
-                          'glyphicon-menu-right': this.props.collapsed,
-                        }
-                    )
+          <Link
+              className="pure-menu-link"
+              to={{pathname: cataloguePath + '/' + id}}
+              activeClassName="active"
+            >
+            { children &&
+              <span
+                className={
+                  classnames("tree-toggle menu-collapsible-icon fa",
+                      {
+                        'fa-minus': !this.props.collapsed,
+                        'fa-plus': this.props.collapsed,
+                      }
+                  )
+                }
+                onClick={(e) => {
+                  // const liChildren = e.target.parentElement.parentElement.childNodes
+                  e.preventDefault()
+                  const currLi = e.target.parentElement.parentElement
+                  const chevron = e.target
+                  const childUl = currLi.getElementsByClassName("menu-list-tree");
+                  if (childUl.length >= 1) {
+                    childUl[0].classList.toggle('hidden')
+                    chevron.classList.toggle('fa-plus')
+                    chevron.classList.toggle('fa-minus')
+                  } else {
+                    console.warn("no parent", childUl.length, currLi, chevron, childUl);
                   }
-                  onClick={(e) => {
-                    // const liChildren = e.target.parentElement.parentElement.childNodes
-                    e.preventDefault()
-                    const currLi = e.target.parentElement.parentElement
-                    const chevron = e.target
-                    const childUl = currLi.getElementsByClassName("tree");
-                    if (childUl.length >= 1) {
-                      childUl[0].classList.toggle('hidden')
-                      chevron.classList.toggle('glyphicon-menu-down')
-                      chevron.classList.toggle('glyphicon-menu-right')
-                    } else {
-                      console.warn("no parent", childUl.length, currLi, chevron, childUl);
-                    }
-                    }
-                  }
-                  aria-hidden="true"
-                  />
+                }
+                }
+                aria-hidden="true"
+                />
               }
-              {name}
               { toggleEditFn &&
-                <span className="pull-right">
-                  <Button onClick={ (e) => { e.preventDefault(); toggleEditFn(id)} } componentClass="btn-sm" aria-label="Edit">
-                    <Glyphicon glyph="pencil" aria-label="edit"/>
-                  </Button>
+                <span className="badge">
+                <Button onClick={ (e) => { e.preventDefault(); toggleEditFn(id)} } className="button-xsmall" aria-label="Edit">
+                <Icon icon="fa-pencil" aria-label="edit"/>
+                </Button>
                 </span>
               }
-          </Link>
+              {name}
+            </Link>
         )
 
-        // <ButtonGroup bsClass="pull-right">
-        //   <Button onClick={ (e) => { e.preventDefault(); this.props.addCategoryFn(id)} } componentClass="btn-sm" aria-label="Add">
-        //     <Glyphicon glyph="plus" aria-label="add"/>
-        //     </Button>
-        // { toggleEditFn &&
-        //     <Button onClick={ (e) => { e.preventDefault(); toggleEditFn(id)} } componentClass="btn-sm" aria-label="Edit">
-        //       <Glyphicon glyph="pencil" aria-label="edit"/>
-        //     </Button>
-        // }
-        // </ButtonGroup>
-
     return (
-      <li className={classnames({"current": this.props.currentPathIds.includes(this.props.id)})}>
+      <li className={classnames("pure-menu-item menu-item", {"current": this.props.currentPathIds.includes(this.props.id)})}>
         {
           enableEdit ?
             editItemUi :
-            roItemUi
+            (
+              roItemUi
+            )
         }
         {children &&
           <CategoryTreeMenu

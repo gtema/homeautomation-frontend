@@ -1,6 +1,16 @@
 import React, { PropTypes, Component } from 'react'
 // import { Link } from 'react-router'
-import { ListGroupItem, Glyphicon, Button, ButtonGroup, ButtonToolbar, Form, FormGroup, FormControl, Col, InputGroup } from 'react-bootstrap'
+// import { ListGroupItem, Glyphicon, Button, ButtonGroup, ButtonToolbar, Form, FormGroup, FormControl, Col, InputGroup } from 'react-bootstrap'
+
+import 'purecss/build/forms-min.css'
+import 'purecss/build/grids-min.css'
+import 'purecss/build/grids-responsive-min.css'
+
+import classnames from 'classnames'
+
+import ButtonGroup from './ButtonGroup'
+import Button from './Button'
+import Icon from './Icon'
 
 import { productItemsPropTypes } from '../tools/constants'
 import {getISODate} from '../tools/common'
@@ -69,80 +79,146 @@ class ProductItem extends Component {
     const itemButtons = (id !== -1)?
       (!inactive)?
         (
-          <ButtonToolbar>
+          <div className="button-toolbar">
             <ButtonGroup>
               {
                 (!this.props.is_started)?
-                  (<Button onClick={(e) => { this.modifyElement(e, {is_started:!this.props.is_started})}} bsStyle="info" bsSize="small" ><Glyphicon glyph="open" />{' '}Open</Button>)
+                  (
+                    <Button
+                        onClick={(e) => { this.modifyElement(e, {is_started:!this.props.is_started})}}
+                        className="button-small button-info">
+                      <Icon icon="fa-cut"/>
+                      {' '}Open
+                    </Button>
+                  )
                   :
-                  (<Button onClick={(e) => { this.modifyElement(e, {is_started:!this.props.is_started})}} bsStyle="info" bsSize="small" ><Glyphicon glyph="save" />{' '}Close</Button>)
+                  (
+                    <Button
+                        onClick={(e) => { this.modifyElement(e, {is_started:!this.props.is_started})}}
+                        className="button-small button-info">
+                      <Icon icon="fa-save" />
+                      {' '}Close
+                    </Button>
+                  )
               }
             </ButtonGroup>
             <ButtonGroup>
-              <Button onClick={(e) => { this.modifyElement(e, {amount:0})}} bsStyle="warning" bsSize="small" ><Glyphicon glyph="unchecked" />{' '}Empty</Button>
-              <Button onClick={(e) => { this.modifyElement(e, {is_disposed:!this.props.is_disposed})}} bsStyle="danger" bsSize="small"><Glyphicon glyph="trash" />{' '}Dispose</Button>
+              <Button onClick={(e) => { this.modifyElement(e, {amount:0})}}
+                  className="button-small button-warning">
+                <Icon icon="fa-battery-empty" />{' '}Empty
+              </Button>
+              <Button onClick={(e) => { this.modifyElement(e, {is_disposed:!this.props.is_disposed})}}
+                  className="button-small button-danger">
+                <Icon icon="fa-trash" />{' '}Dispose
+              </Button>
             </ButtonGroup>
-          </ButtonToolbar>
+          </div>
         )
         :
         null
       :
       (
         <ButtonGroup>
-          <Button onClick={(e) => { this.props.addFn(this.state) }} bsStyle="success" bsSize="small" ><Glyphicon glyph="plus" />{' '}Add</Button>
+          <Button onClick={(e) => { this.props.addFn(this.state) }} className="button-small button-success" ><Icon icon="fa-plus" />{' '}Add</Button>
         </ButtonGroup>
       )
 
     // simple ReadOnly representation of the item
-    const itemUi = (
-        <Form inline onSubmit={this.handleSubmit} onReset={this.cancelEdit}>
-        <div className="row">
-          <Col xs={6} sm={4} md={1} lg={3}>
-            <FormGroup controlId="formInlineAmount" bsSize="small">
-              <InputGroup bsSize="sm">
-                <InputGroup.Addon>Amount</InputGroup.Addon>
-                <FormControl type="number" name="amount" value={this.state.amount} onChange={(e) => {this.setState({amount: e.target.value})}} readOnly={inactive}/>
-                { (id !== -1 && !inactive) &&
-                  (<InputGroup.Button><Button onClick={this.handleSubmit} bsStyle="primary" bsSize="xs" type="submit"><Glyphicon glyph="ok" /></Button></InputGroup.Button>)
-                }
-              </InputGroup>
-            </FormGroup>
-          </Col>
-          <Col xs={6} sm={4} md={1} lg={3}>
-            <FormGroup controlId="formInlineExpiry" bsSize="small">
-              <InputGroup bsSize="sm">
-                <InputGroup.Addon>Expiry</InputGroup.Addon>
-                <FormControl type="date" readOnly={(id !== -1)?true:false}
-                  value={this.state.expiry_date}
-                  onChange={(e) => {this.setState({expiry_date: e.target.value})}}
-                />
-              </InputGroup>
-            </FormGroup>
-          </Col>
-          <Col xs={6} sm={4} md={1} lg={3}>
-            <FormGroup controlId="formInlineBought" bsSize="small">
-              <InputGroup bsSize="sm">
-                <InputGroup.Addon>Bought</InputGroup.Addon>
-                <FormControl type="date" readOnly={(id !== -1)?true:false}
-                  value={this.state.create_date}
-                  onChange={(e) => {this.setState({create_date: e.target.value})}}
-                />
-              </InputGroup>
-            </FormGroup>
-          </Col>
-          <Col lg={3}>
-            {itemButtons}
-          </Col>
-          </div>
-        </Form>
-      )
+    const itemUi =
+    (
+      <form onSubmit={this.handleSubmit} onReset={this.cancelEdit} className="pure-form" disabled={inactive}>
+          <div className="pure-g">
 
+            <div className="pure-u-sm-1-1 pure-u-md-1-2 pure-u-lg-6-24 pure-u-xl-6-24">
+              <div className="pure-control-group">
+                <span className="input-group-addon">Amount</span>
+                <input type="number" name="amount" value={this.state.amount}
+                  onChange={(e) => {this.setState({amount: e.target.value})}} disabled={inactive}
+                />
+              </div>
+            </div>
+
+            <div className="pure-u-sm-1-1 pure-u-md-1-2 pure-u-lg-6-24 pure-u-xl-6-24">
+              <div className="pure-control-group">
+                <span className="input-group-addon">Expiry</span>
+                <input type="date" name="expiry" value={this.state.expiry_date}
+                  onChange={(e) => {this.setState({expiry_date: e.target.value})}} disabled={inactive}
+                />
+              </div>
+            </div>
+
+            <div className="pure-u-sm-1-1 pure-u-md-1-2 pure-u-lg-6-24 pure-u-xl-6-24">
+              <div className="pure-control-group">
+                <span className="input-group-addon">Bought</span>
+                <input type="date" name="expiry" value={this.state.create_date}
+                  onChange={(e) => {this.setState({create_date: e.target.value})}} disabled={inactive}
+                />
+              </div>
+            </div>
+
+            <div className="pure-u-sm-1-1 pure-u-md-1-2 pure-u-lg-6-24 pure-u-xl-6-24">
+              {itemButtons}
+            </div>
+
+          </div>
+      </form>
+    )
+    //const itemUi =
+    // (
+    //     <Form inline onSubmit={this.handleSubmit} onReset={this.cancelEdit}>
+    //     <div className="row">
+    //       <Col xs={6} sm={4} md={1} lg={3}>
+    //         <FormGroup controlId="formInlineAmount" bsSize="small">
+    //           <InputGroup bsSize="sm">
+    //             <InputGroup.Addon>Amount</InputGroup.Addon>
+    //             <FormControl type="number" name="amount" value={this.state.amount} onChange={(e) => {this.setState({amount: e.target.value})}} readOnly={inactive}/>
+    //             { (id !== -1 && !inactive) &&
+    //               (<InputGroup.Button><Button onClick={this.handleSubmit} bsStyle="primary" bsSize="xs" type="submit"><Glyphicon glyph="ok" /></Button></InputGroup.Button>)
+    //             }
+    //           </InputGroup>
+    //         </FormGroup>
+    //       </Col>
+    //       <Col xs={6} sm={4} md={1} lg={3}>
+    //         <FormGroup controlId="formInlineExpiry" bsSize="small">
+    //           <InputGroup bsSize="sm">
+    //             <InputGroup.Addon>Expiry</InputGroup.Addon>
+    //             <FormControl type="date" readOnly={(id !== -1)?true:false}
+    //               value={this.state.expiry_date}
+    //               onChange={(e) => {this.setState({expiry_date: e.target.value})}}
+    //             />
+    //           </InputGroup>
+    //         </FormGroup>
+    //       </Col>
+    //       <Col xs={6} sm={4} md={1} lg={3}>
+    //         <FormGroup controlId="formInlineBought" bsSize="small">
+    //           <InputGroup bsSize="sm">
+    //             <InputGroup.Addon>Bought</InputGroup.Addon>
+    //             <FormControl type="date" readOnly={(id !== -1)?true:false}
+    //               value={this.state.create_date}
+    //               onChange={(e) => {this.setState({create_date: e.target.value})}}
+    //             />
+    //           </InputGroup>
+    //         </FormGroup>
+    //       </Col>
+    //       <Col lg={3}>
+    //         {itemButtons}
+    //       </Col>
+    //       </div>
+    //     </Form>
+    //   )
+// (id === -1)?'item-new':(new Date(this.state.expiry_date) > new Date())?'item-expiry':'item-current'}
     return (
-      <ListGroupItem listItem disabled={inactive} bsStyle={(id === -1)?'success':(new Date(this.state.expiry_date) > new Date())?'info':'danger'}>
-        {
-          itemUi
+      <li className={
+          classnames({
+            'item-new':id === -1 && !inactive,
+            'item-expiry':id !== -1 && !inactive && new Date(this.state.expiry_date) > new Date(),
+            'item-current':id !== -1 && !inactive && new Date(this.state.expiry_date) <= new Date(),
+            'item-old':inactive
+          })
         }
-      </ListGroupItem>
+      >
+        {itemUi}
+      </li>
     )
   }
 }

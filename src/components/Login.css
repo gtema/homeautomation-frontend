@@ -1,0 +1,29 @@
+/*!
+  Login.css
+*/
+.login-form {
+  /*display: flex;
+  align-items: center;
+  justify-content: center;*/
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  padding:30px;
+  background-color: #0679f2;
+  box-shadow: 2px 2px 1px #888888;
+}
+
+.login-form label {
+  color: yellow;
+  font-weight: bold;
+}
+
+.login-form .pure-button-primary {
+  background-color: green;
+}
+
+.login-form .pure-form-message {
+  color: red;
+}

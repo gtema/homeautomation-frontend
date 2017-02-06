@@ -1,0 +1,68 @@
+/*!
+  Sidebar.css
+*/
+
+.sidebarContainer {
+    display: flex;
+    flex-direction: row;
+    flex: 1 100%;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+}
+/*.sidebarContainer:after {
+    content: "";
+    clear: both;
+    display: table;
+}*/
+
+.sidebarContainer .sidebarBar {
+  float:left;
+  border-right: 1px solid black;
+  margin: 0px;
+  width:0px;
+  /*background-color: rgba(250, 250, 255, 0.8);*/
+  /*display: none;*/
+  opacity: 0;
+  display: hidden;
+  overflow: auto;
+  order: 1;
+  transition: opacity 0.5s 0s, visibility 0s 0.5s, width 0.5s 0.5s;
+}
+
+.sidebarContainer .sidebarBar.sidebarBar-visible {
+  opacity: 1;
+  /*display:block;*/
+  width:300px;
+  padding: 10px 10px 10px 0;
+  visibility: visible;
+  transition: opacity 0.5s 0.3s, visibility 0.2s 0.3s, width 0.3s 0s;
+}
+
+.sidebarContainer .sidebarMain {
+  float:left;
+  padding: 10px;
+  /*margin-left:10px;*/
+  order:3;
+  /* take the remaining space */
+  width:100%;
+  /*flex-grow: 2;*/
+}
+
+.sidebarContainer .sidebarToggler {
+  float: left;
+  order: 2;
+  /*vertical-align: middle;*/
+  /*justify-content: center;*/
+  /*align-items: center;*/
+  padding-top:10px;
+}
+
+/* chevron-left */
+.sidebarContainer .sidebarBar.sidebarBar-visible + .sidebarToggler:before {
+  content: "\f060"
+}
+
+/* chevron-right */
+.sidebarContainer .sidebarBar + .sidebarToggler:before {
+  content: "\f061"
+}

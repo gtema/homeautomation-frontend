@@ -1,3 +1,7 @@
+/*!
+  Sidebar.css
+*/
+
 .sidebarContainer {
     display: flex;
     flex-direction: row;
@@ -28,7 +32,7 @@
 .sidebarContainer .sidebarBar.sidebarBar-visible {
   opacity: 1;
   /*display:block;*/
-  width:300px;
+  width:25em;
   padding: 10px 10px 10px 0;
   visibility: visible;
   transition: opacity 0.5s 0.3s, visibility 0.2s 0.3s, width 0.3s 0s;
@@ -47,15 +51,18 @@
 .sidebarContainer .sidebarToggler {
   float: left;
   order: 2;
-  vertical-align: middle;
+  /*vertical-align: middle;*/
+  /*justify-content: center;*/
+  /*align-items: center;*/
+  padding-top:10px;
 }
 
 /* chevron-left */
 .sidebarContainer .sidebarBar.sidebarBar-visible + .sidebarToggler:before {
-  content: "\e079"
+  content: "\f060"
 }
 
 /* chevron-right */
 .sidebarContainer .sidebarBar + .sidebarToggler:before {
-  content: "\e080"
+  content: "\f061"
 }

@@ -2,7 +2,7 @@ import { Schema, arrayOf } from 'normalizr'
 // import { camelizeKeys } from 'humps'
 import fetch  from 'isomorphic-fetch'
 
-import { API_HOST, API_PATH, API_KEY } from '../tools/constants'
+import { API_HOST, API_PATH } from '../tools/constants'
 
 // Extracts the next page URL from Github API response.
 // const getNextPageUrl = response => {
@@ -28,21 +28,34 @@ export const Methods = {
   DELETE: "DELETE"
 }
 
-const apiKey = (API_KEY)? `api_key=${API_KEY}`:null;
-
 // Fetches an API response and normalizes the result JSON according to schema.
 // This makes every API response have the same shape, regardless of how nested it was.
-const callApi = (endpoint, schema, method, payload) => {
-  const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint + `?${apiKey}` : endpoint
+const callApi = (endpoint, schema, method, payload, authenticated) => {
 
-  var headers = new Headers();
-  var data = null;
+  const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint
+  let headers = new Headers()
+
+  let data = null;
   if (Methods.POST === method || Methods.PUT === method) {
     headers.append('Content-Type', 'application/json')
     data = JSON.stringify(payload)
   }
 
-  var request = new Request(fullUrl, {
+  // Handle JWT
+  const token   = localStorage.getItem('id_token') || null
+  const api_key = localStorage.getItem('api_key') || null
+  let authKeys = null
+
+  if (api_key) {
+    headers.append('Authorization', `API_KEY ${api_key}`)
+  }
+  // if (token) {
+  //   headers.append('Authorization', `JWT ${token}`)
+  // }
+
+  console.log("Sending header", headers.getAll('Authorization'))
+
+  let request = new Request(fullUrl, {
   	method: method || Methods.GET,
   	mode: 'cors',
   	redirect: 'follow',
@@ -106,7 +119,8 @@ export default store => next => action => {
     payload,
     shouldCallAPI = () => true,
     method,
-    postSuccessCallback
+    postSuccessCallback,
+    authenticated
   } = callAPI
 
   if (typeof endpoint === 'function') {
@@ -140,27 +154,31 @@ export default store => next => action => {
 
   const [ requestType, successType, failureType ] = types
   // Dispatch the request action
-  next(actionWith(Object.assign({}, payload, { type: requestType })))
+  next(actionWith(Object.assign({}, payload, { type: requestType }, null, authenticated)))
 
   // Invoke API and dispatch success/error action
-  return callApi(endpoint, schema, method, payload).then(
+  return callApi(endpoint, schema, method, payload, authenticated).then(
     response => {
       next(actionWith(Object.assign({}, payload, {
-        response,
-        type: successType,
-        timestamp: Date.now(),
-        status: 'success',
-      })))
+          response,
+          type: successType,
+          timestamp: Date.now(),
+          status: 'success',
+          authenticated,
+        }),
+      ))
       /* If we have a CALL_API postSuccessCallback - dispatch it*/
       if (typeof(postSuccessCallback) === 'object' && postSuccessCallback.hasOwnProperty(CALL_API)) {
         store.dispatch(postSuccessCallback)
       }
     },
     error => next(actionWith(Object.assign({}, payload, {
-      type: failureType,
-      error: error.message || 'Something bad happened',
-      timestamp: Date.now(),
-      status: 'failure'
-    })))
+          type: failureType,
+          error: error.message || 'Something bad happened',
+          timestamp: Date.now(),
+          status: 'failure',
+          authenticated,
+        }),
+      ))
   )
 }

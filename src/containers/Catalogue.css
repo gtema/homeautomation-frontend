@@ -54,3 +54,44 @@
 .ProductsApp input:required:valid {
   /*border-color: green;*/
 }
+
+.panel.panel-warning {
+  background-color: rgb(241, 194, 28);
+}
+
+.productitems-list {
+  margin-bottom: 1em;
+}
+
+.productitems-list li{
+  /*margin: 1em;*/
+  border-bottom: 1px solid #ddd;
+}
+
+.productitems-list fieldset {
+    margin:auto;
+    padding: 5px;
+}
+
+/* center align columns inside of the list*/
+.productitems-list .pure-g {
+    align-items: center;
+}
+
+
+
+.productitems-list li.item-old {
+  background-color: #eee;
+}
+
+.productitems-list li.item-current {
+  background-color: white;
+}
+
+.productitems-list li.item-expiry {
+  background-color: #f9b318;
+}
+
+.productitems-list li.item-new {
+  background-color: #dff0d8;
+}

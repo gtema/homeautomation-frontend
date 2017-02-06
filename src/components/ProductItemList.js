@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import ProductItem from './ProductItem'
-import { ListGroup, ListGroupItem } from 'react-bootstrap'
+// import { ListGroup, ListGroupItem } from 'react-bootstrap'
 
 import { productItemsPropTypes } from '../tools/constants'
 
@@ -10,7 +10,7 @@ import { productItemsPropTypes } from '../tools/constants'
 const ProductItemList = ({ params, elements, active, toggleEditFn, modifyFn, addFn, editItemId, productId }) => {
 
   return (
-    <ListGroup bsClass="list-group productitems-list" componentClass="ul">
+    <ul className="list-group productitems-list">
       { addFn &&
         <ProductItem
           key={-1}
@@ -21,7 +21,7 @@ const ProductItemList = ({ params, elements, active, toggleEditFn, modifyFn, add
           />
       }
       { addFn &&
-        <ListGroupItem />
+        <li />
       }
       {
         elements
@@ -36,7 +36,7 @@ const ProductItemList = ({ params, elements, active, toggleEditFn, modifyFn, add
           )
       }
 
-    </ListGroup>
+    </ul>
   )
 
 }

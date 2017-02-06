@@ -1,0 +1,107 @@
+import { API_HOST, API_PATH } from '../tools/constants'
+
+export const LOGIN_REQUEST = 'LOGIN_REQUEST'
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+export const LOGIN_FAILURE = 'LOGIN_FAILURE'
+export const LOGOUT_REQUEST = 'LOGOUT_REQUEST'
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
+export const LOGOUT_FAILURE = 'LOGOUT_FAILURE'
+
+function requestLogin(creds) {
+  return {
+    type: LOGIN_REQUEST,
+    isFetching: true,
+    isAuthenticated: false,
+    creds
+  }
+}
+
+function receiveLogin(user) {
+  return {
+    type: LOGIN_SUCCESS,
+    isFetching: false,
+    isAuthenticated: true,
+    id_token: user.access_token
+  }
+}
+
+function loginError(message) {
+  return {
+    type: LOGIN_FAILURE,
+    isFetching: false,
+    isAuthenticated: false,
+    message
+  }
+}
+
+function requestLogout() {
+  return {
+    type: LOGOUT_REQUEST,
+    isFetching: true,
+    isAuthenticated: true
+  }
+}
+
+function receiveLogout() {
+  return {
+    type: LOGOUT_SUCCESS,
+    isFetching: false,
+    isAuthenticated: false
+  }
+}
+
+// Calls the API to get a token and
+// dispatches actions along the way
+export function loginUser(creds) {
+
+  let credentials = {
+    username: creds.username,
+    password: creds.password
+  }
+
+  let data = JSON.stringify(credentials)
+
+  let config = {
+    method: 'POST',
+    headers: { 'Content-Type':'application/json' },
+    body: data
+  }
+
+  return dispatch => {
+    // We dispatch requestLogin to kickoff the call to the API
+    dispatch(requestLogin(creds))
+
+    return fetch(`http://${API_HOST}/api/v0/auth`, config)
+      .then(response =>
+        response.json().then(user => ({ user, response }))
+            ).then(({ user, response }) =>  {
+        if (!response.ok) {
+          // If there was a problem, we want to
+          // dispatch the error condition
+          console.debug("error", response)
+          dispatch(loginError(user.message))
+          return Promise.reject(user)
+        } else {
+          console.debug(user)
+          // If login was successful, set the token in local storage
+          localStorage.setItem('id_token', user.access_token)
+          localStorage.setItem('api_key', user.api_key)
+          // Dispatch the success action
+          dispatch(receiveLogin(user))
+        }
+      }).catch(err => {
+        console.log("Error: ", err)
+        dispatch(loginError(err.description))
+      })
+  }
+}
+
+// Logs the user out
+export function logoutUser() {
+  return dispatch => {
+    dispatch(requestLogout())
+    localStorage.removeItem('id_token')
+    localStorage.removeItem('api_key')
+    dispatch(receiveLogout())
+  }
+}

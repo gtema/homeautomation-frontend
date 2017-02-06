@@ -47,7 +47,7 @@ class CategoryTreeMenu extends Component {
     const { tree } = this.props
     if (typeof (tree) !== 'undefined') {
       return (
-          <ul className={classnames('nav nav-list nav-menu-list-style tree',
+          <ul className={classnames('pure-menu-list menu-list-tree',
             {
               'hidden': this.props.collapsed
             })}
