@@ -13,7 +13,8 @@ export const receiveCategories = (ignore, cats, timestamp = Date.now(), err = nu
 
 export const shouldFetchSubcategories = (state, category_id) => {
   // TODO: check timestamp, last update status, ...
-  if ( typeof(state.ui) === 'undefined' || typeof(state.categories) === 'undefined' ) {
+  if ( typeof(state.ui) === 'undefined' || typeof(state.categories) === 'undefined'
+    || state.categories.get('categoriesById').size === 0) {
     return true
   }
 
