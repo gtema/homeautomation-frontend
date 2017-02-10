@@ -11,6 +11,7 @@ export const receiveProductByProductIds = (products, timestamp = Date.now(), err
   }
 }
 
+// Check if products for the given category should be re/-fetched
 export const shouldFetchProductsByCategoryId = (state, category_id) => {
   // TODO: check timestamp, last update status, ...
   if ( typeof(state.ui) === 'undefined' || typeof(state.products) === 'undefined' ) {
@@ -36,8 +37,12 @@ export const shouldFetchProductsByCategoryId = (state, category_id) => {
   return false
 }
 
+// Check if product should be re/-fetched
 export const shouldFetchProduct = (state, product_id) => {
   // TODO: check timestamp, last update status, ...
+  if (product_id === -1) {
+    return false
+  }
   if ( typeof(state.ui) === 'undefined' || typeof(state.products) === 'undefined' ) {
     return true
   }
@@ -55,6 +60,7 @@ export const shouldFetchProduct = (state, product_id) => {
   return false
 }
 
+// Load individual product if required
 export const loadProductByProductIdIfNeeded = (product_id) => {
   return {
     [CALL_API] : {
@@ -68,6 +74,7 @@ export const loadProductByProductIdIfNeeded = (product_id) => {
   }
 }
 
+// Load products if required
 export const loadProductsByCategoryIdIfNeeded = (category_id) => {
   return {
     [CALL_API]: {
@@ -94,6 +101,7 @@ export const addNewProduct = ( name, id ) => {
   }
 }
 
+// Modify product
 export const modifyProduct = ( item ) => {
   return {
     [CALL_API]: {
@@ -106,6 +114,7 @@ export const modifyProduct = ( item ) => {
   }
 }
 
+// Remove product
 export const removeProductByProductId = ( id ) => {
   return {
     [CALL_API]: {

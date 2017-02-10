@@ -14,8 +14,10 @@
 
 .home-menu .pure-menu-heading {
     color: rgb(255, 230, 0);
-    font-weight: 800;
-    font-size: 120%;
+    font-weight: 600;
+    font-size: 160%;
+    -webkit-font-smoothing: antialiased;
+    text-shadow: 10px 10px 10px rgba(0,0,0,0.4);
 }
 
 .home-menu .pure-menu-selected a {

@@ -1,4 +1,4 @@
-import { API_HOST, API_PATH } from '../tools/constants'
+import { API_HOST, API_AUTH_PATH } from '../tools/constants'
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
@@ -71,27 +71,27 @@ export function loginUser(creds) {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds))
 
-    return fetch(`http://${API_HOST}/api/v0/auth`, config)
+    return fetch(`http://${API_HOST}${API_AUTH_PATH}`, config)
       .then(response =>
         response.json().then(user => ({ user, response }))
             ).then(({ user, response }) =>  {
         if (!response.ok) {
           // If there was a problem, we want to
           // dispatch the error condition
-          console.debug("error", response)
           dispatch(loginError(user.message))
           return Promise.reject(user)
         } else {
-          console.debug(user)
           // If login was successful, set the token in local storage
-          localStorage.setItem('id_token', user.access_token)
           localStorage.setItem('api_key', user.api_key)
           // Dispatch the success action
           dispatch(receiveLogin(user))
         }
       }).catch(err => {
-        console.log("Error: ", err)
-        dispatch(loginError(err.description))
+        if (typeof err.desription !== 'undefined') {
+          dispatch(loginError(err.description))
+        } else if (err.name === 'TypeError') {
+          dispatch(loginError("Network problem"))
+        }
       })
   }
 }

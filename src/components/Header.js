@@ -1,23 +1,29 @@
-import React, { Component, PropTypes } from 'react'
-import { Link } from 'react-router'
+//components/Header.js
+import React from 'react'
 
-import Login from './Login'
+import Link from 'react-router/lib/Link'
+
 import Logout from './Logout'
-import { loginUser, logoutUser } from '../actions/auth'
+import { logoutUser } from '../actions/auth'
 
 import './Header.css'
 import 'purecss/build/grids-responsive-min.css'
 
-export default class Header extends Component {
+/* App header*/
+class Header extends React.Component {
+
+  static propTypes = {
+    dispatch: React.PropTypes.func.isRequired
+  }
 
   render() {
-    const { dispatch, isAuthenticated, errorMessage } = this.props
+    const { dispatch } = this.props
 
     return (
       <div className="header">
         <div className="home-menu pure-menu pure-menu-horizontal" id="menu">
           <Link className="pure-menu-heading" to="/">HomeAutomation</Link>
-          <a href="#" className="custom-toggle" id="toggle" onClick={(e) => {  e.preventDefault();}}>
+          <a href="#" className="custom-menu-toggle" id="toggle" onClick={(e) => { e.preventDefault() }}>
             <s className="bar"></s><s className="bar"></s></a>
           <ul className="pure-menu-list">
             <li className="pure-menu-item"><Link className="pure-menu-link" to="/cat">Catalogue</Link></li>
@@ -27,11 +33,6 @@ export default class Header extends Component {
       </div>
     )
   }
-
 }
 
-Header.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-  errorMessage: PropTypes.string
-}
+export default Header

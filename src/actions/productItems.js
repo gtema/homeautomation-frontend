@@ -3,18 +3,8 @@ import { loadProductByProductIdIfNeeded } from './products'
 
 export const shouldFetchProductItemsByProductId = (state, product_id) => {
   /* Always refetch product items*/
-  return true;
+  return (product_id !== -1)? true:false;
   // TODO: check timestamp, last update status, ...
-  // if ( typeof(state.ui) === 'undefined' || typeof(state.product_items) === 'undefined' ) {
-  //   return true
-  // }
-  // if (category_id !== null && product_id !== state.ui.get('fetchingProductsByCategoryId')) {
-    // const productIdsByCategoryId = state.products.getIn(['productsByCategoryId', category_id.toString()])
-    // if (typeof(productIdsByCategoryId) === 'undefined') {
-      // return true;
-    // }
-  // }
-  // return false;
 }
 
 export const loadProductItemsByProductIdIfNeeded = (parent_id) => {

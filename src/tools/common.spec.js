@@ -42,7 +42,7 @@ describe('commons', () => {
           1: normalizeFunction(item)
         },
         [itemsParentKey]: {
-          2: {invalidated:false, items:{1:true}}
+          2: {invalidated:true, items:{1:true}}
         }
       })
   })
@@ -84,7 +84,7 @@ describe('commons', () => {
           2: normalizeFunction(items[1])
         },
         [itemsParentKey]: {
-          [0]: {invalidated:false, items:{1:true, 2:true}}
+          [0]: {invalidated:true, items:{1:true, 2:true}}
         }
       })
   })
@@ -139,6 +139,30 @@ describe('commons', () => {
         false,
         { response: items, status: 'success' })
 
+    expect(initState.toJSON())
+      .toEqual({
+        [itemIdKey]: {
+          1: normalizeFunction(items[0]),
+          2: normalizeFunction(items[1]),
+          3: normalizeFunction(items[2]),
+          4: normalizeFunction(items[3]),
+        },
+        [itemsParentKey]: {
+          [0]: {invalidated:true, items:{1:true, 2:true}},
+          [1]: {invalidated:true, items:{3:true, 4:true}},
+        }
+      })
+
+    /* reset group 0*/
+    const newState_r = tools.reducerReceiveItems(
+        initState,
+        itemIdKey,
+        itemsParentKey,
+        parentAttributeName,
+        normalizeFunction,
+        true,
+        { response: [items[0], items[1]], status: 'success', [parentAttributeName]: 0 })
+
     const data = [
       {name: 't32',
         parent_id: 1,
@@ -155,7 +179,7 @@ describe('commons', () => {
     ]
 
     const newState = tools.reducerReceiveItems(
-        initState,
+        newState_r,
         itemIdKey,
         itemsParentKey,
         parentAttributeName,

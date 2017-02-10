@@ -1,27 +1,24 @@
-import React, { PropTypes, Component } from 'react'
-// import { Link } from 'react-router'
-// import { ListGroupItem, Glyphicon, Button, ButtonGroup, ButtonToolbar, Form, FormGroup, FormControl, Col, InputGroup } from 'react-bootstrap'
+import React from 'react'
+import classnames from 'classnames'
+
+import ButtonGroup from '../basecomponents/ButtonGroup'
+import Button from '../basecomponents/Button'
+import Icon from '../basecomponents/Icon'
 
 import 'purecss/build/forms-min.css'
 import 'purecss/build/grids-min.css'
 import 'purecss/build/grids-responsive-min.css'
 
-import classnames from 'classnames'
-
-import ButtonGroup from './ButtonGroup'
-import Button from './Button'
-import Icon from './Icon'
-
 import { productItemsPropTypes } from '../tools/constants'
 import {getISODate} from '../tools/common'
 
-class ProductItem extends Component {
+class ProductItem extends React.Component {
   static propTypes = {
     productItemsPropTypes,
-    productId: PropTypes.number.isRequired,
-    modifyFn: PropTypes.func,
-    addFn: PropTypes.func,
-    inactive: PropTypes.bool
+    productId: React.PropTypes.number.isRequired,
+    modifyFn: React.PropTypes.func,
+    addFn: React.PropTypes.func,
+    inactive: React.PropTypes.bool
   }
 
   static defaultProps = {
@@ -130,7 +127,7 @@ class ProductItem extends Component {
           <div className="pure-g">
 
             <div className="pure-u-sm-1-1 pure-u-md-1-2 pure-u-lg-6-24 pure-u-xl-6-24">
-              <div className="pure-control-group">
+              <div className="input-group">
                 <span className="input-group-addon">Amount</span>
                 <input type="number" name="amount" value={this.state.amount}
                   onChange={(e) => {this.setState({amount: e.target.value})}} disabled={inactive}
@@ -139,7 +136,7 @@ class ProductItem extends Component {
             </div>
 
             <div className="pure-u-sm-1-1 pure-u-md-1-2 pure-u-lg-6-24 pure-u-xl-6-24">
-              <div className="pure-control-group">
+              <div className="input-group">
                 <span className="input-group-addon">Expiry</span>
                 <input type="date" name="expiry" value={this.state.expiry_date}
                   onChange={(e) => {this.setState({expiry_date: e.target.value})}} disabled={inactive}
@@ -148,7 +145,7 @@ class ProductItem extends Component {
             </div>
 
             <div className="pure-u-sm-1-1 pure-u-md-1-2 pure-u-lg-6-24 pure-u-xl-6-24">
-              <div className="pure-control-group">
+              <div className="input-group">
                 <span className="input-group-addon">Bought</span>
                 <input type="date" name="expiry" value={this.state.create_date}
                   onChange={(e) => {this.setState({create_date: e.target.value})}} disabled={inactive}
@@ -163,50 +160,7 @@ class ProductItem extends Component {
           </div>
       </form>
     )
-    //const itemUi =
-    // (
-    //     <Form inline onSubmit={this.handleSubmit} onReset={this.cancelEdit}>
-    //     <div className="row">
-    //       <Col xs={6} sm={4} md={1} lg={3}>
-    //         <FormGroup controlId="formInlineAmount" bsSize="small">
-    //           <InputGroup bsSize="sm">
-    //             <InputGroup.Addon>Amount</InputGroup.Addon>
-    //             <FormControl type="number" name="amount" value={this.state.amount} onChange={(e) => {this.setState({amount: e.target.value})}} readOnly={inactive}/>
-    //             { (id !== -1 && !inactive) &&
-    //               (<InputGroup.Button><Button onClick={this.handleSubmit} bsStyle="primary" bsSize="xs" type="submit"><Glyphicon glyph="ok" /></Button></InputGroup.Button>)
-    //             }
-    //           </InputGroup>
-    //         </FormGroup>
-    //       </Col>
-    //       <Col xs={6} sm={4} md={1} lg={3}>
-    //         <FormGroup controlId="formInlineExpiry" bsSize="small">
-    //           <InputGroup bsSize="sm">
-    //             <InputGroup.Addon>Expiry</InputGroup.Addon>
-    //             <FormControl type="date" readOnly={(id !== -1)?true:false}
-    //               value={this.state.expiry_date}
-    //               onChange={(e) => {this.setState({expiry_date: e.target.value})}}
-    //             />
-    //           </InputGroup>
-    //         </FormGroup>
-    //       </Col>
-    //       <Col xs={6} sm={4} md={1} lg={3}>
-    //         <FormGroup controlId="formInlineBought" bsSize="small">
-    //           <InputGroup bsSize="sm">
-    //             <InputGroup.Addon>Bought</InputGroup.Addon>
-    //             <FormControl type="date" readOnly={(id !== -1)?true:false}
-    //               value={this.state.create_date}
-    //               onChange={(e) => {this.setState({create_date: e.target.value})}}
-    //             />
-    //           </InputGroup>
-    //         </FormGroup>
-    //       </Col>
-    //       <Col lg={3}>
-    //         {itemButtons}
-    //       </Col>
-    //       </div>
-    //     </Form>
-    //   )
-// (id === -1)?'item-new':(new Date(this.state.expiry_date) > new Date())?'item-expiry':'item-current'}
+
     return (
       <li className={
           classnames({

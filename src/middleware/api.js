@@ -1,25 +1,9 @@
 import { Schema, arrayOf } from 'normalizr'
-// import { camelizeKeys } from 'humps'
 import fetch  from 'isomorphic-fetch'
 
 import { API_HOST, API_PATH } from '../tools/constants'
 
-// Extracts the next page URL from Github API response.
-// const getNextPageUrl = response => {
-//   const link = response.headers.get('link')
-//   if (!link) {
-//     return null
-//   }
-//
-//   const nextLink = link.split(',').find(s => s.indexOf('rel="next"') > -1)
-//   if (!nextLink) {
-//     return null
-//   }
-//
-//   return nextLink.split(';')[0].slice(1, -1)
-// }
-
-const API_ROOT = `http://${API_HOST}${API_PATH}`//'http://localhost:5000/api/v0/stock/'
+const API_ROOT = `http://${API_HOST}${API_PATH}`
 
 export const Methods = {
   GET: "GET",
@@ -33,27 +17,19 @@ export const Methods = {
 const callApi = (endpoint, schema, method, payload, authenticated) => {
 
   const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint
-  let headers = new Headers()
+  let headers = {}
 
   let data = null;
   if (Methods.POST === method || Methods.PUT === method) {
-    headers.append('Content-Type', 'application/json')
+    headers['Content-Type'] = 'application/json'
     data = JSON.stringify(payload)
   }
 
-  // Handle JWT
-  const token   = localStorage.getItem('id_token') || null
   const api_key = localStorage.getItem('api_key') || null
-  let authKeys = null
 
   if (api_key) {
-    headers.append('Authorization', `API_KEY ${api_key}`)
+    headers['Authorization'] = `API_KEY ${api_key}`
   }
-  // if (token) {
-  //   headers.append('Authorization', `JWT ${token}`)
-  // }
-
-  console.log("Sending header", headers.getAll('Authorization'))
 
   let request = new Request(fullUrl, {
   	method: method || Methods.GET,
@@ -69,14 +45,6 @@ const callApi = (endpoint, schema, method, payload, authenticated) => {
         if (!response.ok) {
           return Promise.reject(json)
         }
-
-        // const camelizedJson = camelizeKeys(json)
-        // const nextPageUrl = getNextPageUrl(response)
-
-        // return Object.assign({},
-          // normalize(json, schema)
-        //   { nextPageUrl }
-        // )
         return json
       })
     )
@@ -172,13 +140,29 @@ export default store => next => action => {
         store.dispatch(postSuccessCallback)
       }
     },
-    error => next(actionWith(Object.assign({}, payload, {
+    error => {
+      /* build up an error message for the ui */
+      let errorMessage = '';
+      if (error.name === 'TypeError') {
+        errorMessage = 'Cannot connect to the server'
+      } else if (typeof error.message !== 'undefined') {
+        errorMessage = error.message
+      } else if (typeof error.error !== 'undefined') {
+        errorMessage = error.error + error.description
+      } else if (error.status_code === 401) {
+        errorMessage = 'Unauthorized. Consider loggin out and in again.'
+      } else {
+        errorMessage = 'Something bad happened'
+      }
+
+      next(actionWith(Object.assign({}, payload, {
           type: failureType,
-          error: error.message || 'Something bad happened',
+          error: errorMessage ,
           timestamp: Date.now(),
           status: 'failure',
           authenticated,
         }),
       ))
+    }
   )
 }

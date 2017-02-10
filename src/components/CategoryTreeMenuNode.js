@@ -1,11 +1,11 @@
 import React, { PropTypes, Component } from 'react'
-import { Link } from 'react-router'
+import Link from 'react-router/lib/Link'
 // import { Glyphicon, ButtonGroup, Form, FormGroup, FormControl } from 'react-bootstrap'
 
 import 'purecss/build/forms-min.css'
-import ButtonGroup from './ButtonGroup'
-import Button from './Button'
-import Icon from './Icon'
+import ButtonGroup from '../basecomponents/ButtonGroup'
+import Button from '../basecomponents/Button'
+import Icon from '../basecomponents/Icon'
 
 import { categoryPropTypes, cataloguePath } from '../tools/constants'
 import CategoryTreeMenu from './CategoryTreeMenu'
@@ -84,6 +84,7 @@ class CategoryTreeMenuNode extends Component {
               <Button
                 title="Add Subcategory"
                 className="button-small button-success"
+                onClick={(e) => { e.preventDefault(); this.props.addCategoryFn(id)}}
               >
                 <Icon icon="fa-plus" />
               </Button>

@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react'
-// import { Button, Modal, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 
-class AddCategoryImpl extends Component {
+import Modal from '../basecomponents/Modal'
+import Button from '../basecomponents/Button'
+
+class AddCategoryImpl Component {
   static propTypes = {
     visible: PropTypes.bool.isRequired,
     parent_id: PropTypes.number.isRequired
@@ -40,7 +42,25 @@ class AddCategoryImpl extends Component {
       return null
     }
 
-    return null
+    return (
+      <Modal isVisible={this.props.visible} onClose={ this.handleCancel }>
+        <Modal.Header>Add Category</Modal.Header>
+        <Modal.Body>
+          <form onSubmit={this.handleSubmit} onReset={this.cancelEdit} className="pure-form pure-form-aligned">
+              <div className="pure-control-group">
+                <label htmlFor="name">Name</label>
+                <input type="text" name="name" value={this.state.name}
+                  onChange={ this.handleChange }
+                />
+              </div>
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+              <Button onClick={ this.handleCancel }>Close</Button>
+              <Button onClick={ this.handleSubmit }>Save changes</Button>
+        </Modal.Footer>
+      </Modal>
+    )
     // return (
     //   <Modal.Dialog>
     //     <Modal.Header>

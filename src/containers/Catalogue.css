@@ -23,21 +23,13 @@
     padding-left: 1em;
 }
 
-/*.productitems-list {
-  border-radius: 0px !important;
-  box-shadow: none;
+.ProductsApp section {
+  background-color: rgba(253, 253, 253, 0.9);
 }
 
-.productitems-list > .list-group-item:first-child {
-  border-radius: 0px !important;
-}
+.ProductsApp .panel-body {
+  /*height: 8em;*/
 
-.productitems-list > .list-group-item:last-child {
-  border-radius: 0px !important;
-}*/
-
-.ProductsApp > div > div > .panel-body {
-  height: 8em;
 }
 
 /*.panel-primary > .panel-heading {

@@ -59,6 +59,10 @@ const ui = (state = INITIAL_UI_STATE, action) => {
       return state.set('selectedProductId', action.id)
     case 'SELECT_CATEGORY':
       return state.set('selectedCategoryId', action.id)
+    case 'RECEIVE_PRODUCTS_BY_CATEGORY_ID_ERROR':
+      return state.set('alertText', action.error).set('alertType', 'error')
+    case 'RECEIVE_SUBCATEGORIES_BY_CATEGORY_ID_ERROR':
+      return state.set('alertText', action.error).set('alertType', 'error')
     default:
       return state
   }

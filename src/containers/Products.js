@@ -1,26 +1,23 @@
 import React, { PropTypes, Component }  from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
-// import { Panel, Col, Image } from 'react-bootstrap'
-// import { Button, Glyphicon } from 'react-bootstrap'
-// import { LinkContainer } from 'react-router-bootstrap'
-// import { Link } from 'react-router'
+import Link from 'react-router/lib/Link'
+// import browserHistory from 'react-router/lib/browserHistory'
+
 import classnames from 'classnames';
 
-// import 'purecss/build/base-min.css'
 import 'purecss/build/grids-min.css'
 import 'purecss/build/grids-responsive-min.css'
 import './Products.css'
 
-import Icon from '../components/Icon'
-import Button from '../components/Button'
+import Icon from '../basecomponents/Icon'
+import Button from '../basecomponents/Button'
+import Spinner from '../basecomponents/Spinner'
 
 import * as UIActionCreators from '../actions/ui'
 import * as ProductActionCreators from '../actions/products'
 import { productPropTypes, cataloguePath } from '../tools/constants'
 import { getDatesDiffInDays } from '../tools/common'
-import Spinner from '../components/Spinner'
 
 import { makeGetVisibleProductsByCategoryId } from '../selectors/Catalogue'
 
@@ -133,7 +130,7 @@ class ProductsAppImpl extends Component {
                 {products.map(productItem)}
 
                 <section className="pure-u-sm-1 pure-u-md-1-2 pure-u-lg-1-4 pure-u-xl-1-5">
-                  <Button className="button-small" onClick={() => { this.props.toggleAddProductMode() } }><Icon icon="fa-plus" /></Button>
+                  <Button className="button-small" onClick={() => { /* browserHistory.push(cataloguePath + '/' + categoryId + "/item/-1");*/this.props.toggleAddProductMode() } }><Icon icon="fa-plus" /></Button>
                 </section>
               </div>
           )
@@ -151,7 +148,7 @@ const makeMapStateToProps = () => {
   const mapStateToProps = (state, ownProps) => {
     let groupId = parseInt(ownProps.params.groupId, 10) || 0;
     return {
-      products: getVisibleProductsByCategoryId(state, ownProps),//state.products.getIn(['selectedProductsByCategory', 'products']),
+      products: getVisibleProductsByCategoryId(state, ownProps),
       categoryId: groupId,
       ui: state.ui.toObject(),
       fetchingProductsByCategoryId: state.ui.get('fetchingProductsByCategoryId')
@@ -160,15 +157,6 @@ const makeMapStateToProps = () => {
 
   return mapStateToProps
 }
-
-// const mapStateToProps = ( state, ownProps ) => {
-//   let groupId = parseInt(ownProps.params.groupId) || 0;
-//   return {
-//     products: getVisibleProductsByCategoryId(state, ownProps),//state.products.getIn(['selectedProductsByCategory', 'products']),
-//     categoryId: groupId,
-//     ui: state.ui.toObject()
-//   }
-// }
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(Object.assign({}, UIActionCreators, ProductActionCreators), dispatch)

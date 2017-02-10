@@ -1,12 +1,26 @@
 // components/Login.js
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+
+import Button from '../basecomponents/Button'
 
 import 'purecss/build/forms-min.css'
 import './Login.css'
 
-import Button from './Button'
 
-export default class Login extends Component {
+class Login extends React.Component {
+
+  static propTypes = {
+    onLoginClick: React.PropTypes.func.isRequired,
+    errorMessage: React.PropTypes.string
+  }
+
+  handleClick(event) {
+    const username = this.refs.username
+    const password = this.refs.password
+    const creds = { username: username.value.trim(), password: password.value.trim() }
+    event.preventDefault();
+    this.props.onLoginClick(creds)
+  }
 
   render() {
     const { errorMessage } = this.props
@@ -41,17 +55,6 @@ export default class Login extends Component {
       </div>
     )
   }
-
-  handleClick(event) {
-    const username = this.refs.username
-    const password = this.refs.password
-    const creds = { username: username.value.trim(), password: password.value.trim() }
-    event.preventDefault();
-    this.props.onLoginClick(creds)
-  }
 }
 
-Login.propTypes = {
-  onLoginClick: PropTypes.func.isRequired,
-  errorMessage: PropTypes.string
-}
+export default Login

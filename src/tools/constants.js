@@ -4,12 +4,7 @@ export const cataloguePath = "/cat"
 
 export const API_HOST = process.env.REACT_APP_API_HOST || 'localhost:5000'
 export const API_PATH = process.env.REACT_APP_API_PATH || '/api/v0/stock/'
-export const API_KEY = process.env.REACT_APP_API_KEY || '23'
-export const apiPrefix = API_HOST + API_PATH
-
-export const apiRoot = apiPrefix;
-
-// export const apiKey = "api_key=23"
+export const API_AUTH_PATH = process.env.REACT_APP_API_AUTH_PATH || '/auth'
 
 // Standard category properties
 export const categoryPropTypes = PropTypes.shape({

@@ -1,9 +1,12 @@
-import { connect } from 'react-redux'
 import React, { PropTypes, Component }  from 'react'
-
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import Sidebar from '../components/Sidebar'
+
+import Sidebar from '../basecomponents/Sidebar'
+import Spinner from '../basecomponents/Spinner'
+import Alert from '../basecomponents/Alert'
+
 import { categoryPropTypes } from '../tools/constants'
 // import { categoryPropTypes, cataloguePath } from '../tools/constants'
 // import CategoryList from '../components/CategoryList'
@@ -11,7 +14,6 @@ import * as UIActionCreators from '../actions/ui'
 import * as CatalogueActionCreators from '../actions/categories'
 import AddCategoryWidget  from './AddCategory'
 import AddProductWidget  from './AddProduct'
-import Spinner from '../components/Spinner'
 import CategoryTreeMenu from '../components/CategoryTreeMenu'
 
 import { makeGetPathToRootFromCategoryId, makeGetCurrentCategory, makeGetVisibleSubcategoriesByCategoryId, getCategoriesTree } from '../selectors/Catalogue'
@@ -83,18 +85,22 @@ class CatalogueAppImpl extends Component {
   }
 
   render() {
-    const { categoryId, pathToTop, ui, children, categoryEditId, alertText, fetchingSubcategoriesByCategoryId } = this.props;
+    const { categoryId, pathToTop, children, categoryEditId, alertText, alertType, fetchingSubcategoriesByCategoryId } = this.props;
 
     let alert;
-    if (this.state.alertVisible && alertText !== null && alertText !== "" && typeof alertText !== 'undefined') {
-      alert = null
+    // if (this.state.alertVisible && alertText !== null && alertText !== "" && typeof alertText !== 'undefined') {
+      alert = (
+        <Alert type={alertType || 'info'}>
+          {alertText}
+        </Alert>
+      )
       // (
           // <Alert bsStyle={ui.alertType} onDismiss={this.handleAlertDismiss}>
           //   <h4>Oh snap! You got an error!</h4>
           //   <p>{alertText}</p>
           // </Alert>
         // )
-    }
+    // }
 
     const pathIds = pathToTop
       .map(item=> {return item["id"]}) || [0]
@@ -102,14 +108,6 @@ class CatalogueAppImpl extends Component {
     const sidebarContent = (categoryId === fetchingSubcategoriesByCategoryId)?
         (<Spinner />)
         :
-        // (
-        //   <CategoryList
-        //     elements={subCategories}
-        //     toggleEditFn={this.props.toggleCategoryEditMode}
-        //     modifyFn={this.props.modifyCategory}
-        //     editItemId={categoryEditId}
-        //   />
-        // )
         (this.props.categoriesTree)?
             (<div className="pure-menu custom-restricted-width">
               <CategoryTreeMenu
@@ -124,44 +122,10 @@ class CatalogueAppImpl extends Component {
             )
           : null
 
-
-
     const appHeader = (categoryId === fetchingSubcategoriesByCategoryId)?
         (<Spinner />)
         :
         null
-        // (
-        //   <div className="catalogueHeader">
-        //     <Navbar fluid>
-        //       <Nav>
-        //         { pathToTop &&
-        //           pathToTop.map(cat =>
-        //             <LinkContainer key={cat.id} to={{pathname: cataloguePath + '/' + cat.id}}>
-        //             <NavItem eventKey={cat.id} title={cat.name}>
-        //             {cat.name}
-        //             </NavItem>
-        //             </LinkContainer>
-        //           )
-        //         }
-        //         <NavItem eventKey={1} onClick={() => { this.handleAddCategoryMode() }} title="Add New Subcategory">
-        //           <Button componentClass="btn-sm"><Glyphicon glyph="plus" /></Button>
-        //         </NavItem>
-        //       </Nav>
-        //       <Nav pullRight activeKey={0} bsStyle="pills">
-        //         <NavItem eventKey={2} onClick={() => { this.props.toggleAddProductMode() }} title="Add Product">
-        //           <Button componentClass="btn-sm"><Glyphicon glyph="plus-sign" /></Button>
-        //         </NavItem>
-        //       </Nav>
-        //       <Navbar.Form pullRight>
-        //         <FormGroup>
-        //           <FormControl type="text" placeholder="Filter" onChange={(e) => console.log("Filter value" + e.target.value)}/>
-        //         </FormGroup>
-        //         {' '}
-        //         <Button type="submit" componentClass="btn-sm"><Glyphicon glyph="search" /></Button>
-        //       </Navbar.Form>
-        //     </Navbar>
-        //   </div>
-        // )
 
     return (
       <div className="CatalogueApp">
@@ -178,17 +142,6 @@ class CatalogueAppImpl extends Component {
       </div>
 
     )
-    // {appHeader}
-    // <span className="SidebarToggler"><Glyphicon glyph={this.state.toggleSwitch} /></span>
-
-    // <div className="row">
-    //   <div className="CatSidebar">
-    //     {sidebarContent}
-    //   </div>
-    //   <div className="CatContent">
-    //     {children}
-    //   </div>
-    // </div>
   }
 }
 // <Button componentClass="btn-sm" onClick={() => { this.handleSubcategoriesCollapse() }}><Glyphicon glyph={this.state.toggleSwitch} /></Button>
@@ -205,9 +158,10 @@ const makeMapStateToProps = () => {
       category: getCurrentCategory(state, ownProps),
       pathToTop: getPathToRootFromCategoryId(state, ownProps),
       subCategories: getVisibleSubcategoriesByCategoryId(state, ownProps),
-      ui: state.ui.toObject,
+      // ui: state.ui.toObject,
       categoryEditId: state.ui.get('categoryEditId'),
       alertText: state.ui.get('alertText'),
+      alertType: state.ui.get('alertType'),
       fetchingSubcategoriesByCategoryId: state.ui.get('fetchingSubcategoriesByCategoryId'),
       categoriesTree: getCategoriesTree(state, ownProps),
     }

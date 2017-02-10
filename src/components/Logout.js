@@ -1,11 +1,13 @@
 // components/Logout.js
+import React from 'react'
 
-import React, { Component, PropTypes } from 'react'
+import Button from '../basecomponents/Button'
 
-// import 'purecss/build/buttons-min.css'
-import Button from './Button'
+class Logout extends React.Component {
 
-export default class Logout extends Component {
+  static propTypes = {
+    onLogoutClick: React.PropTypes.func.isRequired
+  }
 
   render() {
     const { onLogoutClick } = this.props
@@ -16,9 +18,6 @@ export default class Logout extends Component {
       </Button>
     )
   }
-
 }
 
-Logout.propTypes = {
-  onLogoutClick: PropTypes.func.isRequired
-}
+export default Logout

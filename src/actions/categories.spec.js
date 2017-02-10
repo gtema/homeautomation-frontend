@@ -22,13 +22,12 @@ describe('products actions', () => {
     let category = {id: 3, name: 'test', parent_id: 1}
     nock(`http://${API_HOST}`)
       .get(`${API_PATH}category/${category.id}`)
-      .query({api_key:API_KEY})
       .reply(200, category);
 
     const timestamp = Date.now()
     const expectedActions = [
       { type: 'REQUEST_CATEGORY_BY_CATEGORY_ID', parent_id: category.id },
-      { type: 'RECEIVE_CATEGORY_BY_CATEGORY_ID', response : category, parent_id: category.id, status: 'success', timestamp: timestamp }
+      { type: 'RECEIVE_CATEGORY_BY_CATEGORY_ID', authenticated: true, response : category, parent_id: category.id, status: 'success', timestamp: timestamp }
     ]
 
     const store = mockStore({})
@@ -45,13 +44,12 @@ describe('products actions', () => {
     let category = {id: 3, name: 'test', parent_id: 1}
     nock(`http://${API_HOST}`)
       .get(`${API_PATH}category/${category.id}`)
-      .query({api_key:API_KEY})
       .reply(401, {message: "ups"});
 
     const timestamp = Date.now()
     const expectedActions = [
       { type: 'REQUEST_CATEGORY_BY_CATEGORY_ID', parent_id: category.id },
-      { type: 'RECEIVE_CATEGORY_BY_CATEGORY_ID_ERROR', parent_id: category.id, status: 'failure', error: "ups", timestamp: timestamp }
+      { type: 'RECEIVE_CATEGORY_BY_CATEGORY_ID_ERROR', authenticated: true, parent_id: category.id, status: 'failure', error: "ups", timestamp: timestamp }
     ]
 
     const store = mockStore({})
@@ -71,13 +69,12 @@ describe('products actions', () => {
     ]
     nock(`http://${API_HOST}`)
       .get(`${API_PATH}categories_by_category_id/${categories[0].parent_id}`)
-      .query({api_key:API_KEY})
       .reply(200, categories);
 
     const timestamp = Date.now()
     const expectedActions = [
       { type: 'REQUEST_SUBCATEGORIES_BY_CATEGORY_ID', parent_id: categories[0].parent_id },
-      { type: 'RECEIVE_SUBCATEGORIES_BY_CATEGORY_ID', parent_id: categories[0].parent_id, response: categories, status: 'success', timestamp: timestamp }
+      { type: 'RECEIVE_SUBCATEGORIES_BY_CATEGORY_ID', authenticated: true, parent_id: categories[0].parent_id, response: categories, status: 'success', timestamp: timestamp }
     ]
 
     const store = mockStore({})
@@ -95,13 +92,12 @@ describe('products actions', () => {
     ]
     nock(`http://${API_HOST}`)
       .get(`${API_PATH}categories`)
-      .query({api_key:API_KEY})
       .reply(200, categories);
     const timestamp = Date.now()
 
     const expectedActions = [
       { type: 'REQUEST_CATEGORIES' },
-      { type: 'RECEIVE_CATEGORIES', response: categories, status: 'success', timestamp: timestamp }
+      { type: 'RECEIVE_CATEGORIES', authenticated: true, response: categories, status: 'success', timestamp: timestamp }
     ]
 
     const store = mockStore({})

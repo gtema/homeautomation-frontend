@@ -2,10 +2,10 @@ import React, {Component, PropTypes} from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-// import { Button, Modal, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
+import Modal from '../basecomponents/Modal'
+import Button from '../basecomponents/Button'
 
 import * as UIActionCreators from '../actions/ui'
-import * as CategoriesActionCreators from '../actions/categories'
 import * as ProductActionCreators from '../actions/products'
 
 
@@ -33,7 +33,7 @@ class AddProductImpl extends Component {
   }
 
   handleCancel(e) {
-    e.preventDefault()
+    // e.preventDefault()
     this.props.toggleAddProductMode()
   }
 
@@ -48,30 +48,25 @@ class AddProductImpl extends Component {
       return null
     }
 
-    return null
-    // return (
-    //   <Modal.Dialog>
-    //     <Modal.Header>
-    //       <Modal.Title>Add Product</Modal.Title>
-    //     </Modal.Header>
-    //
-    //     <Modal.Body>
-    //       <Form inline>
-    //         <FormGroup controlId='name'>
-    //           <ControlLabel>Name</ControlLabel>
-    //           {' '}
-    //           <FormControl type='text' name='name' value={this.state.name} onChange={ this.handleChange } />
-    //         </FormGroup>
-    //       </Form>
-    //     </Modal.Body>
-    //
-    //     <Modal.Footer>
-    //       <Button onClick={ this.handleCancel }>Close</Button>
-    //       <Button bsStyle="primary" onClick={ this.handleSubmit }>Save changes</Button>
-    //     </Modal.Footer>
-    //
-    //   </Modal.Dialog>
-    // )
+    return (
+      <Modal isVisible={this.props.visible} onClose={ this.handleCancel }>
+        <Modal.Header>Add Product</Modal.Header>
+        <Modal.Body>
+          <form onSubmit={this.handleSubmit} onReset={this.cancelEdit} className="pure-form pure-form-aligned">
+              <div className="pure-control-group">
+                <label htmlFor="name">Name</label>
+                <input type="text" name="name" value={this.state.name}
+                  onChange={ this.handleChange }
+                />
+              </div>
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+              <Button onClick={ this.handleCancel }>Close</Button>
+              <Button onClick={ this.handleSubmit }>Save changes</Button>
+        </Modal.Footer>
+      </Modal>
+    )
   }
 
 }
@@ -83,7 +78,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, UIActionCreators, CategoriesActionCreators, ProductActionCreators), dispatch)
+  return bindActionCreators(Object.assign({}, UIActionCreators, ProductActionCreators), dispatch)
 }
 
 const AddProductWidget = connect(mapStateToProps, mapDispatchToProps)(AddProductImpl)

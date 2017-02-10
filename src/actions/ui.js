@@ -68,25 +68,22 @@ export const selectProductId = id => (dispatch, getState) => {
   if (typeof(currentSelectedProductId) !== 'undefined' && currentSelectedProductId !== null ) {
     if (currentSelectedProductId !== id) {
       dispatch(selectProduct(id))
-      // dispatch(productActions.requestProductIfNeeded(id))
     }
   } else {
     dispatch(selectProduct(id))
-    // dispatch(productActions.requestProductIfNeeded(id))
   }
 }
 
+/* Request all individual catalogue elements if necessary */
 export const selectCategoryId = id => (dispatch, getState) => {
   const currentSelectedCategoryId = getState().ui.get('selectedCategoryId');
   if (typeof(currentSelectedCategoryId) !== 'undefined' && currentSelectedCategoryId !== null ) {
     if (currentSelectedCategoryId !== id) {
-      // dispatch(productActions.requestCategoryProductsIfNeeded(id))
       dispatch(categoryActions.loadSubcategoriesIfNeeded(id))
       dispatch(categoryActions.loadCategoryIfNeeded(id))
       dispatch(selectCategory(id))
     }
   } else {
-    // dispatch(productActions.requestCategoryProductsIfNeeded(id))
     dispatch(categoryActions.loadSubcategoriesIfNeeded(id))
     dispatch(categoryActions.loadCategoryIfNeeded(id))
     dispatch(selectCategory(id))

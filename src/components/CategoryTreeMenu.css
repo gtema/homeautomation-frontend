@@ -55,7 +55,7 @@
 .menu-list-tree .menu-collapsible-icon {
   /*font-size:0.8em;*/ /* Glyph size*/
   margin-right: 5px; /* margin between icon and link*/
-  float:left;
+  float:left; /* For Firefox not to break line after text */
 }
 
 .menu-list-tree .pure-menu-link {
