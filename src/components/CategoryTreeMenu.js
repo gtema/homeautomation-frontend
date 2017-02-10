@@ -9,6 +9,7 @@ import CategoryTreeMenuNode from './CategoryTreeMenuNode'
 // import { categoryPropTypes, cataloguePath } from '../tools/constants'
 import classnames from 'classnames'
 
+import 'purecss/build/menus-min.css'
 import './CategoryTreeMenu.css'
 
 class CategoryTreeMenu extends Component {

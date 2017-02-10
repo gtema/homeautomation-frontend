@@ -1,4 +1,5 @@
 import { API_HOST, API_AUTH_PATH } from '../tools/constants'
+import * as CategoriesActions  from '../actions/categories'
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
@@ -21,7 +22,6 @@ function receiveLogin(user) {
     type: LOGIN_SUCCESS,
     isFetching: false,
     isAuthenticated: true,
-    id_token: user.access_token
   }
 }
 
@@ -78,13 +78,20 @@ export function loginUser(creds) {
         if (!response.ok) {
           // If there was a problem, we want to
           // dispatch the error condition
-          dispatch(loginError(user.message))
+          let msg = null
+          if (user.description) {
+            msg = user.description
+          } else {
+            msg = response.statusText
+          }
+          dispatch(loginError(msg))
           return Promise.reject(user)
         } else {
           // If login was successful, set the token in local storage
           localStorage.setItem('api_key', user.api_key)
           // Dispatch the success action
           dispatch(receiveLogin(user))
+          dispatch(CategoriesActions.loadAllCategories())
         }
       }).catch(err => {
         if (typeof err.desription !== 'undefined') {
@@ -104,4 +111,49 @@ export function logoutUser() {
     localStorage.removeItem('api_key')
     dispatch(receiveLogout())
   }
+}
+
+// Check the token validity
+export function is_auth_valid() {
+
+  let api_key = localStorage.getItem('api_key')
+
+  if (typeof api_key !== 'undefined' && api_key !== null) {
+    // do a request to check token validity
+    let config = {
+      method: 'GET',
+      headers: { 'Authorization':`API_KEY ${api_key}`},
+    }
+    return dispatch => {
+      return fetch(`http://${API_HOST}${API_AUTH_PATH}`, config)
+        .then(response =>
+          response.json().then(user => ({ user, response }))
+              ).then(({ user, response }) =>  {
+          if (!response.ok) {
+            let msg = null
+            if (user.description) {
+              msg = user.description
+            } else {
+              msg = response.statusText
+            }
+            dispatch(loginError(msg))
+            return Promise.reject(user)
+          } else {
+            // Dispatch the success action
+            dispatch(receiveLogin(user))
+          }
+        }).catch(err => {
+          if (typeof err.desription !== 'undefined') {
+            console.error("unknown")
+            dispatch(loginError(err.description))
+          } else if (err.name === 'TypeError') {
+            console.error("Network problems")
+            // dispatch(loginError("Network problem"))
+          }
+        })
+      }
+
+  }
+  return {type: null}
+
 }

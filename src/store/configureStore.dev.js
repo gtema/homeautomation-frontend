@@ -5,6 +5,8 @@ import rootReducer from '../reducers'
 import DevTools from '../containers/DevTools'
 import * as CategoriesActions  from '../actions/categories'
 
+import { is_auth_valid } from '../actions/auth'
+
 import api from '../middleware/api'
 
 const configureStore = preloadedState => {
@@ -25,10 +27,11 @@ const configureStore = preloadedState => {
     })
   }
 
+  // Check the authorization
+  store.dispatch(is_auth_valid())
   // Feed initial categories and products
-  // store.dispatch(receiveCategories(require('./categories.json')))
   store.dispatch(CategoriesActions.loadAllCategories())
-  // store.dispatch(receiveProducts(require('./products.json')))
+
 
   return store
 }

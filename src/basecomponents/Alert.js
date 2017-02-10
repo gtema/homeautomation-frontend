@@ -15,7 +15,6 @@ class Alert extends React.Component {
 
   constructor(props) {
     super(props)
-    console.log(props)
     this.state = {
       hidden: (typeof(props.children) !== 'undefined' && props.children !== '')? false: true,
       type: 'info',
@@ -35,7 +34,6 @@ class Alert extends React.Component {
   }
 
   hide() {
-    console.log("hide")
     this.setState({
       hidden: true,
       content: null,

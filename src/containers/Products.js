@@ -2,11 +2,10 @@ import React, { PropTypes, Component }  from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Link from 'react-router/lib/Link'
-// import browserHistory from 'react-router/lib/browserHistory'
 
 import classnames from 'classnames';
 
-import 'purecss/build/grids-min.css'
+
 import 'purecss/build/grids-responsive-min.css'
 import './Products.css'
 
@@ -74,7 +73,7 @@ class ProductsAppImpl extends Component {
       const productExpiresInDays = getDatesDiffInDays(product.first_started_ed, this.state.today);
       const link = cataloguePath + '/' + product.category_id + '/item/' + product.id;
       return (
-        <section className="pure-u-sm-1 pure-u-md-1-2 pure-u-lg-1-4 pure-u-xl-1-5" key={product.id}
+        <section className="pure-u-1 pure-u-md-1-2 pure-u-lg-1-4 pure-u-xl-1-5" key={product.id}
         >
           <div className={classnames("l-box", {
                             "panel-warning":(productExpiresInDays !== null && productExpiresInDays  <= 3 )
@@ -129,7 +128,7 @@ class ProductsAppImpl extends Component {
               <div className="pure-g">
                 {products.map(productItem)}
 
-                <section className="pure-u-sm-1 pure-u-md-1-2 pure-u-lg-1-4 pure-u-xl-1-5">
+                <section className="pure-u-sm-1-1 pure-u-md-1-2 pure-u-lg-1-4 pure-u-xl-1-5">
                   <Button className="button-small" onClick={() => { /* browserHistory.push(cataloguePath + '/' + categoryId + "/item/-1");*/this.props.toggleAddProductMode() } }><Icon icon="fa-plus" /></Button>
                 </section>
               </div>

@@ -32,7 +32,7 @@
 .sidebarContainer .sidebarBar.sidebarBar-visible {
   opacity: 1;
   /*display:block;*/
-  width:25em;
+  width:600px;
   padding: 10px 10px 10px 0;
   visibility: visible;
   transition: opacity 0.5s 0.3s, visibility 0.2s 0.3s, width 0.3s 0s;

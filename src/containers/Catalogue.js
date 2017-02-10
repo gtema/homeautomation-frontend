@@ -134,8 +134,8 @@ class CatalogueAppImpl extends Component {
         <AddProductWidget />
         <Sidebar sidebar={sidebarContent}>
           <div className="container-fluid">
-          {appHeader}
-          {children}
+            {appHeader}
+            {children}
           </div>
         </Sidebar>
 
@@ -144,7 +144,7 @@ class CatalogueAppImpl extends Component {
     )
   }
 }
-// <Button componentClass="btn-sm" onClick={() => { this.handleSubcategoriesCollapse() }}><Glyphicon glyph={this.state.toggleSwitch} /></Button>
+
 // Introduce reselect caching per property (categoryId)
 const makeMapStateToProps = () => {
   const getVisibleSubcategoriesByCategoryId = makeGetVisibleSubcategoriesByCategoryId()

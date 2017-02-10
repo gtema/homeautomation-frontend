@@ -4,8 +4,8 @@ import { loginUser } from '../actions/auth'
 import Login from '../components/Login'
 import Header from '../components/Header'
 
+import 'purecss/build/base-min.css'
 import './App.css'
-import 'purecss/build/pure-min.css'
 
 class App extends Component {
   render() {

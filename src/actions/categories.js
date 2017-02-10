@@ -66,6 +66,7 @@ export const loadAllCategories = () => {
       method: Methods.GET,
       authenticated: true,
       schema: Schemas.CATEGORY_ARRAY,
+      shouldCallAPI: (state) => state.auth.isAuthenticated,
     }
   }
 }

@@ -6,8 +6,8 @@ import Link from 'react-router/lib/Link'
 import Logout from './Logout'
 import { logoutUser } from '../actions/auth'
 
+import 'purecss/build/menus-min.css'
 import './Header.css'
-import 'purecss/build/grids-responsive-min.css'
 
 /* App header*/
 class Header extends React.Component {
