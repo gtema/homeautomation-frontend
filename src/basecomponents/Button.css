@@ -62,3 +62,13 @@
 .pure-button.button-secondary {
     background: rgb(66, 184, 221); /* this is a light blue */
 }
+
+.pure-button .fa + span {
+  margin-left: 2px; /* distance between icon and text*/
+}
+
+@media screen and (max-width: 970px) /* Mobile */ {
+  .hidden-sm {
+    display:none;
+  }
+}
