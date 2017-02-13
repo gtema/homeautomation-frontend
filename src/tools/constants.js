@@ -2,7 +2,10 @@ import { PropTypes } from 'react'
 
 export const cataloguePath = "/cat"
 
+
 export const API_HOST = process.env.REACT_APP_API_HOST || 'localhost:5000'
+export const API_PROTOCOL = (process.env.REACT_APP_API_HTTPS || false)? 'https':'http'
+export const API_HTTPS = process.env.REACT_APP_API_HTTPS || false
 export const API_PATH = process.env.REACT_APP_API_PATH || '/api/v0/stock/'
 export const API_AUTH_PATH = process.env.REACT_APP_API_AUTH_PATH || '/auth'
 

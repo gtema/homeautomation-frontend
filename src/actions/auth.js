@@ -1,4 +1,4 @@
-import { API_HOST, API_AUTH_PATH } from '../tools/constants'
+import { API_HOST, API_AUTH_PATH, API_PROTOCOL } from '../tools/constants'
 import * as CategoriesActions  from '../actions/categories'
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST'
@@ -71,7 +71,7 @@ export function loginUser(creds) {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds))
 
-    return fetch(`http://${API_HOST}${API_AUTH_PATH}`, config)
+    return fetch(`${API_PROTOCOL}://${API_HOST}${API_AUTH_PATH}`, config)
       .then(response =>
         response.json().then(user => ({ user, response }))
             ).then(({ user, response }) =>  {
@@ -125,7 +125,7 @@ export function is_auth_valid() {
       headers: { 'Authorization':`API_KEY ${api_key}`},
     }
     return dispatch => {
-      return fetch(`http://${API_HOST}${API_AUTH_PATH}`, config)
+      return fetch(`${API_PROTOCOL}://${API_HOST}${API_AUTH_PATH}`, config)
         .then(response =>
           response.json().then(user => ({ user, response }))
               ).then(({ user, response }) =>  {

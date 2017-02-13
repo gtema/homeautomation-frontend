@@ -1,9 +1,9 @@
 import { Schema, arrayOf } from 'normalizr'
 import fetch  from 'isomorphic-fetch'
 
-import { API_HOST, API_PATH } from '../tools/constants'
+import { API_HOST, API_PATH, API_PROTOCOL } from '../tools/constants'
 
-const API_ROOT = `http://${API_HOST}${API_PATH}`
+const API_ROOT = `${API_PROTOCOL}://${API_HOST}${API_PATH}`
 
 export const Methods = {
   GET: "GET",
