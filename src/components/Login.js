@@ -14,7 +14,7 @@ class Login extends React.Component {
     errorMessage: React.PropTypes.string
   }
 
-  handleClick(event) {
+  handleSubmit(event) {
     const username = this.refs.username
     const password = this.refs.password
     const creds = { username: username.value.trim(), password: password.value.trim() }
@@ -27,7 +27,7 @@ class Login extends React.Component {
 
     return (
       <div className="login-form">
-        <form className="pure-form pure-form-aligned">
+        <form onSubmit={(e) => {this.handleSubmit(e)}} className="pure-form pure-form-aligned">
           <fieldset>
             <div className="pure-control-group">
                 <label htmlFor="name">Username</label>
@@ -41,7 +41,7 @@ class Login extends React.Component {
 
             <div className="pure-control-group">
               <label />
-              <Button onClick={(event) => {this.handleClick(event); }} className="pure-button-primary">
+              <Button type="submit" className="pure-button-primary">
                 Login
               </Button>
               {errorMessage &&
