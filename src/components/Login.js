@@ -29,6 +29,9 @@ class Login extends React.Component {
       <div className="login-form">
         <form onSubmit={(e) => {this.handleSubmit(e)}} className="pure-form pure-form-aligned">
           <fieldset>
+            <legend>
+              Log in
+            </legend>
             <div className="pure-control-group">
                 <label htmlFor="name">Username</label>
                 <input type='text' ref='username' className="form-control" placeholder='Username'/>

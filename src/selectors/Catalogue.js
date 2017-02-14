@@ -28,7 +28,7 @@ const denormalizeCategories = (objById, idsByParent, categoryId) => {
 
   const tree = childrenIds
     .map(cat => objById.get(cat.toString()))
-    .sortBy((item) => { return item.get('prio') + item.get('name') })
+    .sortBy((item) => { return item.get('prio').toString().padStart(3, "0") + item.get('name') })
     .map(cat => {
         const children = denormalizeCategories(objById, idsByParent, cat.get('id'));
         if (children.length > 0) {

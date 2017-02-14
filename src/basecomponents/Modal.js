@@ -2,13 +2,13 @@ import React, { Component } from 'react'
 
 import './Modal.css'
 
-/* Modal Header */
-class Header extends Component {
+/* Modal ModalHeader */
+class ModalHeader extends Component {
 
-  static propTypes = {
-    children: React.PropTypes.object
-  }
-
+  // static propTypes = {
+  //   children: React.PropTypes.object
+  // }
+  //
   render() {
     return React.createElement(
       'div',
@@ -25,12 +25,12 @@ class Header extends Component {
   }
 }
 
-Header.contextTypes = {
+ModalHeader.contextTypes = {
   onClose: React.PropTypes.func,
 }
 
-/* Modal Body */
-class Body extends Component {
+/* Modal ModalBody */
+class ModalBody extends Component {
   render() {
     return React.createElement(
       'div',
@@ -42,8 +42,8 @@ class Body extends Component {
   }
 }
 
-/* Modal Footer */
-class Footer extends Component {
+/* Modal ModalFooter */
+class ModalFooter extends Component {
   render() {
     return React.createElement(
       'div',
@@ -129,8 +129,8 @@ Modal.childContextTypes ={
   onClose: React.PropTypes.func,
 }
 
-Modal.Header = Header
-Modal.Body = Body
-Modal.Footer = Footer
+Modal.Header = ModalHeader
+Modal.Body = ModalBody
+Modal.Footer = ModalFooter
 
 export default Modal
