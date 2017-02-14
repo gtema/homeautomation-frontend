@@ -13,7 +13,11 @@
 .pure-button.button-success,
 .pure-button.button-error,
 .pure-button.button-warning,
-.pure-button.button-secondary {
+.pure-button.button-secondary,
+.pure-button.bg-success,
+.pure-button.bg-error,
+.pure-button.bg-warning,
+.pure-button.bg-secondary {
     color: white;
     border-radius: 0px;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
@@ -35,33 +39,33 @@
     font-size: 125%;
 }
 
-.pure-button.button-primary {
-    background: rgb(0, 107, 250); /* this is a blue */
+/*.pure-button.button-primary {
+    background: rgb(0, 107, 250);
 }
 
 .pure-button.button-info {
-    background: rgb(0, 107, 250); /* this is a blue */
+    background: rgb(0, 107, 250);
 }
 
 .pure-button.button-success {
-    background: rgb(28, 184, 65); /* this is a green */
+    background: rgb(28, 184, 65);
 }
 
 .pure-button.button-error {
-    background: rgb(202, 60, 60); /* this is a maroon */
+    background: rgb(202, 60, 60);
 }
 
 .pure-button.button-warning {
-    background: rgb(223, 117, 20); /* this is an orange */
+    background: rgb(223, 117, 20);
 }
 
 .pure-button.button-danger {
-    background: rgb(223, 38, 20); /* this is an red */
+    background: rgb(223, 38, 20);
 }
 
 .pure-button.button-secondary {
-    background: rgb(66, 184, 221); /* this is a light blue */
-}
+    background: rgb(66, 184, 221);
+}*/
 
 .pure-button .fa + span {
   margin-left: 2px; /* distance between icon and text*/

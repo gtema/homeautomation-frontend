@@ -20,9 +20,13 @@
   font-weight: bold;
 }
 
-.login-form .pure-button-primary {
-  background-color: green;
+.login-form legend {
+  color: yellow;
 }
+
+/*.login-form .pure-button-primary {
+  background-color: rgb(127, 230, 138);
+}*/
 
 .login-form .pure-form-message {
   color: red;

@@ -2,7 +2,6 @@ import React, { PropTypes, Component }  from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-
 import Sidebar from '../basecomponents/Sidebar'
 import Spinner from '../basecomponents/Spinner'
 import Alert from '../basecomponents/Alert'

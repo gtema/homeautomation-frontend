@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { loginUser } from '../actions/auth'
+
+import * as AuthActionCreators from '../actions/auth'
 import Login from '../components/Login'
 import Header from '../components/Header'
 
@@ -8,16 +10,24 @@ import 'purecss/build/base-min.css'
 import './App.css'
 
 class App extends Component {
+
+  static propTypes = {
+    // dispatch: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
+    errorMessage: PropTypes.string,
+    children: PropTypes.object,
+  }
+
   render() {
-    const { dispatch, isAuthenticated, errorMessage, children } = this.props
+    const { isAuthenticated, errorMessage, children } = this.props
     return (isAuthenticated)?
     (
       <div>
         <Header
           isAuthenticated={isAuthenticated}
           errorMessage={errorMessage}
-          dispatch={dispatch}
-          />
+          logoutFn={this.props.logoutUser}
+        />
         <div className="main-content container-fluid">
           {children}
         </div>
@@ -26,17 +36,14 @@ class App extends Component {
     (
       <Login
         errorMessage={errorMessage}
-        onLoginClick={ creds => dispatch(loginUser(creds)) }
+        onLoginClick={ creds => this.props.loginUser(creds) }
       />
     )
   }
 }
 
-App.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-  errorMessage: PropTypes.string,
-  children: PropTypes.object,
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(Object.assign({}, AuthActionCreators), dispatch)
 }
 
 // These props come from the application's
@@ -52,4 +59,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(App)

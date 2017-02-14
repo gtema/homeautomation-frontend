@@ -20,6 +20,39 @@ a {
   color: #777;
 }
 
+/* Colors */
+.title-background {
+  background: radial-gradient(ellipse at center, #0679f2 0%, #10549d 100%);
+}
+
+.bg-success {
+  background-color: rgb(28, 184, 65);
+}
+
+.bg-primary {
+  background-color: rgb(0, 107, 250);
+}
+
+.bg-info {
+  background-color: rgb(0, 107, 250);
+}
+
+.bg-error {
+  background-color: rgb(202, 60, 60);
+}
+
+.bg-danger {
+  background-color: rgb(223, 38, 20);
+}
+
+.bg-warning {
+  background-color: rgb(223, 117, 20);
+}
+
+.bg-secondary {
+  background-color: rgb(66, 184, 221);
+}
+
 .pure-form input {
   border-radius: 0 !important;
 }
@@ -30,9 +63,7 @@ a {
   box-shadow: 0 1px 1px rgba(0,0,0, 0.10);
 }
 
-/* TODO: decide upon color*/
 .Panel header {
-  background-color: #0679f2;
   color: #fbff1c;
   padding: 10px;
   font-weight: bold;

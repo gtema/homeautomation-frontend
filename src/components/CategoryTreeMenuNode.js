@@ -77,13 +77,13 @@ class CategoryTreeMenuNode extends Component {
               <Button
                 title="Cancel"
                 type="cancel"
-                className="button-small button-warning"
+                className="button-small bg-warning"
               >
                 <Icon icon="fa-undo" />
               </Button>
               <Button
                 title="Add Subcategory"
-                className="button-small button-success"
+                className="button-small bg-success"
                 onClick={(e) => { e.preventDefault(); this.props.addCategoryFn(id)}}
               >
                 <Icon icon="fa-plus" />
@@ -91,7 +91,7 @@ class CategoryTreeMenuNode extends Component {
               <Button
                 title="Save changes"
                 type="submit"
-                className="button-small button-primary"
+                className="button-small bg-primary"
               >
                 <Icon icon="fa-check" />
               </Button>

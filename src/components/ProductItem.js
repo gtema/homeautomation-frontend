@@ -83,7 +83,7 @@ class ProductItem extends React.Component {
                   (
                     <Button
                         onClick={(e) => { this.modifyElement(e, {is_started:!this.props.is_started})}}
-                        className="button-small button-info">
+                        className="button-small bg-info">
                       <Icon icon="fa-cut"/>
                       <span className="hidden-sm">Open</span>
                     </Button>
@@ -92,7 +92,7 @@ class ProductItem extends React.Component {
                   (
                     <Button
                         onClick={(e) => { this.modifyElement(e, {is_started:!this.props.is_started})}}
-                        className="button-small button-info">
+                        className="button-small bg-info">
                       <Icon icon="fa-save" />
                       <span className="hidden-sm">Close</span>
                     </Button>
@@ -101,11 +101,11 @@ class ProductItem extends React.Component {
             </ButtonGroup>
             <ButtonGroup>
               <Button onClick={(e) => { this.modifyElement(e, {amount:0})}}
-                  className="button-small button-warning">
+                  className="button-small bg-warning">
                 <Icon icon="fa-battery-empty" /><span className="hidden-sm">Empty</span>
               </Button>
               <Button onClick={(e) => { this.modifyElement(e, {is_disposed:!this.props.is_disposed})}}
-                  className="button-small button-danger">
+                  className="button-small bg-danger">
                 <Icon icon="fa-trash" />
                 <span className="hidden-sm">Dispose</span>
               </Button>
@@ -117,7 +117,7 @@ class ProductItem extends React.Component {
       :
       (
         <ButtonGroup>
-          <Button onClick={(e) => { this.props.addFn(this.state) }} className="button-small button-success" >
+          <Button onClick={(e) => { this.props.addFn(this.state) }} className="button-small bg-success" >
             <Icon icon="fa-plus" />
             <span className="hidden-sm">Add</span>
           </Button>

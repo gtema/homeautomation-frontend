@@ -111,21 +111,21 @@ class ProductImpl extends Component {
           {editMode ?
             (
               <ButtonGroup>
-                <Button className="button-small button-warning" type="reset" onClick={ this.cancelEdit }>
+                <Button className="button-small bg-warning" type="reset" onClick={ this.cancelEdit }>
                   <Icon icon="fa-undo" />
                 </Button>
-                <Button className="button-small button-success" type="submit" onClick={ this.handleSubmit }>
+                <Button className="button-small bg-success" type="submit" onClick={ this.handleSubmit }>
                   <Icon icon="fa-check" />
                 </Button>
               </ButtonGroup>
             ) : (
               <ButtonGroup>
-                <Button className="button-small button-secondary" onClick={() => {
+                <Button className="button-small bg-secondary" onClick={() => {
                   toggleProductEditMode(product.id)
                 }}>
                   <Icon icon="fa-pencil" />
                 </Button>
-                <Button className="button-small button-warning" onClick={() => {
+                <Button className="button-small bg-warning" onClick={() => {
                   browserHistory.push(cataloguePath + '/' + product.category_id);
                   removeProductByProductId(product.id);
                 }}>
@@ -140,7 +140,7 @@ class ProductImpl extends Component {
 
     return (
       <section className="Panel">
-        <header className="PanelHeader">{header}</header>
+        <header className="PanelHeader bg-primary">{header}</header>
         <div className="PanelDescription">
           <form onSubmit={this.handleSubmit} onReset={this.cancelEdit} className="pure-form pure-form-aligned">
             <fieldset>

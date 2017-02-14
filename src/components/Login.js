@@ -44,7 +44,7 @@ class Login extends React.Component {
 
             <div className="pure-control-group">
               <label />
-              <Button type="submit" className="pure-button-primary">
+              <Button type="submit" className="bg-success">
                 Login
               </Button>
               {errorMessage &&

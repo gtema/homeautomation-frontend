@@ -6,6 +6,7 @@ import browserHistory from 'react-router/lib/browserHistory'
 import { syncHistoryWithStore } from 'react-router-redux'
 import Root from './containers/Root'
 import configureStore from './store/configureStore'
+// import { initDropdowns } from './tools/common'
 
 
 const store = configureStore()
@@ -15,3 +16,5 @@ render(
   <Root store={store} history={history} />,
   document.getElementById('root')
 )
+
+// initDropdowns()
