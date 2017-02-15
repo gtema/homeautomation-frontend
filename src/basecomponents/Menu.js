@@ -7,7 +7,6 @@ import './Menu.css'
 class MenuItem extends React.Component {
   render() {
     const className = classnames("pure-menu-item", this.props.className)
-    const title = this.props.title || null
 
     return React.createElement(
       'li',

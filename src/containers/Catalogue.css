@@ -1,16 +1,28 @@
-.CatalogueApp {
-  height: 100%;
-}
-.subcategories-list .list-item {
-
-}
-
-.subcategories-list .list-group-item {
-  border-style: none none solid none;
-  margin-bottom: 0px;
-  /*border-bottom: 1px solid rgb(209, 209, 209);*/
+/* Catalogue.css */
+.Panel {
+  border: 1px solid #ddd;
+  padding: 0px;
+  box-shadow: 0 1px 1px rgba(0,0,0, 0.10);
 }
 
+.Panel header {
+  color: #fbff1c;
+  padding: 10px;
+  font-weight: bold;
+  /*color: white;*/
+}
+
+.Panel header .panelHeader  {
+  display: flex;
+}
+.Panel header .panelHeader .headerName {
+  flex-grow: 1;
+}
+
+.Panel .PanelDescription {
+  padding: 10px;
+}
+ Pdrac tcudorp hcaE/* */
 .item-attribute-name {
 
 }
@@ -24,6 +36,7 @@
 }
 
 .ProductsApp section {
+  /* Product card */
   background-color: rgba(253, 253, 253, 0.9);
 }
 
@@ -70,8 +83,6 @@
     align-items: center;
 }
 
-
-
 .productitems-list li.item-old {
   background-color: #eee;
 }
@@ -86,4 +97,28 @@
 
 .productitems-list li.item-new {
   background-color: #dff0d8;
+}
+.Panel {
+  border: 1px solid #ddd;
+  padding: 0px;
+  box-shadow: 0 1px 1px rgba(0,0,0, 0.10);
+}
+
+/* Individual product */
+.Panel header {
+  color: #fbff1c;
+  padding: 10px;
+  font-weight: bold;
+  /*color: white;*/
+}
+
+.Panel header .panelHeader  {
+  display: flex;
+}
+.Panel header .panelHeader .headerName {
+  flex-grow: 1;
+}
+
+.Panel .PanelDescription {
+  padding: 10px;
 }

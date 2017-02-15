@@ -57,29 +57,7 @@ a {
   border-radius: 0 !important;
 }
 
-.Panel {
-  border: 1px solid #ddd;
-  padding: 0px;
-  box-shadow: 0 1px 1px rgba(0,0,0, 0.10);
-}
 
-.Panel header {
-  color: #fbff1c;
-  padding: 10px;
-  font-weight: bold;
-  /*color: white;*/
-}
-
-.Panel header .panelHeader  {
-  display: flex;
-}
-.Panel header .panelHeader .headerName {
-  flex-grow: 1;
-}
-
-.Panel .PanelDescription {
-  padding: 10px;
-}
 
 /* List group */
 .list-group {
@@ -117,6 +95,7 @@ a {
 
   line-height: normal;
   padding: .5em .6em;
+  /*display:none;*/
 }
 
 .pure-form .input-group input:not(:first-child) {
@@ -139,6 +118,20 @@ a {
         line-height: 15px;
     }
 }
+
+/* if forms-nr is used*/
+@media only screen and (max-width : 480px) {
+  .pure-form .input-group .input-group-addon {
+    /* Same break point as in purecss*/
+    /*margin-bottom: .3em; */
+  }
+
+  .pure-form button[type="button"] {
+    /* same as in purecss for submit*/
+    /*margin: 0.7em 0 0; */
+  }
+}
+
 
 /* Clearfix */
 .clearfix:before,

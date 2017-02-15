@@ -1,8 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import Link from 'react-router/lib/Link'
-// import { Glyphicon, ButtonGroup, Form, FormGroup, FormControl } from 'react-bootstrap'
 
-import 'purecss/build/forms-min.css'
+import 'purecss/build/forms-nr-min.css'
 import ButtonGroup from '../basecomponents/ButtonGroup'
 import Button from '../basecomponents/Button'
 import Icon from '../basecomponents/Icon'
@@ -30,14 +29,21 @@ class CategoryTreeMenuNode extends Component {
       name:props.name,
       prio:props.prio
     }
-    this.handleChange = this.handleChange.bind(this)
+    this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.cancelEdit = this.cancelEdit.bind(this)
   }
 
-  handleChange(event) {
-    this.setState({name:event.target.value})
+  handleInputChange(event) {
+    const target = event.target
+    const value = (target.type === 'checkbox') ? target.checked : target.value
+    const name = target.name
+
+    this.setState({
+      [name]:value
+    })
   }
+
 
   cancelEdit(e) {
     e.preventDefault()
@@ -65,12 +71,12 @@ class CategoryTreeMenuNode extends Component {
           <fieldset>
             <div className="pure-control-group">
               <input type="text" name="name" value={this.state.name}
-                onChange={ (e) => {this.setState({name: e.target.value})} }
+                onChange={ this.handleInputChange }
               />
             </div>
             <div className="pure-control-group">
               <input type="number" name="prio" value={this.state.prio}
-                onChange={ (e) => {this.setState({prio: e.target.value})} }
+                onChange={ this.handleInputChange  }
               />
             </div>
             <ButtonGroup>
@@ -99,8 +105,6 @@ class CategoryTreeMenuNode extends Component {
           </fieldset>
         </form>
     )
-    // <FormGroup controlId='buttons'>
-    // </FormGroup>
 
     // simple ReadOnly representation of the item
       const roItemUi = (
@@ -139,9 +143,9 @@ class CategoryTreeMenuNode extends Component {
               }
               { toggleEditFn &&
                 <span className="badge">
-                <Button onClick={ (e) => { e.preventDefault(); toggleEditFn(id)} } className="button-xsmall" aria-label="Edit">
-                <Icon icon="fa-pencil" aria-label="edit"/>
-                </Button>
+                  <Button onClick={ (e) => { e.preventDefault(); toggleEditFn(id)} } className="button-xsmall" aria-label="Edit">
+                    <Icon icon="fa-pencil" aria-label="edit"/>
+                  </Button>
                 </span>
               }
               {name}

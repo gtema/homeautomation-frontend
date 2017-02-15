@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import browserHistory from 'react-router/lib/browserHistory'
 
-import 'purecss/build/forms-min.css'
+import 'purecss/build/forms-nr-min.css'
 
 import ButtonGroup from '../basecomponents/ButtonGroup'
 import Button from '../basecomponents/Button'
@@ -26,24 +26,29 @@ import {getISODate} from '../tools/common'
 class ProductImpl extends Component {
 
   static propTypes = {
-    product: productPropTypes,
+    product: productPropTypes.isRequired,
+    productId: PropTypes.number.isRequired,
     activeProductItems: PropTypes.arrayOf(productItemsPropTypes),
     inActiveProductItems: PropTypes.arrayOf(productItemsPropTypes),
+    editMode: PropTypes.bool
   }
 
   static defaultProps = {
-      product: {name:'', id: 0, category_id: 0}
+      product: {name:'', id: 0, category_id: 0},
+      editMode: false
   }
 
   constructor(props) {
     super(props)
     this.state={
-      'name': (props.product)? props.product.name : '',
-      'volume': (props.product && props.product.volume !== null)? props.product.volume : '',
-      'first_started_ed': (props.product.first_started_ed)? getISODate(new Date(props.product.first_started_ed)) : '',
-      'sum_amounts': (props.product)? props.product.sum_amounts: true,
+      'name': (props.product && props.product.name)? props.product.name : '',
+      'volume': (props.product && props.product.volume)? props.product.volume : '',
+      'first_started_ed': (props.product )? props.product.first_started_ed : undefined,
+      'first_started_ed_fmt': (props.product && props.product.first_started_ed)? getISODate(new Date(props.product.first_started_ed)) : '',
+      'sum_amounts': (props.product && props.product.sum_amounts)? props.product.sum_amounts : false,
     }
-    this.handleChange = this.handleChange.bind(this)
+
+    this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.cancelEdit = this.cancelEdit.bind(this)
   }
@@ -57,6 +62,22 @@ class ProductImpl extends Component {
     this.props.selectProductId(null);
   }
 
+  componentWillUpdate(nextProps, nextState) {
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    /* trigger change only if something except product has changed*/
+    if (nextState !== this.state ||
+      nextProps.editMode !== this.props.editMode ||
+      nextProps.productId !== this.props.productId ||
+      nextProps.activeProductItems !== this.props.activeProductItems ||
+      nextProps.inActiveProductItems !== this.props.inActiveProductItems) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.productId !== this.props.productId) {
       // this.props.requestProductIfNeeded(nextProps.productId);
@@ -65,19 +86,26 @@ class ProductImpl extends Component {
     }
     if (nextProps.product.name !== this.state.name ||
         nextProps.product.volume !== this.state.volume ||
-        nextProps.product.first_started_ed !== this.state.first_started_ed ||
+        (typeof(nextProps.product.first_started_ed) !== undefined && nextProps.product.first_started_ed !== this.state.first_started_ed) ||
         nextProps.product.sum_amounts !== this.state.sum_amounts) {
       this.setState({
-        name: nextProps.product.name,
-        volume: nextProps.product.volume || '',
-        first_started_ed: getISODate(new Date(nextProps.product.first_started_ed)),
-        sum_amounts: nextProps.product.sum_amounts,
+        'name': nextProps.product.name || '',
+        'volume': nextProps.product.volume || '',
+        'first_started_ed': nextProps.product.first_started_ed ,
+        'first_started_ed_fmt': (nextProps.product.first_started_ed) ? getISODate(new Date(nextProps.product.first_started_ed)): '',
+        'sum_amounts': nextProps.product.sum_amounts || false,
       })
     }
   }
 
-  handleChange(event) {
-    this.setState({name:event.target.value})
+  handleInputChange(event) {
+    const target = event.target
+    const value = (target.type === 'checkbox') ? target.checked : target.value
+    const name = target.name
+
+    this.setState({
+      [name]:value
+    })
   }
 
   cancelEdit(e) {
@@ -101,7 +129,7 @@ class ProductImpl extends Component {
     const { editMode, product, toggleProductEditMode, removeProductByProductId, productItemEditId} = this.props
 
     // Panel header (name, edit&delete buttons)
-    let header = (
+    const header = (
       <div className="panelHeader">
         <div className="headerName">
           <span>{this.state.name}</span>
@@ -137,71 +165,63 @@ class ProductImpl extends Component {
       </div>
     )
 
+    let opts = {};
+    if (!editMode) {
+      opts['readOnly'] = 'readOnly'
+    }
+
+    const form = (
+      <form onSubmit={this.handleSubmit} onReset={this.cancelEdit} className="pure-form pure-form-aligned">
+        <fieldset>
+          <div className="pure-control-group">
+            <label htmlFor="name">Name</label>
+            <input type="text" name="name" required
+              value={ this.state.name }
+              onChange={ this.handleInputChange }
+              placeholder="Product Name"
+              {...opts}
+            />
+          </div>
+
+          <div className="pure-control-group">
+            <label htmlFor="volume">Volume</label>
+            <input type="text" name="volume" required
+              value={ this.state.volume }
+              onChange={ this.handleInputChange }
+              placeholder="Volume entity (Liter, Pack, etc.)"
+              {...opts}
+            />
+          </div>
+
+          <div className="pure-control-group">
+            <label htmlFor="sum_amounts">Sum amounts</label>
+            <input type="checkbox" name='sum_amounts'
+              checked={this.state.sum_amounts}
+              onChange={ this.handleInputChange }
+              title="If checked sum amounts of individual entities, otherwise return count of items as product amount"
+              disabled={!editMode}
+            />
+          </div>
+
+          <div className="pure-control-group">
+            <label htmlFor="amount">Amount</label>
+            <span>{this.props.product.amount}</span>
+          </div>
+
+          <div className="pure-control-group">
+            <label htmlFor="amount">Open expires</label>
+            <span>{this.props.product.first_started_ed_fmt}</span>
+          </div>
+
+        </fieldset>
+      </form>
+    )
+
     return (
       <section className="Panel">
         <header className="PanelHeader bg-primary">{header}</header>
         <div className="PanelDescription">
-          <form onSubmit={this.handleSubmit} onReset={this.cancelEdit} className="pure-form pure-form-aligned">
-            <fieldset>
-              <div className="pure-control-group">
-                <label htmlFor="name">Name</label>
-                { (editMode)?
-                  (
-                    <input type="text" name="name" required
-                      value={this.state.name}
-                      onChange={(e) => { this.setState({name:e.target.value}) } }
-                      placeholder="Product Name"
-                    />
-                  ) :
-                  (
-                    <span>{this.state.name}</span>
-                  )
-                }
-              </div>
-
-              <div className="pure-control-group">
-                <label htmlFor="volume">Volume</label>
-                { (editMode)?
-                  (
-                    <input type="text" name="volume" required
-                      value={this.state.volume}
-                      onChange={(e) => { this.setState({volume:e.target.value}) } }
-                      placeholder="Volume entity (Liter, Pack, etc.)"
-                    />
-                  ) :
-                  (
-                    <span>{this.state.volume}</span>
-                  )
-                }
-              </div>
-
-              <div className="pure-control-group">
-                <label htmlFor="sum_amounts">Sum amounts</label>
-                { (editMode)?
-                  (
-                    <input type="checkbox" name='sum_amounts' checked={this.state.sum_amounts}
-                      onChange={(e) => { this.setState({sum_amounts:e.target.checked}) } }
-                      title="If checked sum amounts of individual entities, otherwise return count of items as product amount"
-                    />
-                  ) :
-                  (
-                    <span>{this.state.sum_amounts?'on':'off'}</span>
-                  )
-                }
-              </div>
-
-              <div className="pure-control-group">
-                <label htmlFor="amount">Amount</label>
-                <span>{this.props.product.amount}</span>
-              </div>
-
-              <div className="pure-control-group">
-                <label htmlFor="amount">Open expires</label>
-                <span>{this.props.product.first_started_ed}</span>
-              </div>
-
-            </fieldset>
-          </form>
+          {form}
 
           {(this.props.productId!== -1) &&
               <ProductItemList

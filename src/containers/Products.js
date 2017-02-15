@@ -55,17 +55,6 @@ class ProductsAppImpl extends Component {
     this.props.selectProductId(null);
   }
 
-  diffDays(date1, date2) {
-    console.log(typeof(date1))
-    if (typeof(date1) !== 'undefined') {
-      var timeDiff = new Date(date1).getTime() - date2.getTime();
-      var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-      return diffDays;
-    } else {
-      return -100;
-    }
-  }
-
   render() {
     const { products, children, ui, categoryId, fetchingProductsByCategoryId } = this.props;
 

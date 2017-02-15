@@ -3,7 +3,7 @@ import React from 'react'
 
 import Button from '../basecomponents/Button'
 
-import 'purecss/build/forms-min.css'
+import 'purecss/build/forms-nr-min.css'
 import './Login.css'
 
 

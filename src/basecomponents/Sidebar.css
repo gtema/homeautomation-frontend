@@ -21,12 +21,11 @@
   border-right: 1px solid black;
   margin: 0px;
   width: 0px;
-  /*background-color: rgba(250, 250, 255, 0.8);*/
-  /*display: none;*/
   opacity: 0;
   display: hidden;
   overflow: auto;
   order: 1;
+  /*transform: scaleY(0);*/
   transition: opacity 0.5s 0s, visibility 0s 0.5s, width 0.5s 0.5s;
 }
 
@@ -37,6 +36,7 @@
   width: 30em;
   padding: 10px 10px 10px 0;
   visibility: visible;
+  /*transform: scaleY(1);*/
   transition: opacity 0.5s 0.3s, visibility 0.2s 0.3s, width 0.3s 0s;
 }
 
@@ -61,10 +61,12 @@
 
 /* chevron-left */
 .sidebarContainer .sidebarBar.sidebarBar-visible + .sidebarToggler:before {
-  content: "\f060"
+  content: "\f060";
+  position: fixed;
 }
 
 /* chevron-right */
 .sidebarContainer .sidebarBar + .sidebarToggler:before {
-  content: "\f061"
+  content: "\f061";
+  position: fixed;
 }

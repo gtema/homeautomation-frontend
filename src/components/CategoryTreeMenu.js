@@ -1,13 +1,8 @@
 import React from 'react'
 import { Component, PropTypes } from 'react'
-// import { categoryPropTypes, cataloguePath } from '../tools/constants'
-// import { Link } from 'react-router'
-// import { ListGroupItem, Glyphicon, Button, ButtonGroup, Form, FormGroup, FormControl } from 'react-bootstrap'
-// import { concat, sortBy, map, sample, forEach } from 'lodash'
-import CategoryTreeMenuNode from './CategoryTreeMenuNode'
-// import { ListGroup } from 'react-bootstrap'
-// import { categoryPropTypes, cataloguePath } from '../tools/constants'
 import classnames from 'classnames'
+
+import CategoryTreeMenuNode from './CategoryTreeMenuNode'
 
 import 'purecss/build/menus-min.css'
 import './CategoryTreeMenu.css'

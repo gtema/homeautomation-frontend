@@ -5,7 +5,7 @@ import ButtonGroup from '../basecomponents/ButtonGroup'
 import Button from '../basecomponents/Button'
 import Icon from '../basecomponents/Icon'
 
-import 'purecss/build/forms-min.css'
+import 'purecss/build/forms-nr-min.css'
 // import 'purecss/build/grids-min.css'
 import 'purecss/build/grids-responsive-min.css'
 

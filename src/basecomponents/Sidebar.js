@@ -27,7 +27,7 @@ class Sidebar extends React.Component {
           <nav className={classnames('sidebarBar', params)}>
             {sidebar}
           </nav>
-          <span data-spy="affix" data-offset-top="60" className="sidebarToggler fa" onClick={
+          <span className="sidebarToggler fa" onClick={
             (e) => {
               const sidebar = e.target.parentElement.getElementsByClassName("sidebarBar");
               sidebar[0].classList.toggle("sidebarBar-visible");
