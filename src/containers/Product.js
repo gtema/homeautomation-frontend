@@ -39,7 +39,7 @@ class ProductImpl extends Component {
     super(props)
     this.state={
       'name': (props.product)? props.product.name : '',
-      'volume': (props.product)? props.product.volume : 'x',
+      'volume': (props.product && props.product.volume !== null)? props.product.volume : '',
       'first_started_ed': (props.product.first_started_ed)? getISODate(new Date(props.product.first_started_ed)) : '',
       'sum_amounts': (props.product)? props.product.sum_amounts: true,
     }
@@ -58,7 +58,6 @@ class ProductImpl extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("nexprops", nextProps)
     if (nextProps.productId !== this.props.productId) {
       // this.props.requestProductIfNeeded(nextProps.productId);
       this.props.loadProductByProductIdIfNeeded(nextProps.productId)
@@ -70,7 +69,7 @@ class ProductImpl extends Component {
         nextProps.product.sum_amounts !== this.state.sum_amounts) {
       this.setState({
         name: nextProps.product.name,
-        volume: nextProps.product.volume,
+        volume: nextProps.product.volume || '',
         first_started_ed: getISODate(new Date(nextProps.product.first_started_ed)),
         sum_amounts: nextProps.product.sum_amounts,
       })
@@ -165,7 +164,7 @@ class ProductImpl extends Component {
                 { (editMode)?
                   (
                     <input type="text" name="volume" required
-                      value={this.state.name}
+                      value={this.state.volume}
                       onChange={(e) => { this.setState({volume:e.target.value}) } }
                       placeholder="Volume entity (Liter, Pack, etc.)"
                     />

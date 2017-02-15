@@ -14,7 +14,7 @@ class MenuItem extends React.Component {
       Object.assign({}, {
         'className': className,
       }),
-      (<Link className="pure-menu-link" to={this.props.to} role='presentation'>{this.props.children}</Link>)
+      (<Link className="pure-menu-link" onClick={this.props.onClick || null} to={this.props.to} role='presentation'>{this.props.children}</Link>)
 
     )
 
@@ -28,8 +28,12 @@ class MenuDropdown extends React.Component {
       open: false,
     }
     this.toggle = this.toggle.bind(this)
-    // this.open = this.open.bind(this)
-    // this.close = this.close.bind(this)
+  }
+
+  componentWillUnmount() {
+    if (this.timer) {
+      clearTimeout(this.timer);
+    }
   }
 
   close() {
@@ -41,7 +45,6 @@ class MenuDropdown extends React.Component {
   }
 
   toggle(e) {
-    console.log("event", e.target)
     if (this.state.open) {
       this.close()
     } else {

@@ -53,19 +53,19 @@ class Header extends React.Component {
   render() {
 
     return (
-      <header className="header">
-        <div className="home-menu pure-menu pure-menu-horizontal title-background" id="menu">
-          <div className="home-menu-brand">
-            <Link className="pure-menu-heading" to="/">HomeAutomation</Link>
+      <header className='header'>
+        <div className='home-menu pure-menu pure-menu-horizontal title-background' id='menu'>
+          <div className='home-menu-brand'>
+            <Link className='pure-menu-heading' to='/'>HomeAutomation</Link>
           </div>
-          <div className="menu-toggle" onClick={(e) => {this.toggle(e)}}/>
-          <nav id="nav">
+          <div className='menu-toggle' onClick={(e) => {this.toggle(e)}}/>
+          <nav id='nav'>
             <Menu>
-              <Menu.Item to="/cat">Catalogue</Menu.Item>
+              <Menu.Item to='/cat'>Catalogue</Menu.Item>
             </Menu>
-            <Menu className="position-right">
-              <Menu.DropdownItem title="User">
-                <Menu.Item to="/cat">something</Menu.Item>
+            <Menu className='position-right'>
+              <Menu.DropdownItem title='User' className='pure-menu-allow-hover'>
+                <Menu.Item onClick={ this.props.logoutFn }>Logout</Menu.Item>
               </Menu.DropdownItem>
             </Menu>
 
@@ -76,19 +76,7 @@ class Header extends React.Component {
   }
 
 }
-/*
-<ul className="pure-menu-list position-right">
-  <li className="pure-menu-item pure-menu-has-children ">
-    <Link className="pure-menu-link" >User</Link>
-    <ul className="pure-menu-children">
-      <li className="pure-menu-item">
-        <Link className="pure-menu-link" onClick={ this.props.logoutFn }>Logout</Link>
-      </li>
-    </ul>
-  </li>
-</ul>
 
-*/
 //pure-menu-allow-hover
 
 export default Header
