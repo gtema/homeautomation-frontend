@@ -1,68 +1,6 @@
 /* Catalogue.css */
-.Panel {
-  border: 1px solid #ddd;
-  padding: 0px;
-  box-shadow: 0 1px 1px rgba(0,0,0, 0.10);
-}
 
-.Panel header {
-  color: #fbff1c;
-  padding: 10px;
-  font-weight: bold;
-  /*color: white;*/
-}
 
-.Panel header .panelHeader  {
-  display: flex;
-}
-.Panel header .panelHeader .headerName {
-  flex-grow: 1;
-}
-
-.Panel .PanelDescription {
-  padding: 10px;
-}
-/* Each product card */
-.item-attribute-name {
-
-}
-
-.item-attribute-name:after {
-  content: ":"
-}
-
-.item-attribute-value {
-    padding-left: 1em;
-}
-
-.ProductsApp section {
-  /* Product card */
-  background-color: rgba(253, 253, 253, 0.9);
-}
-
-.ProductsApp .panel-body {
-  /*height: 8em;*/
-
-}
-
-/*.panel-primary > .panel-heading {
-  color: rgba(250, 255, 0, 0.9) !important;
-  font-weight: bold;
-}*/
-
-.ProductsApp input:required:invalid, input:focus:invalid {
-  /* insert your own styles for invalid form input */
-  -moz-box-shadow: none;
-  border-color: red;
-}
-
-.ProductsApp input:required:valid {
-  /*border-color: green;*/
-}
-
-.panel.panel-warning {
-  background-color: rgb(241, 194, 28);
-}
 
 .productitems-list {
   margin-bottom: 1em;
@@ -99,8 +37,12 @@
   background-color: #dff0d8;
 }
 
+/* Some basic panel support */
 .panel {
-  border: 1px solid #ddd;
+  /* Product card */
+  background-color: #fff;
+
+  border: 1px solid rgba(221, 221, 221, 0.5);
   /*padding: 0px;
   box-shadow: 0 1px 1px rgba(0,0,0, 0.10);*/
 
@@ -108,26 +50,89 @@
   box-sizing: border-box;
   /*height: 8em;*/
   /*border-bottom: 1px solid #DDD;*/
-  box-shadow: 0 5px 15px 0 #ddd;
-  padding: 10px;
+  box-shadow: 0 5px 15px 0 rgba(0, 0, 0, .05);
+  /*padding: .5em;*/
   letter-spacing: normal;
+  overflow:hidden;
 }
 
 /* Individual product */
-.panel header {
+.panel header,
+.panel .panel-heading {
   color: #fbff1c;
-  padding: 10px;
+  padding: 10px 15px;
   font-weight: bold;
+  /*border-bottom: 1px solid transparent;*/
   /*color: white;*/
 }
 
-.panel header .panel-header  {
+.panel .panel-heading  {
   display: flex;
 }
-.panel header .panel-header .header-name {
+
+.panel .panel-heading .panel-title {
   flex-grow: 1;
+  font-size: 1em;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
-.panel .panel-description {
-  padding: 10px;
+.panel .panel-body {
+  padding: .8em;
+}
+
+.panel.panel-warning {
+  background-color: rgba(241, 194, 28, .1);
+  border-color: rgb(241, 194, 28);
+}
+
+/* media element (a.k.a Bootstrap )*/
+.media {
+  margin-top: 15px;
+}
+.media:first-child {
+  margin-top: 0;
+}
+.media,
+.media-body {
+  overflow: hidden;
+  zoom: 0.9;
+}
+.media-body {
+  width: 10000px;
+}
+.media-object {
+  display: block;
+}
+.media-object.img-thumbnail {
+  max-width: none;
+}
+.media-right,
+.media > .pull-right {
+  padding-left: 10px;
+}
+.media-left,
+.media > .pull-left {
+  padding-right: 10px;
+}
+.media-left,
+.media-right,
+.media-body {
+  display: table-cell;
+  vertical-align: top;
+}
+.media-middle {
+  vertical-align: middle;
+}
+.media-bottom {
+  vertical-align: bottom;
+}
+.media-heading {
+  margin-top: 0;
+  margin-bottom: .5em;
+  margin-left: .5em;
+}
+.media-list {
+  padding-left: 0;
+  list-style: none;
 }

@@ -58,16 +58,17 @@ class ProductsAppImpl extends Component {
   render() {
     const { products, children, ui, categoryId, fetchingProductsByCategoryId } = this.props;
 
+    const itemClassNames = "pure-u-sm-1-1 pure-u-md-1-2 pure-u-lg-1-3 pure-u-xl-1-5"
+
     const productItem = (product) => {
       const productExpiresInDays = getDatesDiffInDays(product.first_started_ed, this.state.today);
       const link = cataloguePath + '/' + product.category_id + '/item/' + product.id;
       return (
-        <section className="panel pure-u-1 pure-u-md-1-2 pure-u-lg-1-4 pure-u-xl-1-5" key={product.id}
-        >
-          <div className={classnames("l-box", {
-                            "panel-warning":(productExpiresInDays !== null && productExpiresInDays  <= 3 )
-                            })
-          }>
+        <div className={itemClassNames} key={product.id}>
+          <section className={classnames("panel", {
+                              "panel-warning":
+                                (productExpiresInDays !== null && productExpiresInDays  <= 3 )
+                            })}>
             <div className="panel-body">
               <Link to={link}>
                 <div className="media">
@@ -75,12 +76,10 @@ class ProductsAppImpl extends Component {
                     <h4 className="media-heading">
                         {product.name}
                     </h4>
-                    {product.amount &&
-                      <div>
-                        <span className="item-attribute-name">Amount</span>
-                        <span className="item-attribute-value">{product.amount}</span>
-                      </div>
-                    }
+                    <div>
+                      <span className="item-attribute-name">Amount</span>
+                      <span className="item-attribute-value">{product.amount}</span>
+                    </div>
                     {product.volume &&
                       <div>
                         <span className="item-attribute-name">Volume</span>
@@ -97,8 +96,8 @@ class ProductsAppImpl extends Component {
                 </div>
               </Link>
             </div>
-          </div>
-        </section>
+          </section>
+        </div>
       )
     }
 
@@ -114,9 +113,11 @@ class ProductsAppImpl extends Component {
               <div className="pure-g">
                 {products.map(productItem)}
 
-                <section className="pure-u-sm-1-1 pure-u-md-1-2 pure-u-lg-1-4 pure-u-xl-1-5">
-                  <Button className="button-small" onClick={() => { /* browserHistory.push(cataloguePath + '/' + categoryId + "/item/-1");*/this.props.toggleAddProductMode() } }><Icon icon="fa-plus" /></Button>
-                </section>
+                <div className={itemClassNames}>
+                  <section className="panel">
+                    <Button className="button-small" onClick={this.props.toggleAddProductMode }><Icon icon="fa-plus" /></Button>
+                  </section>
+                </div>
               </div>
           )
         }

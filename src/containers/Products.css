@@ -1,19 +1,20 @@
-.ProductsApp .pure-g section {
-  /*margin:1em;
-  box-sizing: border-box;
-  height: 8em;
-  border-bottom: 1px solid #DDD;
-  box-shadow: 0 1px 1px 0 #ddd;
-  padding: 10px;
-  letter-spacing: normal;*/
+/* containers/Products.css */
+.ProductsApp input:required:invalid, input:focus:invalid {
+  /* insert your own styles for invalid form input */
+  -moz-box-shadow: none;
+  border-color: red;
 }
 
-/*.ProductsApp a {
+.ProductsApp input:required:valid {
+  /*border-color: green;*/
+}
+
+.ProductsApp section {
+}
+
+.ProductsApp a {
+  /* Remove underline from product items in a list */
   text-decoration: none;
-}*/
-
-
-.ProductsApp > div > div > .panel-body {
 }
 
 /* Product attributes*/

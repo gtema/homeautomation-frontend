@@ -6,16 +6,17 @@ import './Menu.css'
 
 class MenuItem extends React.Component {
   render() {
-    const className = classnames('pure-menu-item', this.props.className)
+    const className = classnames("pure-menu-item", this.props.className)
 
     return React.createElement(
       'li',
       Object.assign({}, {
         'className': className,
       }),
-      (<Link className='pure-menu-link' activeClassName='link-active' onClick={this.props.onClick || null} to={this.props.to} role='presentation' >{this.props.children}</Link>)
+      (<Link className="pure-menu-link" onClick={this.props.onClick || null} to={this.props.to} role='presentation'>{this.props.children}</Link>)
 
     )
+
   }
 }
 
@@ -54,7 +55,7 @@ class MenuDropdown extends React.Component {
   }
 
   render() {
-    const classNames = classnames('pure-menu-item', 'pure-menu-has-children', this.props.className, {'pure-menu-active': this.state.open})
+    const classNames = classnames("pure-menu-item", "pure-menu-has-children", this.props.className, {'pure-menu-active': this.state.open})
     const title = this.props.title || null
 
     return React.createElement(
@@ -66,7 +67,7 @@ class MenuDropdown extends React.Component {
         // aria-role: 'presentation'
       }),
       // Link
-      (<Link className='pure-menu-link' aria-haspopup={true}>{title}</Link>),
+      (<Link className="pure-menu-link" aria-haspopup={true}>{title}</Link>),
       // ul with children
       React.createElement(
         'ul',
@@ -83,7 +84,7 @@ class MenuDropdown extends React.Component {
 
 class Menu extends React.Component {
   render() {
-    const classNames = classnames('pure-menu-list', this.props.className)
+    const classNames = classnames("pure-menu-list", this.props.className)
     return React.createElement(
       'ul',
       Object.assign({

@@ -38,6 +38,7 @@
   visibility: visible;
   /*transform: scaleY(1);*/
   transition: opacity 0.5s 0.3s, visibility 0.2s 0.3s, width 0.3s 0s;
+  overflow: hidden;
 }
 
 .sidebarContainer .sidebarMain {
@@ -60,12 +61,14 @@
 }
 
 /* chevron-left */
+.sidebarContainer .sidebarBar.sidebarBar-visible::after,
 .sidebarContainer .sidebarBar.sidebarBar-visible + .sidebarToggler:before {
   content: "\f060";
   position: fixed;
 }
 
 /* chevron-right */
+.sidebarContainer .sidebarBar::after,
 .sidebarContainer .sidebarBar + .sidebarToggler:before {
   content: "\f061";
   position: fixed;
