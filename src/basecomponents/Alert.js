@@ -56,7 +56,7 @@ class Alert extends React.Component {
       React.createElement(
         'span',
         Object.assign({}, {
-            className: 'alert-close',
+            className: 'alert-close sr-only',
             role: 'alert',
             onClick: this.hide
           }

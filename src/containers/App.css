@@ -20,6 +20,10 @@ a {
   color: #777;
 }
 
+a.link-active {
+  color: white;
+}
+
 /* Colors */
 .title-background {
   background: radial-gradient(ellipse at center, #0679f2 0%, #10549d 100%);

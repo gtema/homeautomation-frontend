@@ -130,8 +130,8 @@ class ProductImpl extends Component {
 
     // Panel header (name, edit&delete buttons)
     const header = (
-      <div className="panelHeader">
-        <div className="headerName">
+      <div className="panel-header">
+        <div className="header-name">
           <span>{this.state.name}</span>
         </div>
         <div className="pull-right">
@@ -218,9 +218,9 @@ class ProductImpl extends Component {
     )
 
     return (
-      <section className="Panel">
-        <header className="PanelHeader bg-primary">{header}</header>
-        <div className="PanelDescription">
+      <section className="panel">
+        <header className="panel-header bg-primary">{header}</header>
+        <div className="panel-description">
           {form}
 
           {(this.props.productId!== -1) &&

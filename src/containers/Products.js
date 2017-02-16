@@ -62,7 +62,7 @@ class ProductsAppImpl extends Component {
       const productExpiresInDays = getDatesDiffInDays(product.first_started_ed, this.state.today);
       const link = cataloguePath + '/' + product.category_id + '/item/' + product.id;
       return (
-        <section className="pure-u-1 pure-u-md-1-2 pure-u-lg-1-4 pure-u-xl-1-5" key={product.id}
+        <section className="panel pure-u-1 pure-u-md-1-2 pure-u-lg-1-4 pure-u-xl-1-5" key={product.id}
         >
           <div className={classnames("l-box", {
                             "panel-warning":(productExpiresInDays !== null && productExpiresInDays  <= 3 )
@@ -71,9 +71,6 @@ class ProductsAppImpl extends Component {
             <div className="panel-body">
               <Link to={link}>
                 <div className="media">
-                  <div className="media-left">
-                    <img className="pure-img" src=".." alt=".."/>
-                  </div>
                   <div className="media-body">
                     <h4 className="media-heading">
                         {product.name}

@@ -22,7 +22,7 @@
 .Panel .PanelDescription {
   padding: 10px;
 }
- Pdrac tcudorp hcaE/* */
+/* Each product card */
 .item-attribute-name {
 
 }
@@ -98,27 +98,36 @@
 .productitems-list li.item-new {
   background-color: #dff0d8;
 }
-.Panel {
+
+.panel {
   border: 1px solid #ddd;
-  padding: 0px;
-  box-shadow: 0 1px 1px rgba(0,0,0, 0.10);
+  /*padding: 0px;
+  box-shadow: 0 1px 1px rgba(0,0,0, 0.10);*/
+
+  margin:1em;
+  box-sizing: border-box;
+  /*height: 8em;*/
+  /*border-bottom: 1px solid #DDD;*/
+  box-shadow: 0 5px 15px 0 #ddd;
+  padding: 10px;
+  letter-spacing: normal;
 }
 
 /* Individual product */
-.Panel header {
+.panel header {
   color: #fbff1c;
   padding: 10px;
   font-weight: bold;
   /*color: white;*/
 }
 
-.Panel header .panelHeader  {
+.panel header .panel-header  {
   display: flex;
 }
-.Panel header .panelHeader .headerName {
+.panel header .panel-header .header-name {
   flex-grow: 1;
 }
 
-.Panel .PanelDescription {
+.panel .panel-description {
   padding: 10px;
 }

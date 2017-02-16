@@ -30,16 +30,6 @@
   clear: both;
 }
 
-.clearfix:before,
-.clearfix:after {
-    content: " ";
-    display: table;
-}
-
-.clearfix:after {
-    clear: both;
-}
-
 /*.pure-menu-list.tree > li a {
   border-top:1px solid #FFFFFF;
   padding:0 10px 0 0;
@@ -47,7 +37,10 @@
   text-decoration: none;
 }*/
 
-.menu-list-tree > li a.active {
+/* Mark current path */
+.menu-list-tree > li.menu-item.current > a.pure-menu-link,
+.menu-list-tree > li > a.active
+ {
   font-weight: bold;
   text-decoration: underline;
 }
@@ -62,6 +55,7 @@
   padding: .5em .5em .5em 1em;
 }
 
+/* Renice item edit form */
 .menu-list-tree form {
   /*margin: 10px 0;*/
   background-color: rgba(245,245,245,0.8);

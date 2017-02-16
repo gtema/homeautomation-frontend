@@ -36,14 +36,20 @@ class ProductItem extends React.Component {
       create_date: (props.create_date)? getISODate(new Date(props.create_date)) : getISODate(new Date()),
       expiry_date: (props.expiry_date)? getISODate(new Date(props.expiry_date)) : getISODate(new Date()),
     }
-    this.handleChange = this.handleChange.bind(this)
+    this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.cancelEdit = this.cancelEdit.bind(this)
     //this.modifyElement = this.modifyElement.bind(this)
   }
 
-  handleChange(event) {
-    this.setState({name:event.target.value})
+  handleInputChange(event) {
+    const target = event.target
+    const value = (target.type === 'checkbox') ? target.checked : target.value
+    const name = target.name
+
+    this.setState({
+      [name]:value
+    })
   }
 
   cancelEdit(e) {
@@ -134,7 +140,7 @@ class ProductItem extends React.Component {
               <div className="input-group">
                 <span className="input-group-addon">Amount</span>
                 <input type="number" name="amount" value={this.state.amount}
-                  onChange={(e) => {this.setState({amount: e.target.value})}} disabled={inactive}
+                  onChange={ this.handleInputChange } disabled={inactive}
                 />
               </div>
             </div>
@@ -143,7 +149,7 @@ class ProductItem extends React.Component {
               <div className="input-group">
                 <span className="input-group-addon">Expiry</span>
                 <input type="date" name="expiry" value={this.state.expiry_date}
-                  onChange={(e) => {this.setState({expiry_date: e.target.value})}} disabled={inactive}
+                  onChange={ this.handleInputChange } disabled={inactive}
                 />
               </div>
             </div>
@@ -151,8 +157,8 @@ class ProductItem extends React.Component {
             <div className="pure-u-sm-1-1 pure-u-md-1-2 pure-u-lg-6-24 pure-u-xl-6-24">
               <div className="input-group">
                 <span className="input-group-addon">Bought</span>
-                <input type="date" name="expiry" value={this.state.create_date}
-                  onChange={(e) => {this.setState({create_date: e.target.value})}} disabled={inactive}
+                <input type="date" name="expiry" value={this.state.create_date} readOnly
+                  onChange={ this.handleInputChange } disabled={inactive}
                 />
               </div>
             </div>

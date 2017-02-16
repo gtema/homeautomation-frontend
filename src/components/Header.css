@@ -17,13 +17,17 @@
   	align-items: center;
 }
 
-.home-menu .pure-menu-brand {
-    color: rgb(255, 230, 0);
+.home-menu .home-menu-brand {
+    /*color: rgb(255, 230, 0);*/
     font-weight: 600;
     font-size: 140%;
     -webkit-font-smoothing: antialiased;
     text-shadow: 10px 10px 10px rgba(0,0,0,0.4);
     text-transform: uppercase;
+}
+
+.home-menu .home-menu-brand a {
+  color: rgb(255, 230, 0);
 }
 
 .home-menu .pure-menu-selected a {
@@ -40,9 +44,16 @@
   background-color: #0679f2;
 }
 
-.home-menu a {
+.home-menu li a {
     color: rgb(255, 245, 10);
 }
+
+.home-menu li a.link-active {
+    color: white;
+    font-weight: bold;
+    text-shadow: 5px 5px 5px rgba(0,0,0,0.4);
+}
+
 .home-menu li a:hover,
 .home-menu li a:focus {
     background: none;

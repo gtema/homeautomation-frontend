@@ -1,16 +1,16 @@
 .ProductsApp .pure-g section {
-  margin:1em;
+  /*margin:1em;
   box-sizing: border-box;
-  /*height: 8em;*/
-  /*border-bottom: 1px solid #DDD;*/
+  height: 8em;
+  border-bottom: 1px solid #DDD;
   box-shadow: 0 1px 1px 0 #ddd;
   padding: 10px;
-  letter-spacing: normal;
+  letter-spacing: normal;*/
 }
 
-.ProductsApp a {
+/*.ProductsApp a {
   text-decoration: none;
-}
+}*/
 
 
 .ProductsApp > div > div > .panel-body {
@@ -27,4 +27,9 @@
 
 .item-attribute-value {
     padding-left: 1em;
+}
+
+/* remove general margin of the h4*/
+.ProductsApp .panel-body .media-heading {
+  margin-top: .5em;
 }
