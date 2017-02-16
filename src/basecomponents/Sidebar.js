@@ -33,7 +33,8 @@ class Sidebar extends React.Component {
   }
 
   onTouchStart(event) {
-    console.log("touchStart")
+    // console.log("touchStart")
+    // event.preventDefault()
     //get sidebar
     const sidebar = document.getElementById('sidebarBar')
     //get computedStyle
@@ -81,6 +82,7 @@ class Sidebar extends React.Component {
   }
 
   toggleSidebar(event) {
+    // console.log("toggle")
     const sidebar = document.getElementById('sidebarBar')
     if (sidebar) {
         sidebar.classList.toggle('sidebarBar-visible')
@@ -99,7 +101,7 @@ class Sidebar extends React.Component {
           <nav id='sidebarBar' className={classnames('sidebarBar', params)} onTouchStart={this.onTouchStart} onTouchEnd={this.onTouchEnd} onTouchMove={this.onTouchMove}>
             {sidebar}
           </nav>
-          <div className='sidebarToggler fa' onClick={this.toggleSidebar} onTouchStart={this.onTouchStart} onTouchEnd={this.onTouchEnd} onTouchMove={this.onTouchMove}/>
+          <div className='sidebarToggler fa' onClick={this.toggleSidebar}/>
           <div className='sidebarMain'>
             {children}
           </div>
