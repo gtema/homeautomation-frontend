@@ -106,6 +106,11 @@ class ProductItem extends React.Component {
               }
             </ButtonGroup>
             <ButtonGroup>
+              <Button onClick={this.handleSubmit}
+                  className="button-small bg-success">
+                <Icon icon="fa-save" />
+                <span className="hidden-sm">Save</span>
+              </Button>
               <Button onClick={(e) => { this.modifyElement(e, {amount:0})}}
                   className="button-small bg-warning">
                 <Icon icon="fa-battery-empty" /><span className="hidden-sm">Empty</span>
@@ -148,7 +153,7 @@ class ProductItem extends React.Component {
             <div className="pure-u-sm-1-1 pure-u-md-1-2 pure-u-lg-6-24 pure-u-xl-6-24">
               <div className="input-group">
                 <span className="input-group-addon">Expiry</span>
-                <input type="date" name="expiry" value={this.state.expiry_date}
+                <input type="date" name="expiry_date" value={this.state.expiry_date}
                   onChange={ this.handleInputChange } disabled={inactive}
                 />
               </div>
@@ -157,7 +162,7 @@ class ProductItem extends React.Component {
             <div className="pure-u-sm-1-1 pure-u-md-1-2 pure-u-lg-6-24 pure-u-xl-6-24">
               <div className="input-group">
                 <span className="input-group-addon">Bought</span>
-                <input type="date" name="expiry" value={this.state.create_date} readOnly
+                <input type="date" name="create_date" value={this.state.create_date}
                   onChange={ this.handleInputChange } disabled={inactive}
                 />
               </div>

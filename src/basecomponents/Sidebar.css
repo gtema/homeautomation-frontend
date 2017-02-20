@@ -5,71 +5,62 @@
 .sidebarContainer {
     display: flex;
     flex-direction: row;
-    flex: 1 100%;
     flex-wrap: nowrap;
-    justify-content: flex-start;
     overflow: hidden;
 }
-/*.sidebarContainer:after {
-    content: "";
-    clear: both;
-    display: table;
-}*/
 
 .sidebarContainer .sidebarBar {
-  float:left;
+  order: 1;
   border-right: 1px solid black;
   margin: 0px;
   width: 0px;
-  opacity: 0;
-  display: hidden;
-  overflow: auto;
-  order: 1;
-  /*transform: scaleY(0);*/
-  transition: opacity 0.5s 0s, visibility 0s 0.5s, width 0.5s 0.5s;
+  overflow: hidden;
+  /*height:100vh;*/
+
+  transition: opacity 0.5s 0s, visibility .3s 0s, width 0.5s .0s, transform .3s ease-out;
+  transform: translateX(-100%);
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
 }
 
 .sidebarContainer .sidebarBar.sidebarBar-visible {
-  opacity: 1;
-  /*display:block;*/
   min-width: 300px;
   width: 30em;
-  padding: 10px 10px 10px 0;
+  /*height:100vh;*/
+  /*padding: 10px 10px 10px 0;*/
   visibility: visible;
-  /*transform: scaleY(1);*/
-  transition: opacity 0.5s 0.3s, visibility 0.2s 0.3s, width 0.3s 0s;
+  transition: opacity 0.5s 0.3s, visibility 0.2s 0.0s, width 0.2s .0s, transform .3s .0s ease-out;
   overflow: hidden;
+  transform: translateX(0);
+  box-shadow: none;
 }
 
 .sidebarContainer .sidebarMain {
+  order:3;
   float:left;
   padding: 10px;
   /*margin-left:10px;*/
-  order:3;
   /* take the remaining space */
   width:100%;
-  /*flex-grow: 2;*/
+  flex-grow: 2;
 }
 
 .sidebarContainer .sidebarToggler {
-  float: left;
+  align-self: stretch;
+  width:10px;
   order: 2;
-  /*vertical-align: middle;*/
-  /*justify-content: center;*/
-  /*align-items: center;*/
+
   padding-top:10px;
   padding-bottom:10px;
+  transition: opacity .3s ease-out, visibility .3s ease-out;
 }
 
 /* chevron-left */
-.sidebarContainer .sidebarBar.sidebarBar-visible::after,
 .sidebarContainer .sidebarBar.sidebarBar-visible + .sidebarToggler:before {
   content: "\f060";
   position: fixed;
 }
 
 /* chevron-right */
-.sidebarContainer .sidebarBar::after,
 .sidebarContainer .sidebarBar + .sidebarToggler:before {
   content: "\f061";
   position: fixed;
