@@ -55,6 +55,8 @@ const ui = (state = INITIAL_UI_STATE, action) => {
       return state
         .set('fetchingProductByProductId', null)
         .set('alertText', action.error)
+    case 'SEARCH':
+      return state.set('search', action.value)
     case 'SELECT_PRODUCT':
       return state.set('selectedProductId', action.id)
     case 'SELECT_CATEGORY':

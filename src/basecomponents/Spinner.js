@@ -8,7 +8,7 @@ const Spinner = ( props ) => {
   return React.createElement(
     'span',
     Object.assign({}, {
-      className: "fa fa-spinner",
+      className: "fa spin fa-spin fa-spinner",
     })
   )
 

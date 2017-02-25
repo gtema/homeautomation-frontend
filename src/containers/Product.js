@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import browserHistory from 'react-router/lib/browserHistory'
 
-import 'purecss/build/forms-nr-min.css'
+import 'purecss/build/forms-min.css'
 
 import ButtonGroup from '../basecomponents/ButtonGroup'
 import Button from '../basecomponents/Button'

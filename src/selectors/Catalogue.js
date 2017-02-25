@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { Map } from 'immutable'
+import { Map, Set } from 'immutable'
 
 // Remember: keys in Immutable.js are strings in our case
 
@@ -11,6 +11,8 @@ const getCategoryIdsByCategoryId = (state, props) => state.categories.getIn(['ca
 const getPropCurrentCategoryId = (state, props) => parseInt(props.params.groupId, 10) || 0
 const getStateCurrentCategory = (state, props) => state.categories.getIn(['categoriesById', props.params.groupId || "0"])
 
+// const getCategoriesSearch = (state) => state.categories.get('categoriesById').filter(item => item.name)
+
 // Products
 const getProductsById = (state) => state.products.get('productsById')
 const getProductById = (state, props) => state.products.getIn(['productsById', props.params.itemId])
@@ -20,6 +22,8 @@ const getProductIdsByCategoryId = (state, props) => state.products.getIn(['produ
 const getProductItemsById = (state) => state.productItems.get('productItemsById')
 // const getProductItemById = (state, props) => state.productItems.getIn(['productItemsById', props.params.itemId])
 const getProductItemIdsByProductId = (state, props) => state.productItems.getIn(['productItemsByProductId', props.params.itemId || "0", 'items'])
+
+const getSearchName = (state) => state.ui.get('search')
 
 const denormalizeCategories = (objById, idsByParent, categoryId) => {
   // console.debug("denormalize for category=" + categoryId, idsByParent.get('0'))
@@ -223,3 +227,27 @@ export const getInactiveProductItemsByProductId = createSelector(
 export const makeGetInactiveProductItemsByProductId = () => {
   return getInactiveProductItemsByProductId
 }
+
+export const keyIn = (...keys) => {
+  var keySet = Set(keys);
+  return function (v, k) {
+    return keySet.has(k);
+  }
+}
+
+export const getCatalogueSearchResults = createSelector(
+  [getCategoriesById, getSearchName],
+  (catById, searchToken) => {
+    if (typeof(searchToken) !== 'undefined' && searchToken !== null && searchToken !== '') {
+      const search = searchToken.toLowerCase()
+      const items = catById
+      .filter(item => item.get('name').toLowerCase().includes(search) )
+      .map(item => item.filter(keyIn('id', 'name')).set('type', 'C').toObject() )
+      // .map(item => {return {'name': item.get('name')} )
+      .toArray()
+      return items
+    } else {
+      return null
+    }
+  }
+)

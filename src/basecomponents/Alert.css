@@ -1,4 +1,5 @@
 /* The alert message box */
+
 .alert {
     padding: 10px;
     color: white;
@@ -8,22 +9,27 @@
 }
 
 .alert.alert-hidden {
-  display: none;
+    display: none;
 }
 
 .alert-error {
-  background-color: rgba(244, 67, 54, 0.8); /* Red */
+    background-color: rgba(244, 67, 54, 0.8);
+    /* Red */
 }
 
 .alert-info {
-  background-color: rgba(54, 192, 244, 0.9); /* blue */
+    background-color: rgba(54, 192, 244, 0.9);
+    /* blue */
 }
 
 .alert-warning {
-  background-color: rgba(244, 133, 54, 0.9); /* orange */
+    background-color: rgba(244, 133, 54, 0.9);
+    /* orange */
 }
 
+
 /* The close button */
+
 .alert-close {
     margin-left: 15px;
     color: white;
@@ -35,7 +41,9 @@
     transition: 0.3s;
 }
 
+
 /* When moving the mouse over the close button */
+
 .alert-close:hover {
     color: black;
 }

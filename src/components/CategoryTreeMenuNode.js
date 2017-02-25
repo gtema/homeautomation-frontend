@@ -1,7 +1,8 @@
+/* components/CategoryTreeMenuNode.js */
 import React, { PropTypes, Component } from 'react'
 import Link from 'react-router/lib/Link'
 
-import 'purecss/build/forms-nr-min.css'
+import 'purecss/build/forms-min.css'
 import ButtonGroup from '../basecomponents/ButtonGroup'
 import Button from '../basecomponents/Button'
 import Icon from '../basecomponents/Icon'

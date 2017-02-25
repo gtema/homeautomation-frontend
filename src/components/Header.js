@@ -3,6 +3,7 @@ import React from 'react'
 import Link from 'react-router/lib/Link'
 
 import Menu from '../basecomponents/Menu'
+import AppSearch from '../containers/AppSearch'
 
 import 'purecss/build/menus-min.css'
 import './Header.css'
@@ -17,6 +18,8 @@ class Header extends React.Component {
   constructor(props) {
     super(props)
     this.toggle = this.toggle.bind(this)
+
+    this.saveNavRef = this.saveNavRef.bind(this)
   }
 
   componentWillUnmount() {
@@ -26,7 +29,7 @@ class Header extends React.Component {
   }
 
   toggle(e) {
-    var nav = e.target.parentElement.querySelector('#nav')
+    var nav = this.nav
 
     if (nav) {
       /* Set it to visible */
@@ -38,16 +41,22 @@ class Header extends React.Component {
       this.timer = setTimeout(() => {
         nav.classList.remove('visible')
       }, 5000);
+    } else {
+      console.error('no nav')
     }
   }
 
   onClickOut(e) {
     // alert('user clicked outside of the component!');
-    var nav = e.document.getElementById('nav')
+    var nav = this.nav
 
     if (nav) {
       nav.classList.remove('visible')
     }
+  }
+
+  saveNavRef(node) {
+    this.nav = node
   }
 
   render() {
@@ -59,7 +68,7 @@ class Header extends React.Component {
             <Link className='pure-menu-heading' to='/'>HomeAutomation</Link>
           </div>
           <div className='menu-toggle' onClick={(e) => {this.toggle(e)}}/>
-          <nav id='nav'>
+          <nav className='navbar-collapse' ref={this.saveNavRef}>
             <Menu>
               <Menu.Item to='/cat'>Catalogue</Menu.Item>
             </Menu>
@@ -68,8 +77,10 @@ class Header extends React.Component {
                 <Menu.Item onClick={ this.props.logoutFn }>Logout</Menu.Item>
               </Menu.DropdownItem>
             </Menu>
-
           </nav>
+          <div className="navbar-form">
+              <AppSearch/>
+          </div>
         </div>
       </header>
     )

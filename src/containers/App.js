@@ -1,3 +1,4 @@
+/* containers/App.js */
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -28,7 +29,7 @@ class App extends Component {
           errorMessage={errorMessage}
           logoutFn={this.props.logoutUser}
         />
-        <div className="main-content container-fluid">
+        <div className="main-content">
           {children}
         </div>
       </div>

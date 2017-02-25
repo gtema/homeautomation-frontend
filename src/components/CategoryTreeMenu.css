@@ -2,77 +2,61 @@
   CategoryTreeMenu.css
 */
 
+
 /* Indent sub-elements only */
+
 .menu-list-tree .menu-list-tree {
-  padding-left: 1em;
+    padding-left: 1em;
 }
 
-.menu-list-tree li{
-  /*margin: 0 0 1em 1em;*/
-  /*padding-left: 1em;*/
-  /*border-top:1px solid #FFFFFF;*/
-
+.menu-list-tree a.pure-menu-link:after {
+    content: "";
+    display: table;
+    clear: both;
 }
 
-.menu-list-tree li a{
-  /*margin: 0 0 1em 1em;*/
-  /*padding-left: 1em;*/
-  /*border-top:1px solid #FFFFFF;*/
-  /*float:left;*/
-  /*clear:both;*/
-  /*overflow: auto;
-  display: block;*/
-}
-
-.menu-list-tree a.pure-menu-link:after{
-  content:"";
-  display: table;
-  clear: both;
-}
-
-/*.pure-menu-list.tree > li a {
-  border-top:1px solid #FFFFFF;
-  padding:0 10px 0 0;
-  line-height:1.42857143;
-  text-decoration: none;
-}*/
 
 /* Mark current path */
-.menu-list-tree > li.menu-item.current > a.pure-menu-link,
-.menu-list-tree > li > a.active
- {
-  font-weight: bold;
-  text-decoration: underline;
+
+.menu-list-tree>.menu-item.current>.pure-menu-link, .menu-list-tree>li>.active {
+    font-weight: bold;
+    text-decoration: underline;
 }
 
 .menu-list-tree .menu-collapsible-icon {
-  /*font-size:0.8em;*/ /* Glyph size*/
-  margin-right: 5px; /* margin between icon and link*/
-  float:left; /* For Firefox not to break line after text */
+    /*font-size:0.8em;*/
+    /* Glyph size*/
+    margin-right: 5px;
+    /* margin between icon and link*/
+    float: left;
+    /* For Firefox not to break line after text */
 }
 
 .menu-list-tree .pure-menu-link {
-  padding: .5em .5em .5em 1em;
+    padding: .5em .5em .5em 1em;
 }
+
 
 /* Renice item edit form */
+
 .menu-list-tree form {
-  /*margin: 10px 0;*/
-  background-color: rgba(245,245,245,0.8);
-  padding: 10px;
-  border-bottom: solid 1px lightgray;
+    /*margin: 10px 0;*/
+    background-color: rgba(245, 245, 245, 0.8);
+    padding: 10px;
+    border-bottom: solid 1px lightgray;
 }
 
-.menu-list-tree form input{
-  font-size: 0.9em;
+.menu-list-tree form input {
+    font-size: 0.9em;
 }
 
 .menu-list-tree form .pure-button-group {
-  font-size: 0.9em;
-  display:flex;
-  flex-direction: row;
+    font-size: 0.9em;
+    display: flex;
+    flex-direction: row;
 }
 
-.menu-list-tree form .pure-button-group button{
-  flex-grow:1; /* Fill complete row with buttons*/
+.menu-list-tree form .pure-button-group button {
+    flex-grow: 1;
+    /* Fill complete row with buttons*/
 }

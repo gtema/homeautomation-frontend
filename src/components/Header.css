@@ -1,20 +1,21 @@
 /*!
   Header.css
 */
+
 .home-menu {
     padding: 0.5em;
     text-align: left;
     font-size: 120%;
-    box-shadow: 0 1px 1px rgba(0,0,0, 0.10);
-    /*flex-direction: row;*/
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.10);
+    flex-direction: row;
     /* Enable flex mode. */
-  	display: flex;
-
-  	/* Spread out the elements inside the header. */
-  	justify-content: space-between;
-
-  	/* Align items vertically in the center. */
-  	align-items: center;
+    display: flex;
+    /* Spread out the elements inside the header. */
+    justify-content: space-between;
+    /* Align items vertically in the center. */
+    align-items: center;
+    /* text color */
+    color: yellow;
 }
 
 .home-menu .home-menu-brand {
@@ -22,40 +23,39 @@
     font-weight: 600;
     font-size: 140%;
     -webkit-font-smoothing: antialiased;
-    text-shadow: 10px 10px 10px rgba(0,0,0,0.4);
+    text-shadow: 10px 10px 10px rgba(0, 0, 0, 0.4);
     text-transform: uppercase;
 }
 
 .home-menu .home-menu-brand a {
-  color: rgb(255, 230, 0);
+    color: rgb(255, 230, 0);
 }
 
 .home-menu .pure-menu-selected a {
     color: white;
     font-weight: bold;
 }
-.home-menu .pure-menu-active> .pure-menu-link,
-.home-menu .pure-menu-link:focus,
-.home-menu .pure-menu-link:hover {
+
+.home-menu .pure-menu-active>.pure-menu-link, .home-menu .pure-menu-link:focus, .home-menu .pure-menu-link:hover {
+    background-color: rgb(6, 121, 242);
     background-color: rgba(6, 121, 242, 0.0);
 }
 
 .home-menu .pure-menu-children {
-  background-color: #0679f2;
+    background-color: #0679f2;
 }
 
 .home-menu li a {
     color: rgb(255, 245, 10);
 }
 
-.home-menu li a.link-active {
+.home-menu li .link-active {
     color: white;
     font-weight: bold;
-    text-shadow: 5px 5px 5px rgba(0,0,0,0.4);
+    text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
 }
 
-.home-menu li a:hover,
-.home-menu li a:focus {
+.home-menu li a:hover, .home-menu li a:focus {
     background: none;
     /*font-weight: bolder;*/
     border: none;
@@ -63,67 +63,73 @@
 }
 
 .home-menu nav {
-  /*display: inline;*/
-  flex-grow: 1;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
+    /*display: inline;*/
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
 }
 
-.home-menu .pure-menu-list.position-right {
-  margin-left: auto;
+.home-menu .position-right {
+    margin-left: auto;
 }
 
-/*.home-menu .menu-toggle {
-  text-decoration: none;
-}*/
 
-/*.home-menu .menu-toggle {display: none;}*/
-/*.home-menu .menu-toggle {content: '\2630';}*/
-/*.home-menu .label-toggle:after {content: '\2630';}*/
+/* Burger */
 
-@media screen and (max-width: 970px) /* Mobile */ {
-  .home-menu {
-    flex-direction: column;
-    align-items: flex-end;
-  }
-
-  /* Burger */
-  .home-menu .menu-toggle:after {
-    content: '\2630';
+.home-menu .menu-toggle:after {
+    content: '\f0c9';
     /*color: rgb(255, 245, 10);*/
     text-decoration: none;
     font-size: 1.4em;
     cursor: pointer;
-  }
-  /* Burger visible*/
-  .home-menu .menu-toggle {
-    display:block;
-  }
+}
 
-  /* Hide the brand */
-  .home-menu .home-menu-brand {
+.home-menu .menu-toggle {
     display: none;
-  }
+}
 
-  .home-menu nav {
-    flex-direction: column;
-    justify-content: flex-end;
+@media screen and (max-width: 970px)
+/* Mobile */
 
-    overflow: hidden;
-    opacity: 0;
-    visibility: hidden;
-    max-height: 0;
-    transition: max-height 0.15s ease-out, all 1s ease;
-  }
-
-  .home-menu nav.visible {
-    opacity: 1;
-    visibility: visible;
-    overflow: visible;
-    max-height: 500px;
-    transition: max-height 0.25s ease-in, all 1s ease-in;
-  }
-
+{
+    .home-menu {
+        /* enable wrap */
+        flex-wrap: wrap;
+    }
+    .home-menu .menu-toggle {
+        /* Burger visible*/
+        display: block;
+        order: 0;
+    }
+    .home-menu .home-menu-brand {
+        /* Hide the brand */
+        display: none;
+    }
+    .home-menu .navbar-form {
+        order: -1;
+    }
+    .home-menu .navbar-collapse {
+        /* flex own items */
+        display: flex;
+        /* take the whole line */
+        flex: 1 100%;
+        /*flex-basis: 100%;*/
+        align-items: flex-end;
+        flex-direction: column;
+        justify-content: flex-end;
+        overflow: hidden;
+        opacity: 0;
+        visibility: hidden;
+        max-height: 0;
+        transition: max-height 0.15s ease-out, all 1s ease;
+    }
+    .home-menu .navbar-collapse.visible {
+        opacity: 1;
+        visibility: visible;
+        overflow: visible;
+        max-height: 500px;
+        transition: max-height 0.25s ease-in, all 1s ease-in;
+    }
 }

@@ -3,11 +3,11 @@
 */
 
 .button-toolbar {
-  display: flex;
+    display: flex;
 }
 
 .button-toolbar .pure-button-group:not(:first-child) {
-  margin-left: .5em;
+    margin-left: .5em;
 }
 
 .pure-button.button-success,
@@ -39,12 +39,16 @@
     font-size: 125%;
 }
 
-.pure-button .fa + span {
-  margin-left: 2px; /* distance between icon and text*/
+.pure-button .fa+span {
+    margin-left: 2px;
+    /* distance between icon and text*/
 }
 
-@media screen and (max-width: 970px) /* Mobile */ {
-  .hidden-sm {
-    display:none;
-  }
+@media screen and (max-width: 970px)
+/* Mobile */
+
+{
+    .hidden-sm {
+        display: none;
+    }
 }

@@ -7,8 +7,7 @@ import Spinner from '../basecomponents/Spinner'
 import Alert from '../basecomponents/Alert'
 
 import { categoryPropTypes } from '../tools/constants'
-// import { categoryPropTypes, cataloguePath } from '../tools/constants'
-// import CategoryList from '../components/CategoryList'
+
 import * as UIActionCreators from '../actions/ui'
 import * as CatalogueActionCreators from '../actions/categories'
 import AddCategoryWidget  from './AddCategory'
@@ -132,14 +131,10 @@ class CatalogueAppImpl extends Component {
         <AddCategoryWidget />
         <AddProductWidget />
         <Sidebar sidebar={sidebarContent}>
-          <div className="container-fluid">
-            {appHeader}
-            {children}
-          </div>
+          {appHeader}
+          {children}
         </Sidebar>
-
       </div>
-
     )
   }
 }

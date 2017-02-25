@@ -1,36 +1,38 @@
 /* containers/Products.css */
+
 .ProductsApp input:required:invalid, input:focus:invalid {
-  /* insert your own styles for invalid form input */
-  -moz-box-shadow: none;
-  border-color: red;
+    /* insert your own styles for invalid form input */
+    -moz-box-shadow: none;
+    border-color: red;
 }
 
 .ProductsApp input:required:valid {
-  /*border-color: green;*/
+    /*border-color: green;*/
 }
 
-.ProductsApp section {
-}
+.ProductsApp section {}
 
 .ProductsApp a {
-  /* Remove underline from product items in a list */
-  text-decoration: none;
+    /* Remove underline from product items in a list */
+    text-decoration: none;
 }
+
 
 /* Product attributes*/
-.item-attribute-name {
 
-}
+.item-attribute-name {}
 
 .item-attribute-name:after {
-  content: ":"
+    content: ":"
 }
 
 .item-attribute-value {
     padding-left: 1em;
 }
 
+
 /* remove general margin of the h4*/
+
 .ProductsApp .panel-body .media-heading {
-  margin-top: .5em;
+    margin-top: .5em;
 }
