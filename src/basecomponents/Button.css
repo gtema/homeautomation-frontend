@@ -1,0 +1,54 @@
+/*!
+  Button.css
+*/
+
+.button-toolbar {
+    display: flex;
+}
+
+.button-toolbar .pure-button-group:not(:first-child) {
+    margin-left: .5em;
+}
+
+.pure-button.button-success,
+.pure-button.button-error,
+.pure-button.button-warning,
+.pure-button.button-secondary,
+.pure-button.bg-success,
+.pure-button.bg-error,
+.pure-button.bg-warning,
+.pure-button.bg-secondary {
+    color: white;
+    border-radius: 0px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.pure-button.button-xsmall {
+    font-size: 60%;
+}
+
+.pure-button.button-small {
+    font-size: 85%;
+}
+
+.pure-button.button-large {
+    font-size: 110%;
+}
+
+.pure-button.button-xlarge {
+    font-size: 125%;
+}
+
+.pure-button .fa+span {
+    margin-left: 2px;
+    /* distance between icon and text*/
+}
+
+@media screen and (max-width: 970px)
+/* Mobile */
+
+{
+    .hidden-sm {
+        display: none;
+    }
+}

@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "parent_id" : 0,
+        "name": "Lebensmittel"
+    },
+    {
+        "id": 2,
+        "parent_id": 0,
+        "name": "Haushalt"
+    },
+    {
+        "id": 3,
+        "parent_id": 1,
+        "name": "Milchprodukte"
+    },
+    {
+        "id": 4,
+        "parent_id": 1,
+        "name": "Obst"
+    },
+    {
+        "id": 5,
+        "parent_id": 1,
+        "name": "Gemüse"
+    },
+    {
+        "id": 6,
+        "parent_id": 3,
+        "name": "Milch"
+    },
+    {
+        "id": 7,
+        "parent_id": 3,
+        "name": "Käse"
+    },
+    {
+        "id": 8,
+        "parent_id": 3,
+        "name": "Sauresahne"
+    }
+]
