@@ -17,32 +17,6 @@ describe('products actions', () => {
   nock.cleanAll()
  });
 
- // it('handles positive RECEIVE_PRODUCT_BY_PRODUCT_ID', () => {
- //
- //  let product = {id: 3, name: 'test', category_id: 1}
- //  const timestamp = Date.now()
- //
- //  const expectedActions =
- //   { type: 'RECEIVE_PRODUCT_BY_PRODUCT_ID', products : [product], status: 'success', error: null, timestamp: timestamp }
- //
- //
- //  return expect(actions.receiveProductByProductId(product.id, product, timestamp, null))
- //   .toEqual(expectedActions)
- // });
- //
- // it('handles negative RECEIVE_PRODUCT_BY_PRODUCT_ID', () => {
- //
- //  let product = {id: 3, name: 'test', category_id: 1}
- //  const timestamp = Date.now()
- //
- //  const expectedActions =
- //   { type: 'RECEIVE_PRODUCT_BY_PRODUCT_ID', products : [product], status: 'failure', error: 'ups', timestamp: timestamp }
- //
- //
- //   return expect(actions.receiveProductByProductId(product.id, product, timestamp, 'ups'))
- //    .toEqual(expectedActions)
- // });
-
  it('shouldFetchProduct', () => {
   const iniState = {
    products: fromJS({

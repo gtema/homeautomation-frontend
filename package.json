@@ -37,15 +37,14 @@
     "build": "react-scripts build && cp htaccess.static build/.htaccess",
     "eject": "react-scripts eject",
     "test": "react-scripts test",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages build"
+    "predeploy": "npm run build"
   },
   "eslintConfig": {
     "extends": "./node_modules/react-scripts/config/eslint.js"
   },
-  "description": "This project template was built with [Create React App](https://github.com/facebookincubator/create-react-app).",
+  "description": "Frontend application for the homeautomation project",
   "main": "index.js",
   "author": "",
-  "license": "ISC",
+  "license": "Apache Licence 2",
   "proxy": "http://localhost:5000"
 }

@@ -1,4 +1,4 @@
-# README
+# README [![Build Status](https://travis-ci.org/gtema/homeautomation-frontend.svg?branch=master)](https://travis-ci.org/gtema/homeautomation-frontend)
 
 This project implements frontend for [MyAutomation project](github.com/gtema/homeautomation)
 

@@ -100,7 +100,7 @@ describe('products actions', () => {
       { type: 'RECEIVE_CATEGORIES', authenticated: true, response: categories, status: 'success', timestamp: timestamp }
     ]
 
-    const store = mockStore({})
+    const store = mockStore({auth: {isAuthenticated: true}})
 
     return store.dispatch(actions.loadAllCategories())
       .then(() => {
