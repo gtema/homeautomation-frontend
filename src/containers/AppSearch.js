@@ -40,16 +40,33 @@ class AppSearchImpl extends React.Component {
   render() {
 
     const searchItem = (item) => {
-      return (
-        <li key={`${item.type}${item.id}`}>
-          <Link className='pure-menu-link' to={`${cataloguePath}/${item.id}`}>
-            <span className='entry-type'>
-              {item.type}
-            </span>
-            {item.name}
-          </Link>
-        </li>
-      )
+      let link = null
+      let key = `${item.type}${item.id}`
+
+      switch(item.type) {
+        case 'C':
+          link = `${cataloguePath}/${item.id}`
+          break
+        case 'P':
+          link = `${cataloguePath}/${item.category_id}/item/${item.id}`
+          break
+        default:
+          // do nothing
+      }
+
+      if (link !== null) {
+        return (
+          <li key={key}>
+            <Link className='pure-menu-link' to={link}>
+              <span className='entry-type'>
+                {item.type}
+              </span>
+              {item.name}
+            </Link>
+          </li>
+        )
+      }
+
     }
 
     return (

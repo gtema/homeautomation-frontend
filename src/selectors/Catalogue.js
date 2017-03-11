@@ -254,7 +254,7 @@ export const getCatalogueSearchResults = createSelector(
     // Append received products
     if (typeof(products) !== 'undefined' && products !== null) {
       const items = products
-        .map(item => item.filter(keyIn('id', 'name')).set('type', 'P').toObject() )
+        .map(item => item.filter(keyIn('id', 'name', 'category_id')).set('type', 'P').toObject() )
         .toArray()
 
       if (items !== null) {
