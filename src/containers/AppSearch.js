@@ -41,7 +41,7 @@ class AppSearchImpl extends React.Component {
 
     const searchItem = (item) => {
       return (
-        <li key={item.id}>
+        <li key={`${item.type}${item.id}`}>
           <Link className='pure-menu-link' to={`${cataloguePath}/${item.id}`}>
             <span className='entry-type'>
               {item.type}

@@ -1,5 +1,6 @@
 // import * as productActions from './products'
 import * as categoryActions from './categories'
+import { CALL_API, Schemas, Methods } from '../middleware/api'
 
 // Switch category edit mode
 export const toggleCategoryEditMode = (catId) => {
@@ -56,10 +57,32 @@ export const selectCategory = id => {
   }
 }
 
-export const search = value => {
-  return {
-    type: 'SEARCH',
+// Search
+export const search = value => (dispatch, getState) => {
+  dispatch({
+    type: 'SEARCH_LOCAL',
     value: value
+  })
+  /**
+    Fire a API request to get products with the NAME containing search value
+
+    It is of course possible to do a local search only, and this is even done for
+    categories (they are all loaded), but lots of products might not be loaded yet.
+    Therefore each time a search changes we will fire an API request to get matching
+    products. Search results will be stored in the UI part of the state and
+    will NOT be merged/updated in the real app state.
+  */
+  if (typeof(value) !== 'undefined' && value !== null && value.length > 2) {
+    // Do a remote search only if search token length is more than 2
+    dispatch({
+      [CALL_API] : {
+        types: ['REQUEST_SEARCH_PRODUCTS', 'RECEIVE_SEARCH_PRODUCTS', 'RECEIVE_SEARCH_PRODUCTS_ERROR'],
+        endpoint: `products?name=${value}`,
+        method: Methods.GET,
+        schema: Schemas.PRODUCT_ARRAY,
+        payload: {value},
+      }
+    })
   }
 }
 

@@ -23,7 +23,9 @@ const getProductItemsById = (state) => state.productItems.get('productItemsById'
 // const getProductItemById = (state, props) => state.productItems.getIn(['productItemsById', props.params.itemId])
 const getProductItemIdsByProductId = (state, props) => state.productItems.getIn(['productItemsByProductId', props.params.itemId || "0", 'items'])
 
+// Search stuff
 const getSearchName = (state) => state.ui.get('search')
+const getSearchProductsResults = (state) => state.ui.get('searchProductsResults')
 
 const denormalizeCategories = (objById, idsByParent, categoryId) => {
   // console.debug("denormalize for category=" + categoryId, idsByParent.get('0'))
@@ -236,18 +238,29 @@ export const keyIn = (...keys) => {
 }
 
 export const getCatalogueSearchResults = createSelector(
-  [getCategoriesById, getSearchName],
-  (catById, searchToken) => {
+  [getCategoriesById, getSearchName, getSearchProductsResults],
+  (catById, searchToken, products) => {
+    let results = []
+    // Filter locally known categories
     if (typeof(searchToken) !== 'undefined' && searchToken !== null && searchToken !== '') {
       const search = searchToken.toLowerCase()
       const items = catById
-      .filter(item => item.get('name').toLowerCase().includes(search) )
-      .map(item => item.filter(keyIn('id', 'name')).set('type', 'C').toObject() )
-      // .map(item => {return {'name': item.get('name')} )
-      .toArray()
-      return items
-    } else {
-      return null
+        .filter(item => item.get('name').toLowerCase().includes(search) )
+        .map(item => item.filter(keyIn('id', 'name')).set('type', 'C').toObject() )
+        // .map(item => {return {'name': item.get('name')} )
+        .toArray()
+      results = items
     }
+    // Append received products
+    if (typeof(products) !== 'undefined' && products !== null) {
+      const items = products
+        .map(item => item.filter(keyIn('id', 'name')).set('type', 'P').toObject() )
+        .toArray()
+
+      if (items !== null) {
+        results = results.concat(items)
+      }
+    }
+    return results
   }
 )
