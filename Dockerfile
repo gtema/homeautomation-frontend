@@ -1,16 +1,18 @@
-FROM node:4-alpine
+FROM node:6-alpine
 
-MAINTAINER Artem Goncharov
+LABEL version="1.0"
+LABEL description="The frontend of my Homeautomatizaion"
 
 EXPOSE 3000
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-ONBUILD ARG NODE_ENV
-ONBUILD ENV NODE_ENV $NODE_ENV
-ONBUILD COPY package.json /usr/src/app/
-ONBUILD RUN npm install
-ONBUILD COPY . /usr/src/app
+COPY package.json /usr/src/app/
+RUN npm install -g serve; npm install
+COPY . /usr/src/app/
 
-CMD [ "npm", "start" ]
+# Prepare the production build
+RUN npm run build
+
+CMD [ "serve", "-s", "build", "-p", "3000" ]

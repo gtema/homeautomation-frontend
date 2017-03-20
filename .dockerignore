@@ -1,0 +1,6 @@
+# exclude local node_modules directory
+node_modules
+.travis.yml
+.git*
+static.json
+Dockerfile
