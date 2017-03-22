@@ -1,9 +1,11 @@
-FROM node:6-alpine
+FROM fedora:latest
 
 LABEL version="1.0"
 LABEL description="The frontend of my Homeautomatizaion"
 
 EXPOSE 3000
+
+RUN dnf -y update && dnf -y install npm && dnf clean all
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
