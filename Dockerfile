@@ -5,6 +5,7 @@ LABEL description="The frontend of my Homeautomatizaion"
 
 EXPOSE 443
 
+
 # install packages
 RUN dnf -y update && dnf -y install \
   httpd \
