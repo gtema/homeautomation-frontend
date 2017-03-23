@@ -1,18 +1,25 @@
-FROM node:6-alpine
+FROM fedora/apache:latest
 
 LABEL version="1.0"
 LABEL description="The frontend of my Homeautomatizaion"
 
-EXPOSE 3000
+EXPOSE 443
 
-RUN mkdir -p /usr/src/app
+# install packages
+RUN dnf -y update && dnf -y install \
+  httpd \
+  mod_ssl \
+  npm  \
+  && dnf clean all
+
+# fix httpd config
+RUN sed -i.orig 's/#ServerName/ServerName/' /etc/httpd/conf/httpd.conf
+
 WORKDIR /usr/src/app
-
 COPY package.json /usr/src/app/
-RUN npm install -g serve; npm install
+RUN npm install
 COPY . /usr/src/app/
 
-# Prepare the production build
-RUN npm run build
+#WORKDIR /var/www/frontend
 
-CMD [ "serve", "-s", "build", "-p", "3000" ]
+CMD ["/usr/src/app/docker-run.sh"]

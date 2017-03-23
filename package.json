@@ -44,7 +44,7 @@
   },
   "description": "Frontend application for the homeautomation project",
   "main": "index.js",
-  "author": "",
+  "author": "Artem Goncharov",
   "license": "Apache Licence 2",
   "proxy": "http://localhost:5000"
 }
