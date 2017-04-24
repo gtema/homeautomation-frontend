@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import classnames from 'classnames';
 
 import 'font-awesome/css/font-awesome.min.css'
@@ -6,8 +7,8 @@ import 'font-awesome/css/font-awesome.min.css'
 class Icon extends React.Component {
 
   static propTypes = {
-    icon: React.PropTypes.string.isRequired,
-    onClick: React.PropTypes.func
+    icon: PropTypes.string.isRequired,
+    onClick: PropTypes.func
   }
 
   render() {

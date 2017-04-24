@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import classnames from 'classnames'
 
 import ButtonGroup from '../basecomponents/ButtonGroup'
@@ -15,10 +16,10 @@ import {getISODate} from '../tools/common'
 class ProductItem extends React.Component {
   static propTypes = {
     productItemsPropTypes,
-    productId: React.PropTypes.number.isRequired,
-    modifyFn: React.PropTypes.func,
-    addFn: React.PropTypes.func,
-    inactive: React.PropTypes.bool
+    productId: PropTypes.number.isRequired,
+    modifyFn: PropTypes.func,
+    addFn: PropTypes.func,
+    inactive: PropTypes.bool
   }
 
   static defaultProps = {

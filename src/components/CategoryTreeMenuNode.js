@@ -1,5 +1,6 @@
 /* components/CategoryTreeMenuNode.js */
-import React, { PropTypes, Component } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import Link from 'react-router/lib/Link'
 
 import 'purecss/build/forms-min.css'

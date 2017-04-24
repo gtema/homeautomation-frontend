@@ -1,5 +1,6 @@
 //components/ProductItem.js
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import ProductItem from './ProductItem'
 import { productItemsPropTypes } from '../tools/constants'
@@ -7,12 +8,12 @@ import { productItemsPropTypes } from '../tools/constants'
 // List of Product Items of the given category
 class ProductItemList extends React.Component {
   static propTypes = {
-    items: React.PropTypes.arrayOf(productItemsPropTypes.isRequired),
+    items: PropTypes.arrayOf(productItemsPropTypes.isRequired),
     // inactiveItems: PropTypes.arrayOf(productItemsPropTypes.isRequired),
-    modifyFn: React.PropTypes.func,
-    addFn: React.PropTypes.func,
-    productId: React.PropTypes.number.isRequired,
-    active: React.PropTypes.bool,
+    modifyFn: PropTypes.func,
+    addFn: PropTypes.func,
+    productId: PropTypes.number.isRequired,
+    active: PropTypes.bool,
   }
 
   static defaultProps = {

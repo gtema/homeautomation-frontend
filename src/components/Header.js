@@ -1,5 +1,6 @@
 //components/Header.js
 import React from 'react'
+import PropTypes from 'prop-types'
 import Link from 'react-router/lib/Link'
 
 import Menu from '../basecomponents/Menu'
@@ -12,7 +13,7 @@ import './Header.css'
 class Header extends React.Component {
 
   static propTypes = {
-    logoutFn: React.PropTypes.func.isRequired,
+    logoutFn: PropTypes.func.isRequired,
   }
 
   constructor(props) {

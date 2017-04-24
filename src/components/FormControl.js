@@ -1,5 +1,5 @@
-import React, {PropTypes} from 'react'
-import classnames from 'classnames';
+import React from 'react'
+import classnames from 'classnames'
 
 import './Button.css'
 import 'purecss/build/buttons-min.css'

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 import './Modal.css'
 
@@ -59,8 +60,8 @@ class ModalFooter extends Component {
 class Modal extends Component {
 
   static propTypes = {
-    isVisible: React.PropTypes.bool,
-    onClose: React.PropTypes.func,
+    isVisible: PropTypes.bool,
+    onClose: PropTypes.func,
   }
 
   static defaultProps = {
@@ -126,7 +127,7 @@ class Modal extends Component {
 }
 
 Modal.childContextTypes ={
-  onClose: React.PropTypes.func,
+  onClose: PropTypes.func,
 }
 
 Modal.Header = ModalHeader

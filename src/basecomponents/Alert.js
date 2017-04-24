@@ -1,12 +1,13 @@
 import React from 'react'
-import classnames from 'classnames';
+import PropTypes from 'prop-types'
+import classnames from 'classnames'
 
 import './Alert.css'
 
 class Alert extends React.Component {
 
   static propTypes = {
-    type: React.PropTypes.oneOf(['info', 'warning', 'error']).isRequired
+    type: PropTypes.oneOf(['info', 'warning', 'error']).isRequired
   }
 
   static defaultProps = {

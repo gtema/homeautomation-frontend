@@ -1,5 +1,6 @@
 //containers/Root.prod.js
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { Provider } from 'react-redux'
 import routes from '../routes'
 import Router from 'react-router/lib/Router'

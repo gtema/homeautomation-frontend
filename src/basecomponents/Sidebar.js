@@ -1,4 +1,5 @@
 import React  from 'react'
+import PropTypes from 'prop-types'
 import {ContainerQuery } from 'react-container-query'
 import classnames from 'classnames'
 
@@ -23,8 +24,8 @@ const SIDEBAR_MODE = {
 class Sidebar extends React.Component {
 
   static propTypes = {
-    sidebar: React.PropTypes.node.isRequired,
-    children: React.PropTypes.node.isRequired,
+    sidebar: PropTypes.node.isRequired,
+    children: PropTypes.node.isRequired,
   }
 
   static defaultProps = {

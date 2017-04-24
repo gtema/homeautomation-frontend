@@ -1,4 +1,4 @@
-import { Schema, arrayOf } from 'normalizr'
+import { schema } from 'normalizr'
 import fetch  from 'isomorphic-fetch'
 
 import { API_HOST, API_PATH, API_PROTOCOL } from '../tools/constants'
@@ -50,23 +50,27 @@ const callApi = (endpoint, schema, method, payload, authenticated) => {
     )
 }
 
-const productSchema = new Schema('products', {
+const productSchema = new schema.Entity('products', {
   idAttribute: 'id'
 })
-const productItemSchema = new Schema('productItems', {
+const productArraySchema = new schema.Array(productSchema)
+
+const productItemSchema = new schema.Entity('productItems', {
   idAttribute: 'id'
 })
-const categorySchema = new Schema('categories', {
+const productItemArraySchema = new schema.Array(productItemSchema)
+const categorySchema = new schema.Entity('categories', {
   idAttribute: 'id'
 })
+const categoryArraySchema = new schema.Array(categorySchema)
 
 export const Schemas = {
   PRODUCT: productSchema,
-  PRODUCT_ARRAY: arrayOf(productSchema),
+  PRODUCT_ARRAY: productArraySchema,
   PRODUCT_ITEM: productItemSchema,
-  PRODUCT_ITEM_ARRAY: arrayOf(productItemSchema),
+  PRODUCT_ITEM_ARRAY: productItemArraySchema,
   CATEGORY: categorySchema,
-  CATEGORY_ARRAY: arrayOf(categorySchema)
+  CATEGORY_ARRAY: categoryArraySchema
 }
 
 // Action key that carries API call info interpreted by this Redux middleware.

@@ -1,5 +1,6 @@
 /* containers/AppSearch.js */
 import React from 'react'
+import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Link from 'react-router/lib/Link'
@@ -22,14 +23,14 @@ import { cataloguePath } from '../tools/constants'
 class AppSearchImpl extends React.Component {
 
   static propTypes = {
-    searchResults: React.PropTypes.arrayOf(React.PropTypes.shape({
-      'id': React.PropTypes.number.isRequired,
-      'name': React.PropTypes.string.isRequired
+    searchResults: PropTypes.arrayOf(PropTypes.shape({
+      'id': PropTypes.number.isRequired,
+      'name': PropTypes.string.isRequired
     }))
   }
 
   static contextTypes = {
-    router: React.PropTypes.object
+    router: PropTypes.object
   }
 
   // constructor(props) {

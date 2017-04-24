@@ -1,5 +1,6 @@
 // components/Login.js
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import Button from '../basecomponents/Button'
 
@@ -10,8 +11,8 @@ import './Login.css'
 class Login extends React.Component {
 
   static propTypes = {
-    onLoginClick: React.PropTypes.func.isRequired,
-    errorMessage: React.PropTypes.string
+    onLoginClick: PropTypes.func.isRequired,
+    errorMessage: PropTypes.string
   }
 
   handleSubmit(event) {

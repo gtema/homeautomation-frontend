@@ -1,5 +1,5 @@
-import { PropTypes } from 'react'
-
+/* /src/tools/constants.js */
+import PropTypes from 'prop-types'
 export const cataloguePath = "/cat"
 
 

@@ -1,9 +1,11 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import {Component} from 'react'
+import PropTypes from 'prop-types'
 
 import Modal from '../basecomponents/Modal'
 import Button from '../basecomponents/Button'
 
-class AddCategoryImpl Component {
+class AddCategoryImpl extends Component {
   static propTypes = {
     visible: PropTypes.bool.isRequired,
     parent_id: PropTypes.number.isRequired
